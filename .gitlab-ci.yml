@@ -9,9 +9,9 @@ cache:
 
 pages:
   script:
-    - yarn generate
+    - yarn generate public
   artifacts:
     paths:
-      - dist
+      - public
   only:
     - master
