@@ -7,7 +7,7 @@
           h1.title.is-4 me
           p.content.
             i'm a communist, a
-            #[a(href='https://mattandmack.website' target='_blank') spouse-to-be],
+            #[a(href='https://mattandmack.website' target='_blank') partner],
             a recently graduated student, and a software developer at yelp.
       .tile.is-9
         .notification.is-warning
