@@ -13,9 +13,9 @@
         .notification.is-warning
           h1.title.is-4 what's inspiring me now
           .content
-            p david lynch's twin peaks
+            p bo burnham's 8th grade
             p louis brennan's #[a(href='https://louisbrennan.bandcamp.com/album/dead-capital' target='_blank') dead capital]
-            p vladimir lenin's 'imperialism: the highest stage of capitalism'
+            p thomas pynchon's gravity's rainbow
     .tile.is-4
       .tile.is-9
         .notification.is-danger
