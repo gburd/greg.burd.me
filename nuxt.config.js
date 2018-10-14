@@ -1,35 +1,67 @@
+const pkg = require('./package') // javascript.validate.enable false
+
 module.exports = {
+  mode: 'universal',
+
   /*
   ** Headers of the page
   */
   head: {
-    title: 'matthew ess',
+    titleTemplate(titleChunk) {
+      return titleChunk ? `${titleChunk} | matthew ess` : 'matthew ess'
+    },
     meta: [
       { charset: 'utf-8' },
       { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge,chrome=1' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'my personal website' },
-    ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-    ],
+      { hid: 'description', name: 'description', content: pkg.description }
+    ]
   },
+
+  /*
+  ** Customize the progress-bar color
+  */
+  loading: { color: '#fff' },
+
+  /*
+  ** Global CSS
+  */
+  css: [],
+
+  /*
+  ** Plugins to load before mounting the App
+  */
+  plugins: [],
+
+  /*
+  ** Nuxt.js modules
+  */
+  modules: ['@nuxtjs/bulma'],
+
   /*
   ** Build configuration
   */
   build: {
+    postcss: {
+      preset: {
+        features: {
+          customProperties: false
+        }
+      }
+    },
     /*
-    ** Run ESLint on save
+    ** You can extend webpack config here
     */
-    extend(config, { isDev, isClient }) {
-      if (isDev && isClient) {
+    extend(config, ctx) {
+      // Run ESLint on save
+      if (ctx.isDev && ctx.isClient) {
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
-          exclude: /(node_modules)/,
-        });
+          exclude: /(node_modules)/
+        })
       }
-    },
-  },
-};
+    }
+  }
+}

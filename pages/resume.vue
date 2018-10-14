@@ -41,10 +41,22 @@
         p source control, git
 </template>
 
+<script>
+export default {
+  head() {
+    return {
+      title: 'resume'
+    }
+  },
+  layout: 'compact'
+}
+</script>
+
 <style lang="sass" scoped>
 @import '~bulma/sass/utilities/mixins'
+@import '~assets/sass/variables'
 
-$background: #BD271A
+$background: $primary
 
 hr
   height: 0.5rem

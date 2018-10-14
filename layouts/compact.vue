@@ -1,6 +1,6 @@
 <template lang="pug">
 .nuxt
-  hero
+  hero(:compact='true')
   .container
     nuxt
   footer.footer.white
