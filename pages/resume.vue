@@ -30,13 +30,16 @@
       .column
         p python 2 and 3
         p flask, django, pyramid
+        p elixir and phoenix
         p java, junit testing, ruby on rails
       .column
         p html5, css, javascript
         p vue.js, react
+        p elm, reactive frontend programming
         p single page apps, components, flux
       .column
         p c, unix programming
+        p software deployment
         p macOS, linux, windows
         p source control, git
 </template>

@@ -36,7 +36,16 @@ module.exports = {
   /*
   ** Nuxt.js modules
   */
-  modules: ['@nuxtjs/bulma'],
+  modules: ['@nuxtjs/bulma', 'nuxtent'],
+
+  /*
+  ** Nuxtent configuration
+  */
+  nuxtent: {
+    page: '/posts/_slug',
+    permalink: ':slug',
+    generate: ['get', 'getAll']
+  },
 
   /*
   ** Build configuration

@@ -4,6 +4,9 @@
 
 <script>
 export default {
+  asyncData({ app, route }) {
+    console.log(route)
+  },
   head() {
     return {
       title: 'blog'
