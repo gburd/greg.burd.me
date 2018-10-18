@@ -33,21 +33,19 @@
     or my older #[a.has-text-info(href='https://github.com/matthewess') github account].
 </template>
 
+<script>
+export default {
+  head() {
+    return { title: 'projects' }
+  },
+  layout: 'compact'
+}
+</script>
+
 <style lang="sass" scoped>
-@import '~bulma/sass/utilities/mixins'
+@import '~assets/sass/utilities'
 
 +desktop
   .is-half
     width: 50%
 </style>
-
-<script>
-export default {
-  head() {
-    return {
-      title: 'projects'
-    }
-  },
-  layout: 'compact'
-}
-</script>

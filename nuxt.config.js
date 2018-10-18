@@ -1,6 +1,6 @@
-const pkg = require('./package') // javascript.validate.enable false
+import pkg from './package'
 
-module.exports = {
+export default {
   mode: 'universal',
 
   /*
@@ -31,7 +31,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [],
+  plugins: ['~/plugins/filters.js'],
 
   /*
   ** Nuxt.js modules
@@ -39,12 +39,21 @@ module.exports = {
   modules: ['@nuxtjs/bulma', 'nuxtent'],
 
   /*
+  ** Static Site Generation configuration
+  */
+  generate: {
+    dir: 'public'
+  },
+
+  /*
   ** Nuxtent configuration
   */
   nuxtent: {
-    page: '/posts/_slug',
-    permalink: ':slug',
-    generate: ['get', 'getAll']
+    content: {
+      page: '/blog/_slug',
+      permalink: ':slug',
+      generate: ['get', 'getAll']
+    }
   },
 
   /*

@@ -47,23 +47,15 @@
 <script>
 export default {
   head() {
-    return {
-      title: 'resume'
-    }
+    return { title: 'resume' }
   },
   layout: 'compact'
 }
 </script>
 
 <style lang="sass" scoped>
-@import '~bulma/sass/utilities/mixins'
-@import '~assets/sass/variables'
+@import '~assets/sass/utilities'
 
-$background: $primary
-
-hr
-  height: 0.5rem
-  background: $background
 +desktop
   .is-three-quarters
     width: 75%
