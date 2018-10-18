@@ -38,7 +38,7 @@ export default {
   head() {
     return { title: 'projects' }
   },
-  layout: 'compact'
+  layout: 'compact',
 }
 </script>
 

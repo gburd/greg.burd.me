@@ -18,9 +18,9 @@ export default {
   props: {
     compact: {
       type: Boolean,
-      default: false
-    }
-  }
+      default: false,
+    },
+  },
 }
 </script>
 

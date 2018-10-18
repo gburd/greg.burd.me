@@ -5,20 +5,26 @@ ul.blog-items
       span.post-title {{ post.title }}
       span.post-date {{ post.date | prettifyDate }}
       .post-tagline {{ post.tagline }}
-    hr(v-if='index < listing.length - 1')
+    hr(v-if='last(index)')
 </template>
 
 <script>
 export default {
   async asyncData({ app }) {
     return {
-      listing: await app
-        .$content('/')
-        .query({ exclude: ['body', 'meta', 'permalink', 'anchors'] })
-        .getAll()
+      listing:
+        (await app
+          .$content('/')
+          .query({ exclude: ['body', 'meta', 'permalink', 'anchors'] })
+          .getAll()) || payload,
     }
   },
-  layout: 'compact'
+  methods: {
+    last(index) {
+      return index < this.listing.length - 1
+    },
+  },
+  layout: 'compact',
 }
 </script>
 

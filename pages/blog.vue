@@ -8,15 +8,10 @@
 
 <script>
 export default {
-  async asyncData({ app }) {
-    return {
-      listing: await app.$content('/').getAll()
-    }
-  },
   head() {
     return { title: 'blog' }
   },
-  layout: 'compact'
+  layout: 'compact',
 }
 </script>
 

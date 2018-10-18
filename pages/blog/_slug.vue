@@ -10,9 +10,9 @@
 
 <script>
 export default {
-  async asyncData({ app, params, payload }) {
+  async asyncData({ app, route, payload }) {
     return {
-      post: await app.$content('/').get(params.slug),
+      post: (await app.$content('/').get(route.path)) || payload,
     }
   },
   head() {

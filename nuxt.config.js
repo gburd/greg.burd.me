@@ -14,8 +14,8 @@ export default {
       { charset: 'utf-8' },
       { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge,chrome=1' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: pkg.description }
-    ]
+      { hid: 'description', name: 'description', content: pkg.description },
+    ],
   },
 
   /*
@@ -42,7 +42,7 @@ export default {
   ** Static Site Generation configuration
   */
   generate: {
-    dir: 'public'
+    dir: 'public',
   },
 
   /*
@@ -50,10 +50,16 @@ export default {
   */
   nuxtent: {
     content: {
-      page: '/blog/_slug',
-      permalink: ':slug',
-      generate: ['get', 'getAll']
-    }
+      page: '/_slug',
+      permalink: '/blog/:slug',
+      isPost: false,
+      generate: ['get', 'getAll'],
+    },
+    api: isStatic => {
+      return {
+        browserBaseURL: isStatic ? 'https://mat.services' : '',
+      }
+    },
   },
 
   /*
@@ -63,9 +69,9 @@ export default {
     postcss: {
       preset: {
         features: {
-          customProperties: false
-        }
-      }
+          customProperties: false,
+        },
+      },
     },
     /*
     ** You can extend webpack config here
@@ -77,9 +83,9 @@ export default {
           enforce: 'pre',
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
-          exclude: /(node_modules)/
+          exclude: /(node_modules)/,
         })
       }
-    }
-  }
+    },
+  },
 }

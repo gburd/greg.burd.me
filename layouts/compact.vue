@@ -10,7 +10,7 @@
 import hero from '../components/hero.vue'
 
 export default {
-  components: { hero }
+  components: { hero },
 }
 </script>
 

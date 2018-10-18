@@ -49,7 +49,7 @@ export default {
   head() {
     return { title: 'resume' }
   },
-  layout: 'compact'
+  layout: 'compact',
 }
 </script>
 
