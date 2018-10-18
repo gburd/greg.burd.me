@@ -10,8 +10,6 @@ cache:
 pages:
   script:
     - yarn generate
-    - mkdir public
-    - mv dist/* public/
   artifacts:
     paths:
       - public

@@ -5,20 +5,22 @@ section.hero.is-primary.is-bold(v-once)
       h1.title.has-text-danger matthew ess
       h2.subtitle.has-text-danger software developer, social justice warrior, wannabe artist
   .hero-foot
-    nav-tabs
+    .tabs.is-boxed.is-fullwidth.is-three-quarters
+      ul.has-text-weight-semibold.has-text-danger
+        li(v-if='compact') #[nuxt-link.has-text-weight-bold(to='/') matthew ess]
+        li #[nuxt-link(to='/projects') projects]
+        li #[nuxt-link(to='/resume') resume]
+        li #[nuxt-link(to='/blog') blog]
 </template>
 
 <script>
-import navTabs from './navTabs.vue'
-
 export default {
-  components: { navTabs },
   props: {
     compact: {
       type: Boolean,
-      default: false
-    }
-  }
+      default: false,
+    },
+  },
 }
 </script>
 

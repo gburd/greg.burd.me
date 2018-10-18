@@ -1,6 +1,6 @@
-const pkg = require('./package') // javascript.validate.enable false
+import pkg from './package'
 
-module.exports = {
+export default {
   mode: 'universal',
 
   /*
@@ -14,8 +14,8 @@ module.exports = {
       { charset: 'utf-8' },
       { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge,chrome=1' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: pkg.description }
-    ]
+      { hid: 'description', name: 'description', content: pkg.description },
+    ],
   },
 
   /*
@@ -31,12 +31,36 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [],
+  plugins: ['~/plugins/filters.js'],
 
   /*
   ** Nuxt.js modules
   */
-  modules: ['@nuxtjs/bulma'],
+  modules: ['@nuxtjs/bulma', 'nuxtent'],
+
+  /*
+  ** Static Site Generation configuration
+  */
+  generate: {
+    dir: 'public',
+  },
+
+  /*
+  ** Nuxtent configuration
+  */
+  nuxtent: {
+    content: {
+      page: '/_slug',
+      permalink: '/blog/:slug',
+      isPost: false,
+      generate: ['get', 'getAll'],
+    },
+    api: isStatic => {
+      return {
+        browserBaseURL: isStatic ? 'https://mat.services' : '',
+      }
+    },
+  },
 
   /*
   ** Build configuration
@@ -45,9 +69,9 @@ module.exports = {
     postcss: {
       preset: {
         features: {
-          customProperties: false
-        }
-      }
+          customProperties: false,
+        },
+      },
     },
     /*
     ** You can extend webpack config here
@@ -59,9 +83,9 @@ module.exports = {
           enforce: 'pre',
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
-          exclude: /(node_modules)/
+          exclude: /(node_modules)/,
         })
       }
-    }
-  }
+    },
+  },
 }

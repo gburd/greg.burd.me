@@ -1,9 +1,5 @@
 {
   "eslint.enable": true,
   "eslint.packageManager": "yarn",
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "vue"
-  ]
+  "eslint.validate": ["javascript", "javascriptreact", "vue", "html"]
 }
