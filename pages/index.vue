@@ -6,7 +6,7 @@
         .notification.is-info
           h1.title.is-4 me
           p.content.
-            i'm a communist, a
+            i'm an aspiring communist, a
             #[a(href='https://mattandmack.website' target='_blank') partner],
             and a software developer at yelp.
       .tile.is-9
@@ -21,7 +21,7 @@
         .notification.is-danger
             h1.title.is-4 what i care about
             p.content.
-              as a communist, i think the most important tools are the ones that help
+              as an aspirational communist, i think the most important tools are the ones that help
               workers organize and empower themselves. i want my software to be a tool for
               liberation, and i want to work on projects that embody that goal. reach out
               to mess [at] yelp [dot] com if you want to work on or discuss something.
