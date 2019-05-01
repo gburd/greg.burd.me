@@ -14,11 +14,16 @@
     h2.subtitle experience
     p.has-text-weight-semibold software engineer @ yelp: summer 2018 - present
     p.
-      transactions backend engineer.
+      backend engineer on the transactions and food ordering teams. i work on
+      high performance, realtime python infrastructure that supports a wide
+      variety of features for ordering food on yelp, including driver tracking
+      support to realtime updates and notifications about your order via push.
     p.has-text-weight-semibold software engineer intern @ yelp: summer 2017
     p.
-      i joined the transactions team and worked on restructuring ordering data
-      to make it more efficient to query.
+      intern on the transactions team. built a streaming transformation pipeline
+      that leveraged yelp's streaming datapipe (built on kafka technologies) and
+      replicated to elasticsearch for high performance text querying over order
+      data.
     p.has-text-weight-semibold developer intern @ school datebooks: summer 2016 - winter 2016
     p.
       i worked on a very small team of talented engineers writing backend
@@ -28,20 +33,29 @@
     h2.subtitle skills
     .columns
       .column
-        p python 2 and 3
-        p flask, django, pyramid
-        p elixir and phoenix
-        p java, junit testing, ruby on rails
-      .column
+        p.has-text-weight-semibold strong
+        p python
+        p pyramid, flask, django
+        p unit, integration, and acceptance testing
+        p darwin and linux systems
+        p git, source control
+        p working on a team, agile and "semi-agile" processes
         p html5, css, javascript
-        p vue.js, react
-        p elm, reactive frontend programming
-        p single page apps, components, flux
       .column
-        p c, unix programming
+        p.has-text-weight-semibold familiar
+        p haskell
+        p elixir and phoenix
+        p functional programming paradigms
+        p database technology, sql, postgresql, elasticsearch
         p software deployment
-        p macOS, linux, windows
-        p source control, git
+        p elm, vue.js, react, SPAs, flux
+        p c, systems programming, java, junit testing, ruby on rails
+      .column
+       p.has-text-weight-semibold learning
+       p functional reactive programming, reflex
+       p nix, nixos
+       p type level programming and theory
+       p programming language and compiler theory
 </template>
 
 <script>
