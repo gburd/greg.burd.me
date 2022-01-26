@@ -1,6 +1,8 @@
 image: alpine
 
 pages:
+  script:
+    echo "(¬_¬')"
   artifacts:
     paths:
       - site
