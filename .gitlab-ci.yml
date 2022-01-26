@@ -2,9 +2,10 @@ image: alpine
 
 pages:
   script:
-    echo "(¬_¬')"
+    mkdir public
+    cp site/* public
   artifacts:
     paths:
-      - site
+      - public
   only:
     - master
