@@ -2,8 +2,8 @@ image: alpine
 
 pages:
   script:
-    mkdir public
-    cp site/* public
+    - mkdir public
+    - cp site/* public
   artifacts:
     paths:
       - public
