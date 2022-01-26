@@ -1,17 +1,8 @@
-image: node
-
-before_script:
-  - yarn install
-
-cache:
-  paths:
-    - node_modules/
+image: alpine
 
 pages:
-  script:
-    - yarn generate
   artifacts:
     paths:
-      - public
+      - site
   only:
     - master
