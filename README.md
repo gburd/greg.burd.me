@@ -1,5 +1,6 @@
 # mat.services
+## my personal site
 
-> my personal site
+built using zola and nix
 
-wip
+inspired by <https://ilanjoselevich.com/blog/building-websites-using-nix-flakes-and-zola/>

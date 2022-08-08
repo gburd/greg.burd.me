@@ -1,0 +1,39 @@
+// Logo
+
+div.brand>* {
+  padding: 0 0.25em;
+}
+
+div.brand:hover img.logo {
+  filter: brightness(0) invert(1);
+}
+
+img.logo {
+  border: none;
+  height: 0.75em;
+  width: 0.75em;
+  padding-right: 0.25em;
+}
+
+// Footer
+.content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+div.inner {
+  flex-grow: 1;
+}
+
+header,
+footer {
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+footer {
+  margin: 2em;
+  color: grey;
+  font-size: 0.75em;
+}

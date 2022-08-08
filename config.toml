@@ -1,0 +1,28 @@
+# The URL the site will be built for
+base_url = "https://mat.services"
+title = "mat.services"
+
+# Whether to automatically compile all Sass files in the sass directory
+compile_sass = true
+
+# Whether to build a search index to be used later on by a JavaScript library
+build_search_index = false
+
+theme = "apollo"
+
+[markdown]
+# Whether to do syntax highlighting
+highlight_code = true
+
+[extra]
+theme = "auto"
+favicon = "/favicon.svg"
+stylesheets = ["extra.css"]
+
+menu = [
+    { name = "/posts", url = "/posts", external = false },
+    { name = "/projects", url = "/projects", external = false },
+    { name = "/about", url = "/about", external = false },
+    { name = "git", url = "https://git.mat.services/explore/repos", external = true },
+]
+
