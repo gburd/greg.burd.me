@@ -1,5 +1,4 @@
 // Logo
-
 div.brand>* {
   padding: 0 0.25em;
 }
@@ -13,6 +12,11 @@ img.logo {
   height: 0.75em;
   width: 0.75em;
   padding-right: 0.25em;
+}
+
+// Nav links
+nav a {
+  margin-left: 0.7em;
 }
 
 // Footer
