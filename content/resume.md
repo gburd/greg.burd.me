@@ -4,7 +4,6 @@ path = "resume"
 +++
 
 # skills
-
 ## professional 
 * python
 * relational databases
@@ -14,15 +13,13 @@ path = "resume"
 * flink
 
 ## personal
-* nix package maanger
+* nix package manager
 * rust
 * haskell
 * java
 
 # experience
-
 ## yelp inc, 2017-present
-
 ### 2022-present
 _software engineer, core services team_
 
@@ -36,6 +33,5 @@ _software engineer, food ordering experience team_
 _software engineering intern, transactions team_
 
 # education
-
 ## purdue university, 2014-2018
 _bachelor of science, computer science_
