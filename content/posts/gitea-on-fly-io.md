@@ -1,12 +1,12 @@
 +++
 title = "diy code hosting with gitea and fly.io"
-date = "2022-08-07"
+date = "2022-08-08"
 +++
 
 ## Setting the scene
 Inspired by the [Give Up Github campaign](https://sfconservancy.org/GiveUpGitHub/), I recently decided I wanted to spin up my own instance of [Gitea](https://gitea.io/). There are free (as in beer), free (as in freedom), public instances of Gitea and other FOSS-leaning code forges, but self-hosted Gitea struck me as a nice way to take even a bit more ownership over my own code.
 
-I maintain a small PC running in my home as a server for a few services running via Proxmox, but I am really dissatisfied with my workflows for managing that box lately (picture SSHing into LXC containers and manually editing systemd configurations... yuck). I recently read a couple of different articles singing the praises of [Fly.io](https://fly.io/), a platform as a service (PaaS) that replicates most of the good parts of the classic Heroku developer experience. Further enticed by their generous-looking free tier, I took the plunge and created a Fly.io account.
+I maintain a small PC running in my home as a server for a few services running via Proxmox, but I am really dissatisfied with my workflows for managing that box lately (picture SSHing into LXC containers and manually editing systemd configurations... yuck). I recently read a couple of different articles singing the praises of [Fly.io](https://fly.io/), a platform as a service (PaaS) that replicates most of the good parts of the classic Heroku developer experience. Further enticed by their ample free tier, I took the plunge and created a Fly.io account.
 
 ## Getting started
 First things first: in order to interact with Fly.io, we primarily use the `flyctl` command line tool. It's available from a variety of sources:
@@ -124,7 +124,7 @@ flyctl open
 Now you can register your account! If you want to keep your Gitea instance private, uncomment the last line in the `env` section and rerun `flyctl deploy` after registering.
 
 ## Bonus round: configuring your custom domain with Fly.io
-Some, like myself, will not be satisfied accessing their Gitea instances with a `.fly.dev` URL. Thankfully, Fly.io makes it a breeze to configure a secure custom domain with the help of LetsEncrypt.
+Some, like myself, will not be satisfied accessing their Gitea instances with a `.fly.dev` URL. Thankfully, Fly.io makes it a breeze to configure a secure custom domain with the help of [LetsEncrypt](https://letsencrypt.org/).
 
 Fly.io and `flyctl` seem to offer tooling for managing your domains and DNS records entirely within the Fly.io system, but I personally didn't explore this route, as my own domains and DNS records are managed elsewhere. Whatever you use to manage your own domains and DNS, you will need to create two records for your domain name corresponding with the IPv4 and IPv6 addresses of the application:
 ```bash
@@ -134,7 +134,7 @@ v4   1.2.3.4             global 2022-07-03T04:39:18Z
 v6   dead:beef:1::a:a    global 2022-07-03T04:39:19Z 
 ```
 
-Create an A record for the v4 address, and an AAAA record for the v6 address. With those records in place, you should be clear to provision a certificate:
+Create an A record for the v4 address, and an AAAA record for the v6 address. With those records in place, `flyctl` can automatically perform the necessary setup with LetsEncrypt to secure your domain:
 ```bash
 flyctl certs add git.mat.services
 ```
