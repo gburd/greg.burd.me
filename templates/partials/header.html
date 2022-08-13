@@ -2,7 +2,6 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   {# Site title #}
@@ -29,7 +28,7 @@
   <link href={{ cdn.url }} rel="stylesheet" integrity="sha384-{{ cdn.hash }}" crossorigin="anonymous">
   {% endfor %}
   {% else %}
-  <link href="{{ get_url(path='fonts.css') }}" rel="stylesheet" />
+  <link href="{{ get_url(path='style/fonts.css', cachebust=true) }}" rel="stylesheet" />
   {% endif %}
 
   {# RSS #}
@@ -37,16 +36,16 @@
     href="{{ get_url(path='atom.xml', trailing_slash=false) }}">
 
   {# Theme #}
-  <link rel="stylesheet" type="text/css" href="{{ get_url(path='theme/light.css') }}" />
-  <link rel="stylesheet" type="text/css" href="{{ get_url(path='theme/dark.css') }}"
+  <link rel="stylesheet" type="text/css" href="{{ get_url(path='style/theme/light.css', cachebust=true) }}" />
+  <link rel="stylesheet" type="text/css" href="{{ get_url(path='style/theme/dark.css', cachebust=true) }}"
     media="(prefers-color-scheme: dark)" />
 
-  <link rel="stylesheet" type="text/css" media="screen" href="{{ get_url(path='main.css') }}" />
+  <link rel="stylesheet" type="text/css" media="screen" href="{{ get_url(path='style/main.css', cachebust=true) }}" />
 
 
   {% if config.extra.stylesheets %}
   {% for stylesheet in config.extra.stylesheets %}
-  <link rel="stylesheet" href="{{ get_url(path=stylesheet) }}">
+  <link rel="stylesheet" href="{{ get_url(path=stylesheet, cachebust=true) }}">
   {% endfor %}
   {% endif %}
 </head>

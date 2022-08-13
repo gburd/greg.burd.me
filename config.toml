@@ -38,6 +38,6 @@ menu = [
     { name = "/posts", url = "@/posts/_index.md" },
     { name = "/projects", url = "@/projects.md" },
     { name = "/about", url = "@/about.md" },
-    { name = "git", url = "https://git.mat.services/explore/repos", external = true },
+    { name = "git", url = "https://git.mat.services/mat", external = true },
 ]
 

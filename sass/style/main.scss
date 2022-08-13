@@ -1,9 +1,9 @@
-@import "../themes/apollo/sass/parts/_code.scss";
-@import "../themes/apollo/sass/parts/_header.scss";
-@import "../themes/apollo/sass/parts/_image.scss";
-@import "../themes/apollo/sass/parts/misc.scss";
-@import "../themes/apollo/sass/parts/table.scss";
-@import "../themes/apollo/sass/parts/tags.scss";
+@import "parts/_code.scss";
+@import "../../themes/apollo/sass/parts/_header.scss";
+@import "../../themes/apollo/sass/parts/_image.scss";
+@import "../../themes/apollo/sass/parts/misc.scss";
+@import "../../themes/apollo/sass/parts/table.scss";
+@import "../../themes/apollo/sass/parts/tags.scss";
 
 :root {
   /* Used for: block comment, hr, ... */
@@ -96,14 +96,25 @@ footer {
 
 footer {
   margin: 2em;
-  color: grey;
+  color: var(--text-1);
   font-size: 0.75em;
+
+  code {
+    color: var(--text-0);
+  }
 }
 
 // Different sized headers
-h1 {
-  font-size: 1.5rem;
-  margin-top: 1.5em;
+.page-header {
+  font-size: 2.5em;
+  font-weight: 400;
+  line-height: 100%;
+  font-family: var(--header-font);
+  margin: 4rem 0px 1rem 0px;
+}
+
+.page-header::before {
+  content: "";
 }
 
 h2 {
@@ -163,4 +174,15 @@ ul.tags {
 // Header dot
 .header-dot {
   font-size: 1.6em;
+}
+
+// Meta
+.meta a:hover {
+  color: white;
+}
+
+// Fixup grays
+.meta,
+time {
+  color: var(--text-1);
 }

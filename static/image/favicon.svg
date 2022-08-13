@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+<svg id="svg_document" width="512px" height="512px" style="zoom:1" baseProfile="full" version="1.1" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with macSVG - https://macsvg.org/ - https://github.com/dsward2/macsvg/ -->
+ <title id="svg_document_title">Untitled.svg</title>
+ <defs id="svg_document_defs">
+  <clipPath id="halfCircle">
+   <rect id="rect1" x="50%" width="50%" height="100%"/>
+  </clipPath>
+  <clipPath id="smallHalfCircle">
+   <rect id="rect2" y="50%" width="100%" height="100%"/>
+  </clipPath>
+ </defs>
+ <g id="main_group">
+  <rect id="background_rect" x="8" y="8" width="496px" height="496px" rx="64" ry="64" fill="none" stroke="#f08080" stroke-linejoin="round" stroke-width="16"/>
+  <circle id="circle1" cx="256px" cy="256px" r="40%" clip-path="url(#halfCircle)" fill="#f08080"/>
+  <circle id="circle2" cx="256px" cy="256px" r="40%" clip-path="url(#smallHalfCircle)" fill="#f08080"/>
+ </g>
+</svg>

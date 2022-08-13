@@ -23,16 +23,17 @@
           pname = "personal-site";
           version = "2022-08-07";
           src = ./.;
-          nativeBuildInputs = [ pkgs.zola ];
+          nativeBuildInputs = with pkgs; [ scour zola ];
           configurePhase = ''
             mkdir -p "themes/${themeName}"
             cp -r ${theme}/* "themes/${themeName}"
+            scour -i static/favicon-unoptimized.svg -o static/favicon.svg
           '';
           buildPhase = "zola build";
           installPhase = "cp -r public $out";
         };
         devShells.default = pkgs.mkShell {
-          packages = [ pkgs.zola ];
+          packages = with pkgs; [ zola ];
           shellHook = ''
             mkdir -p themes
             ln -sn "${theme}" "themes/${themeName}"

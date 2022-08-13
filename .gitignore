@@ -1,3 +1,5 @@
+.nvimlog
 .direnv/
 themes/
 public/
+result
