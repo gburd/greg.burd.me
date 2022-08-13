@@ -139,3 +139,21 @@ code {
 .page-header {
   max-width: 720px;
 }
+
+// Tags
+ul.tags {
+  margin: 0.5rem;
+
+  li {
+    margin-right: 0.6rem;
+    display: inline-block;
+
+    a {
+      margin-left: 0;
+    }
+  }
+}
+
+.meta.tags {
+  float: right;
+}

@@ -1,6 +1,9 @@
 +++
 title = "diy code hosting with gitea and fly.io"
-date = "2022-08-08"
+date = "2022-08-07"
+updated = "2022-08-08"
+[taxonomies]
+tags = ["git", "gitea", "fly.io"]
 +++
 
 ## Setting the scene
