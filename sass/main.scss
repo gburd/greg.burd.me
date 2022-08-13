@@ -54,6 +54,8 @@ html {
   }
 }
 
+// Logo
+
 div.brand>* {
   padding: 0 0.25em;
 }
@@ -156,4 +158,9 @@ ul.tags {
 
 .meta.tags {
   float: right;
+}
+
+// Header dot
+.header-dot {
+  font-size: 1.6em;
 }
