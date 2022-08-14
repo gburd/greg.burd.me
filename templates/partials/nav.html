@@ -3,7 +3,7 @@
     <a href={{ config.base_url }}><img class=logo src="/image/favicon.svg" alt="" />{{ config.title }}</a>
   </div>
 
-  <nav>
+  <nav aria-label="Site navigation">
     {% for menu in config.extra.menu %}
     {%- set external = menu.external | default(value=false) -%}
     {%- if external %}

@@ -131,8 +131,8 @@
 
     {% if page.taxonomies and page.taxonomies.tags %}
     <div class="post-tags">
-      <span class="meta">Tagged with</span>
-      <nav class="nav tags">
+      <span class="meta" id="tagged-with-label">This post is tagged with</span>
+      <nav class="nav tags" aria-labelledby="tagged-with-label">
         <ul class="tags">
           {% for tag in page.taxonomies.tags %}
           <li><a href="{{ get_taxonomy_url(kind='tags', name=tag) | safe }}">{{ tag }}</a></li>
