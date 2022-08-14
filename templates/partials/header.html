@@ -19,13 +19,13 @@
   {# Favicon #}
   {% if config.extra.favicon %}
   {% set favicon_ext = config.extra.favicon | split(pat=".") | last %}
-  <link rel="icon" type="image/{{ favicon_ext }}" href={{ config.extra.favicon }} />
+  <link rel="icon" type="image/{{ favicon_ext }}" href="{{ get_url(path=config.extra.favicon, cachebust=true) }}" />
   {% endif %}
 
   {# Font from cdn or disk #}
   {% if config.extra.use_cdn | default(value=false) %}
   {% for cdn in config.extra.cdns %}
-  <link href={{ cdn.url }} rel="stylesheet" integrity="sha384-{{ cdn.hash }}" crossorigin="anonymous">
+  <link href="{{ cdn.url }}" rel="stylesheet" integrity="sha384-{{ cdn.hash }}" crossorigin="anonymous">
   {% endfor %}
   {% else %}
   <link href="{{ get_url(path='style/fonts.css', cachebust=true) }}" rel="stylesheet" />
