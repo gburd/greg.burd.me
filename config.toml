@@ -42,3 +42,10 @@ menu = [
     { name = "git", url = "https://git.mat.services/mat", external = true },
 ]
 
+me_links = [
+    { name = "github", url = "https://github.com/matthewess" },
+    { name = "gitlab", url = "https://gitlab.com/matthewess" },
+    { name = "pijul nest", url = "https://nest.pijul.org/mat" },
+    { name = "lobste.rs", url = "https://lobste.rs/u/mat" },
+]
+

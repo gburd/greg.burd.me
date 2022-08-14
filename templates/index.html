@@ -2,4 +2,17 @@
 
 {% block main_content %}
 {{ post_macros::page_header(title="a sadware company")}}
+
+also on
+{% for me in config.extra.me_links %}
+{%- if loop.last -%}
+<span>and </span>
+{%- endif -%}
+<a href="{{ me.url }}" target="_blank" rel="me noopener noreferrer">{{ me.name }}</a>
+{%- if not loop.last -%}
+<span>, </span>
+{%- else -%}
+.
+{%- endif -%}
+{% endfor %}
 {% endblock main_content %}
