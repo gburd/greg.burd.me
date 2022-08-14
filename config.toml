@@ -21,7 +21,7 @@ external_links_target_blank = true
 external_links_no_referrer = true
 
 [extra]
-favicon = "/favicon.svg"
+favicon = "/image/favicon.svg"
 stylesheets = []
 
 use_cdn = true
