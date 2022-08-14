@@ -10,11 +10,11 @@
       <a href={{ page.permalink }}>{{page.title}}</a>
     </h1>
 
-    <div class="meta tags">
-      {{ post_macros::tags(page=page, short=false) }}
+    <div class="meta">
+      posted on <time>{{ page.date | date(format="%Y-%m-%d") }}</time>
     </div>
 
-    <time>{{ page.date | date(format="%Y-%m-%d") }}</time>
+    {{ post_macros::tags(page=page) }}
 
     <br />
     <div class="description">
@@ -36,19 +36,13 @@
 </ul>
 {% endmacro list_posts %}
 
-{% macro tags(page, short=false) %}
+{% macro tags(page) %}
 {%- if page.taxonomies and page.taxonomies.tags %}
-<span class="post-tags-inline">
-  {%- if short %}
-  ::
-  {%- set sep = "," -%}
-  {% else %}
-  :: tags:&nbsp;
-  {%- set sep = "&nbsp;" -%}
-  {% endif -%}
+<span class="meta post-tags-inline">
+  <span>tagged with </span>
   {%- for tag in page.taxonomies.tags %}
   <a class="post-tag" href="{{ get_taxonomy_url(kind='tags', name=tag) | safe }}">#{{ tag }}</a>
-  {%- if not loop.last %}{{ sep | safe }}{% endif -%}
+  {%- if not loop.last %},{% endif -%}
   {% endfor -%}
 </span>
 {% endif -%}
@@ -131,7 +125,7 @@
 
     {% if page.taxonomies and page.taxonomies.tags %}
     <div class="post-tags">
-      <span class="meta" id="tagged-with-label">This post is tagged with</span>
+      <span class="meta" id="tagged-with-label">this post is tagged with</span>
       <nav class="nav tags" aria-labelledby="tagged-with-label">
         <ul class="tags">
           {% for tag in page.taxonomies.tags %}
