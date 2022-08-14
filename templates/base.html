@@ -9,11 +9,15 @@
     {% include "partials/nav.html" %}
 
     {# Post page is the default #}
-    <div class="inner">
+    <main class="inner">
       {% block main_content %}
       Nothing here?!
       {% endblock main_content %}
-    </div>
+    </main>
+
+    {% block trailing_content %}
+
+    {% endblock trailing_content %}
 
     {% include "partials/footer.html" %}
   </div>

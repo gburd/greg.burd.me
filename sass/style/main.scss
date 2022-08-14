@@ -103,6 +103,12 @@ footer {
   code {
     color: var(--text-0);
   }
+
+  code:hover {
+    background-color: var(--primary-color);
+    color: var(--hover-color);
+    border-radius: 0;
+  }
 }
 
 // Different sized headers

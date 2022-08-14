@@ -55,86 +55,88 @@
 {% endmacro content %}
 
 {% macro content(page) %}
-<main>
-  <article>
-    <div class="title">
-      {{ post_macros::page_header(title=page.title) }}
+<article>
+  <div class="title">
+    {{ post_macros::page_header(title=page.title) }}
 
-      {% if page.date %}
-      <div class="meta">
-        Posted on <time>{{ page.date | date(format="%Y-%m-%d") }}</time>
+    {% if page.date %}
+    <div class="meta">
+      Posted on <time>{{ page.date | date(format="%Y-%m-%d") }}</time>
 
-        {% if page.draft %}
-        <span class="draft-label">DRAFT</span>
-        {% endif %}
-      </div>
-      {% if page.updated %}
-      <div class="meta">
-        Updated on <time>{{ page.updated | date(format="%Y-%m-%d") }}</time>
-      </div>
-      {% endif %}
-      <div class="meta">
-        {{ page.word_count }} words, {{ page.reading_time }} minute read
-      </div>
+      {% if page.draft %}
+      <span class="draft-label">DRAFT</span>
       {% endif %}
     </div>
-
-    {% if page.extra.tldr %}
-    <div class="tldr">
-      <strong>tl;dr:</strong>
-      {{ page.extra.tldr }}
+    {% if page.updated %}
+    <div class="meta">
+      Updated on <time>{{ page.updated | date(format="%Y-%m-%d") }}</time>
     </div>
     {% endif %}
+    <div class="meta">
+      {{ page.word_count }} words, {{ page.reading_time }} minute read
+    </div>
+    {% endif %}
+  </div>
 
-    {# Optional table of contents #}
-    {% if config.extra.toc | default(value=false) %}
-    {% if page.toc %}
-    <h2>Table of Contents</h2>
-    <ul>
-      {% for h1 in page.toc %}
-      <li>
-        <a href="{{ h1.permalink | safe }}">{{ h1.title }}</a>
-        {% if h1.children %}
+  {% if page.extra.tldr %}
+  <div class="tldr">
+    <strong>tl;dr:</strong>
+    {{ page.extra.tldr }}
+  </div>
+  {% endif %}
+
+  {# Optional table of contents #}
+  {% if config.extra.toc | default(value=false) %}
+  {% if page.toc %}
+  <h2>Table of Contents</h2>
+  <ul>
+    {% for h1 in page.toc %}
+    <li>
+      <a href="{{ h1.permalink | safe }}">{{ h1.title }}</a>
+      {% if h1.children %}
+      <ul>
+        {% for h2 in h1.children %}
+        <li>
+          <a href="{{ h2.permalink | safe }}">{{ h2.title }}</a>
+        </li>
+
+        {% if h2.children %}
         <ul>
-          {% for h2 in h1.children %}
+          {% for h3 in h2.children %}
           <li>
-            <a href="{{ h2.permalink | safe }}">{{ h2.title }}</a>
+            <a href="{{ h3.permalink | safe }}">{{ h3.title }}</a>
           </li>
-
-          {% if h2.children %}
-          <ul>
-            {% for h3 in h2.children %}
-            <li>
-              <a href="{{ h3.permalink | safe }}">{{ h3.title }}</a>
-            </li>
-            {% endfor %}
-          </ul>
-          {% endif %}
           {% endfor %}
         </ul>
         {% endif %}
-      </li>
-      {% endfor %}
-    </ul>
-    {% endif %}
-    {% endif %}
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% endif %}
 
-    <section class="body">
-      {{ page.content | safe }}
-    </section>
+  <section class="body">
+    {{ page.content | safe }}
+  </section>
 
-    {% if page.taxonomies and page.taxonomies.tags %}
-    <div class="post-tags">
-      <span class="meta" id="tagged-with-label">this post is tagged with</span>
-      <nav class="nav tags" aria-labelledby="tagged-with-label">
-        <ul class="tags">
-          {% for tag in page.taxonomies.tags %}
-          <li><a href="{{ get_taxonomy_url(kind='tags', name=tag) | safe }}">{{ tag }}</a></li>
-          {% endfor %}
-        </ul>
-      </nav>
-    </div>
-    {% endif %}
-  </article>
-</main>
+  {% if page.taxonomies and page.taxonomies.tags %}
+  <div class="post-tags">
+    <span class="meta" id="tagged-with-label">this post is tagged with</span>
+    <nav class="nav tags" aria-labelledby="tagged-with-label">
+      <ul class="tags">
+        {% for tag in page.taxonomies.tags %}
+        <li>
+          <a href="{{ get_taxonomy_url(kind='tags', name=tag) | safe }}">
+            #{{ tag }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </div>
+  {% endif %}
+</article>
 {% endmacro content %}
