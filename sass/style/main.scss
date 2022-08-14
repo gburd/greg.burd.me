@@ -14,12 +14,13 @@
   --header-font: 'Pretendard Std';
   --code-font: 'Fira Code';
 
-  @supports(font-variation-settings: normal) {
-    /* Variable fonts */
-    --text-font: 'iA Writer Quattro var';
-    --header-font: 'Pretendard Std Variable';
-    --code-font: 'Fira Code VF';
-  }
+  // Disabling variable fonts to bring site weight down
+  // @supports(font-variation-settings: normal) {
+  //   /* Variable fonts */
+  //   --text-font: 'iA Writer Quattro var';
+  //   --header-font: 'Pretendard Std Variable';
+  //   --code-font: 'Fira Code VF';
+  // }
 }
 
 html {
