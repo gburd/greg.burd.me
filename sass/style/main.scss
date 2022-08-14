@@ -183,3 +183,8 @@ ul.tags {
 time {
   color: var(--text-1);
 }
+
+// Post list
+li.post-list-item {
+  list-style-type: none;
+}

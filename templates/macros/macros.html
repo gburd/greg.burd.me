@@ -5,10 +5,10 @@
   {% continue %}
   {% endif -%}
 
-  <section class="list-item">
-    <h1 class="title">
+  <li class="post-list-item">
+    <h2 class="title">
       <a href={{ page.permalink }}>{{page.title}}</a>
-    </h1>
+    </h2>
 
     <div class="meta">
       posted on <time>{{ page.date | date(format="%Y-%m-%d") }}</time>
@@ -30,7 +30,7 @@
     {% if not hide_read_more %}
     <a class="readmore" href={{ page.permalink }}>Read more ⟶</a>
     {% endif %}
-  </section>
+  </li>
 
   {% endfor -%}
 </ul>
@@ -89,7 +89,7 @@
     {# Optional table of contents #}
     {% if config.extra.toc | default(value=false) %}
     {% if page.toc %}
-    <h1>Table of Contents</h1>
+    <h2>Table of Contents</h2>
     <ul>
       {% for h1 in page.toc %}
       <li>
