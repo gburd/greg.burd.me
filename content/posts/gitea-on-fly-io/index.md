@@ -176,7 +176,7 @@ That doesn't look so great. It seems like Gitea idles just under the amount of m
 
 I have been running my Gitea install on a 512MB instance since the first day I started using it, which seems to be plenty of headroom for personal use. If you open up your Gitea installation to the public and it starts to get popular, you might end up needing to scale up further.
 
-It's worth noting that scaling up to 512 MB means you will start accruing a Fly.io balance, but thus far this has never been more than a $2 monthly bill for me. If that's too steep for you, consider that Fly.io doesn't (at the time of this writing) charge for monthly bills below $5, or else check out some of the competing PaaS options out there.
+It's worth noting that scaling up to 512 MB means you will start accruing a Fly.io balance, but so far this has never been more than a $2 monthly bill for me. If that's too steep for you, consider that Fly.io doesn't (at the time of this writing) charge for monthly bills below $5, or else check out some of the competing PaaS options out there.
 
 ### Acknowledgements
 - [Thank you to Xe Iaso for xer blog post on Fly.io that inspired me to try it in the first place!](https://xeiaso.net/blog/fly.io-heroku-replacement)
