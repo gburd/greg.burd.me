@@ -23,11 +23,16 @@
           pname = "personal-site";
           version = "2022-08-13";
           src = ./.;
-          nativeBuildInputs = with pkgs; [ scour zola ];
+          nativeBuildInputs = with pkgs; [ pngquant scour zola ];
           configurePhase = ''
             mkdir -p "themes/${themeName}"
             cp -r ${theme}/* "themes/${themeName}"
-            scour -i static/image/_favicon-original.svg -o static/image/favicon.svg
+            scour -i static/image/_favicon.svg -o static/image/favicon.svg
+            for image in content/**/_*.png static/image/**.png; do
+              path=$(dirname $image)
+              file=$(basename $image)
+              pngquant --quality 90-99 -f -o "$path/''${file:1}"
+            done
           '';
           buildPhase = "zola build";
           installPhase = "cp -r public $out";

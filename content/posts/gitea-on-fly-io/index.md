@@ -1,22 +1,22 @@
 +++
 title = "diy code hosting with gitea and fly.io"
 date = "2022-08-07"
-updated = "2022-08-08"
+updated = "2022-08-21"
 [taxonomies]
 tags = ["git", "gitea", "fly.io"]
 +++
 
-## Setting the scene
+## Setting the Scene
 Inspired by the [Give Up Github campaign](https://sfconservancy.org/GiveUpGitHub/), I recently decided I wanted to spin up my own instance of [Gitea](https://gitea.io/). There are free (as in beer), free (as in freedom), public instances of Gitea and other FOSS-leaning code forges, but self-hosted Gitea struck me as a nice way to take even a bit more ownership over my own code.
 
 I maintain a small PC running in my home as a server for a few services running via Proxmox, but I am really dissatisfied with my workflows for managing that box lately (picture SSHing into LXC containers and manually editing systemd configurations... yuck). I recently read a couple of different articles singing the praises of [Fly.io](https://fly.io/), a platform as a service (PaaS) that replicates most of the good parts of the classic Heroku developer experience. Further enticed by their ample free tier, I took the plunge and created a Fly.io account.
 
-## Getting started
+## Getting Started
 First things first: in order to interact with Fly.io, we primarily use the `flyctl` command line tool. It's available from a variety of sources:
 ```bash
 # Nix
-nix-shell -p flyctl
-nix-env -iA nixpkgs.flyctl
+nix-shell --packages flyctl
+nix-env --install --attr nixpkgs.flyctl
 
 # macOS
 brew install flyctl
@@ -39,7 +39,7 @@ flyctl auth signup
 flyctl auth login
 ```
 
-## Configuring apps with `flyctl`
+## Configuring Apps with `flyctl`
 In order to avoid even the appearance of disorganization, we'll start off with a git repository for tracking our Fly.io configurations:
 ```bash
 mkdir fly-apps; cd fly-apps
@@ -126,7 +126,7 @@ flyctl open
 
 Now you can register your account! If you want to keep your Gitea instance private, uncomment the last line in the `env` section and rerun `flyctl deploy` after registering.
 
-## Bonus round: configuring your custom domain with Fly.io
+## Bonus Round: Configuring Your Custom Domain with Fly.io
 Some, like myself, will not be satisfied accessing their Gitea instances with a `.fly.dev` URL. Thankfully, Fly.io makes it a breeze to configure a secure custom domain with the help of [LetsEncrypt](https://letsencrypt.org/).
 
 Fly.io and `flyctl` seem to offer tooling for managing your domains and DNS records entirely within the Fly.io system, but I personally didn't explore this route, as my own domains and DNS records are managed elsewhere. Whatever you use to manage your own domains and DNS, you will need to create two records for your domain name corresponding with the IPv4 and IPv6 addresses of the application:
@@ -140,9 +140,43 @@ v6   dead:beef:1::a:a    global 2022-07-03T04:39:19Z
 Create an A record for the v4 address, and an AAAA record for the v6 address. With those records in place, `flyctl` can automatically perform the necessary setup with LetsEncrypt to secure your domain:
 ```bash
 flyctl certs add git.mat.services
+flyctl open
 ```
 
-Now open up your custom domain and revel in your new code hosting powers.
+Now it's time to revel in your new code hosting powers.
+
+### The First Push (or, 256MB just isn't enough sometimes)
+With everything now set up, let's go ahead and kick the tires on our new Gitea installation. We can push our `fly-apps` repository to Gitea as a test! Create a new blank repository on Gitea with an appropriate name, then add that as a remote for your local repo:
+```bash
+git remote add origin git@gitea-mat-services.fly.dev:mat/fly-apps.git
+```
+
+And now it's as simple as one command!
+```bash
+git push --set-upstream origin main
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 195 bytes | 195.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+remote: 
+remote: Gitea: Internal Server Error
+Gitea: Internal error
+To git.mat.services:mat/foobar.git
+ ! [remote rejected] main -> main (pre-receive hook declined)
+error: failed to push some refs to 'git.mat.services:mat/foobar.git'
+```
+
+Uh. Hm. I just got an email saying a Fly.io instance ran out of memory and crashed. Let's peek at our Fly.io dashboards:
+
+![Fly.io memory dashboard](fly-io-memory-dashboard.png)
+
+That doesn't look so great. It seems like Gitea idles just under the amount of memory we have with a default instance size, and operations like `git push` can bump it over the threshold to an out-of-memory error. Let's check out the "Scale" section of the dashboard, and increase the memory allotment for this VM:
+
+![Fly.io VM scale interface](fly-io-scale-vm.png)
+
+I have been running my Gitea install on a 512MB instance since the first day I started using it, which seems to be plenty of headroom for personal use. If you open up your Gitea installation to the public and it starts to get popular, you might end up needing to scale up further.
+
+It's worth noting that scaling up to 512 MB means you will start accruing a Fly.io balance, but thus far this has never been more than a $2 monthly bill for me. If that's too steep for you, consider that Fly.io doesn't (at the time of this writing) charge for monthly bills below $5, or else check out some of the competing PaaS options out there.
 
 ### Acknowledgements
 - [Thank you to Xe Iaso for xer blog post on Fly.io that inspired me to try it in the first place!](https://xeiaso.net/blog/fly.io-heroku-replacement)
