@@ -146,12 +146,12 @@ flyctl open
 Now it's time to revel in your new code hosting powers.
 
 ### The First Push (or, 256MB just isn't enough sometimes)
-With everything now set up, let's go ahead and kick the tires on our new Gitea installation. We can push our `fly-apps` repository to Gitea as a test! Create a new blank repository on Gitea with an appropriate name, then add that as a remote for your local repo:
+With everything now set up, let's go ahead and kick the tires on our new Gitea installation. We can push our `fly-apps` repository to Gitea as a test. Create a new blank repository on Gitea with an appropriate name, then add that as a remote for your local repo:
 ```bash
-git remote add origin git@gitea-mat-services.fly.dev:mat/fly-apps.git
+git remote add origin git@git.mat.services:mat/fly-apps.git
 ```
 
-And now it's as simple as one command!
+And now it's as easy as one simple command!
 ```bash
 git push --set-upstream origin main
 Enumerating objects: 3, done.
@@ -161,9 +161,9 @@ Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
 remote: 
 remote: Gitea: Internal Server Error
 Gitea: Internal error
-To git.mat.services:mat/foobar.git
+To git.mat.services:mat/fly-apps.git
  ! [remote rejected] main -> main (pre-receive hook declined)
-error: failed to push some refs to 'git.mat.services:mat/foobar.git'
+error: failed to push some refs to 'git.mat.services:mat/fly-apps.git'
 ```
 
 Uh. Hm. I just got an email saying a Fly.io instance ran out of memory and crashed. Let's peek at our Fly.io dashboards:
