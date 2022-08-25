@@ -12,7 +12,7 @@
   </clipPath>
  </defs>
  <g id="main_group">
-  <rect id="background_rect" x="8" y="8" width="496px" height="496px" rx="64" ry="64" fill="none" stroke="#f08080" stroke-linejoin="round" stroke-width="16"/>
+  <rect id="background_rect" x="10px" y="10px" width="496px" height="496px" rx="64" ry="64" fill="none" stroke="#f08080" stroke-linejoin="round" stroke-width="20"/>
   <circle id="circle1" cx="256px" cy="256px" r="40%" clip-path="url(#halfCircle)" fill="#f08080"/>
   <circle id="circle2" cx="256px" cy="256px" r="40%" clip-path="url(#smallHalfCircle)" fill="#f08080"/>
  </g>

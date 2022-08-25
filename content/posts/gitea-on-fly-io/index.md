@@ -168,11 +168,17 @@ error: failed to push some refs to 'git.mat.services:mat/fly-apps.git'
 
 Uh. Hm. I just got an email saying a Fly.io instance ran out of memory and crashed. Let's peek at our Fly.io dashboards:
 
-![Fly.io memory dashboard](fly-io-memory-dashboard.png)
+<figure>
+<img alt="Fly.io memory dashboard" src=fly-io-memory-dashboard.png />
+<figcaption class=meta>Fly.io memory dashboard</figcaption>
+</figure>
 
 That doesn't look so great. It seems like Gitea idles just under the amount of memory we have with a default instance size, and operations like `git push` can bump it over the threshold to an out-of-memory error. Let's check out the "Scale" section of the dashboard, and increase the memory allotment for this VM:
 
-![Fly.io VM scale interface](fly-io-scale-vm.png)
+<figure>
+<img alt="Fly.io VM scaling interface" src=fly-io-scale-vm.png />
+<figcaption class=meta>Fly.io VM scaling interface</figcaption>
+</figure>
 
 I have been running my Gitea install on a 512MB instance since the first day I started using it, which seems to be plenty of headroom for personal use. If you open up your Gitea installation to the public and it starts to get popular, you might end up needing to scale up further.
 

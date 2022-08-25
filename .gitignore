@@ -1,5 +1,9 @@
 .nvimlog
 .direnv/
-themes/
 public/
 result
+
+# ignore folders where we link in files from the nix store
+themes/
+static/font/
+static/style/fonts.css

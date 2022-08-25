@@ -42,7 +42,6 @@
 
   <link rel="stylesheet" type="text/css" media="screen" href="{{ get_url(path='style/main.css', cachebust=true) }}" />
 
-
   {% if config.extra.stylesheets %}
   {% for stylesheet in config.extra.stylesheets %}
   <link rel="stylesheet" href="{{ get_url(path=stylesheet, cachebust=true) }}">

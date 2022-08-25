@@ -24,7 +24,7 @@ external_links_no_referrer = true
 favicon = "/image/favicon.svg"
 stylesheets = []
 
-use_cdn = true
+use_cdn = false
 # include hashes for SRI
 cdns = [
     { url = "https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.min.css", hash = "sWIpcFPnJFfPqQU7FWn8H9+Xax/h5ihI8hVjQTBa5WmUde6CZZLw9DUAaIyA6j5u" },
