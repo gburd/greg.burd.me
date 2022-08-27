@@ -3,6 +3,7 @@ code {
   padding: 0.1em 0.2em;
   border-radius: 5px;
   border: 1px solid var(--border-color);
+  font-family: var(--code-font);
 }
 
 pre {
@@ -92,7 +93,6 @@ pre code[class*="language-go"]::before {
   color: royalblue;
 }
 
-pre code[class*="language-md"]::before,
 pre code[class*="language-md"]::before {
   content: "Markdown";
   background: royalblue;
@@ -104,4 +104,10 @@ pre code[class*="language-rs"]::before {
   content: "rust";
   background: #fff8f6;
   color: #ff4647;
+}
+
+pre code[class*="language-nix"]::before {
+  content: "nix";
+  background: #5277C3;
+  color: snow;
 }

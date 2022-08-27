@@ -7,7 +7,8 @@ compile_sass = true
 build_search_index = false
 generate_feed = true
 
-theme = "apollo"
+# theme is inlined
+# theme = "apollo"
 
 taxonomies = [
     { name = "tags" },

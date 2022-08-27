@@ -6,13 +6,14 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-parts.inputs.nixpkgs.follows = "nixpkgs";
 
-    # theme
+    # theme - inlined now, not used
     apollo.url = "github:not-matthias/apollo";
     apollo.flake = false;
   };
 
   outputs = { self, flake-parts, ... }@inputs:
     let
+      themeEnabled = false;
       theme = inputs.apollo;
       themeName = ((builtins.fromTOML (builtins.readFile "${theme}/theme.toml")).name);
     in
@@ -31,7 +32,7 @@
             version = "2022-08-21";
             src = ./.;
             nativeBuildInputs = [ optimize-images zola ];
-            configurePhase = ''
+            configurePhase = lib.optionalString themeEnabled ''
               mkdir -p themes/${themeName}
               cp -r ${theme}/* themes/${themeName}
             '' + copyFonts;
@@ -46,7 +47,7 @@
           };
           devShells.default = with pkgs; mkShell {
             packages = [ flyctl optimize-images zola ];
-            shellHook = ''
+            shellHook = lib.optionalString themeEnabled ''
               mkdir -p themes
               ln -snf "${theme}" "themes/${themeName}"
             '' + linkFonts;

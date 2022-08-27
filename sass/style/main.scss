@@ -1,15 +1,16 @@
 @import "parts/_code.scss";
-@import "../../themes/apollo/sass/parts/_header.scss";
-@import "../../themes/apollo/sass/parts/_image.scss";
-@import "../../themes/apollo/sass/parts/misc.scss";
-@import "../../themes/apollo/sass/parts/table.scss";
-@import "../../themes/apollo/sass/parts/tags.scss";
+@import "parts/_header.scss";
+@import "parts/_image.scss";
+@import "parts/misc.scss";
+@import "parts/table.scss";
+@import "parts/tags.scss";
 
 :root {
   /* Used for: block comment, hr, ... */
   --border-color: var(--bg-1);
 
   // Fonts defined via fonts.nix
+  --system-font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 html {
@@ -45,7 +46,6 @@ html {
 }
 
 // Logo
-
 div.brand>* {
   padding: 0 0.25em;
 }
@@ -88,65 +88,77 @@ footer {
   margin: 2em;
   color: var(--text-1);
   font-size: 0.75em;
+  display: flex;
 
   code {
     color: var(--text-0);
+
+    &:hover {
+      background-color: var(--primary-color);
+      color: var(--hover-color);
+      border-radius: 0;
+    }
   }
 
-  code:hover {
-    background-color: var(--primary-color);
-    color: var(--hover-color);
-    border-radius: 0;
+  .privacy-note {
+    flex: 2 0;
+    padding-right: 1em;
+  }
+
+  .powered-by {
+    flex: 1 0;
   }
 }
 
 // Different sized headers
-.page-header {
-  font-size: 2.5em;
-  font-weight: 400;
-  line-height: 100%;
-  font-family: var(--header-font);
-  margin: 4rem 0px 1rem 0px;
-}
-
-.page-header::before {
-  content: "";
+h1.page-header {
+  font-weight: normal;
+  max-width: 720px;
 }
 
 h2 {
   font-size: 1.4rem;
   margin-top: 1.4em;
+
+  &::before {
+    content: "# ";
+  }
 }
 
 h3 {
   font-size: 1.3rem;
   margin-top: 1.3em;
+
+  &::before {
+    content: "## ";
+  }
 }
 
 h4 {
   font-size: 1.2rem;
   margin-top: 1.2em;
+
+  &::before {
+    content: "### ";
+  }
 }
 
 h5 {
   font-size: 1.1rem;
   margin-top: 1.1em;
+
+  &::before {
+    content: "#### ";
+  }
 }
 
 h6 {
   font-size: 1rem;
   margin-top: 1em;
-}
 
-// Code fonts
-pre,
-code {
-  font-family: var(--code-font);
-}
-
-// Page title width
-.page-header {
-  max-width: 720px;
+  &::before {
+    content: "##### ";
+  }
 }
 
 // Tags
@@ -163,10 +175,10 @@ ul.tags {
   }
 }
 
-// Header dot
-.header-dot {
-  font-size: 1.6em;
-}
+// // Header dot
+// .header-dot {
+//   font-size: 1.6em;
+// }
 
 // Meta
 .meta a:hover {
@@ -174,7 +186,6 @@ ul.tags {
 }
 
 // Fixup grays
-.meta,
 time {
   color: var(--text-1);
 }
@@ -182,9 +193,4 @@ time {
 // Post list
 li.post-list-item {
   list-style-type: none;
-}
-
-// Rounded image
-img {
-  border-radius: 5px;
 }
