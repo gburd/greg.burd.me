@@ -12,11 +12,6 @@
   };
 
   outputs = { self, flake-parts, ... }@inputs:
-    let
-      themeEnabled = false;
-      theme = inputs.apollo;
-      themeName = ((builtins.fromTOML (builtins.readFile "${theme}/theme.toml")).name);
-    in
     flake-parts.lib.mkFlake { inherit self; } {
       imports = [ ];
       systems = inputs.nixpkgs.lib.systems.flakeExposed;
@@ -25,6 +20,10 @@
           inherit (pkgs) callPackage;
           optimize-images = callPackage ./nix/optimize-images.nix { };
           inherit (callPackage ./nix/fonts.nix { }) copyFonts linkFonts;
+          inherit (callPackage ./nix/theme.nix {
+            theme = inputs.apollo;
+            themeEnabled = false;
+          }) copyTheme linkTheme;
         in
         {
           packages.default = with pkgs; stdenv.mkDerivation {
@@ -32,10 +31,7 @@
             version = "2022-08-21";
             src = ./.;
             nativeBuildInputs = [ optimize-images zola ];
-            configurePhase = lib.optionalString themeEnabled ''
-              mkdir -p themes/${themeName}
-              cp -r ${theme}/* themes/${themeName}
-            '' + copyFonts;
+            configurePhase = copyTheme + copyFonts;
             buildPhase = ''
               optimize-images
               zola build
@@ -47,10 +43,7 @@
           };
           devShells.default = with pkgs; mkShell {
             packages = [ flyctl optimize-images zola ];
-            shellHook = lib.optionalString themeEnabled ''
-              mkdir -p themes
-              ln -snf "${theme}" "themes/${themeName}"
-            '' + linkFonts;
+            shellHook = linkTheme + linkFonts;
           };
           packages.docker = callPackage ./nix/docker.nix { site = self'.packages.default; };
           apps.deploy.program =
