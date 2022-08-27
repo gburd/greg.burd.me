@@ -21,22 +21,9 @@
       systems = inputs.nixpkgs.lib.systems.flakeExposed;
       perSystem = { config, self', inputs', pkgs, system, ... }:
         let
-          optimize-images = pkgs.writeShellScriptBin "optimize-images" ''
-            shopt -s globstar nullglob
-            ${pkgs.scour}/bin/scour -i static/image/_favicon.svg -o static/image/favicon.svg
-            for image in content/**/_*.png static/image/**/_*.png; do
-              path=$(dirname $image)
-              file=$(basename $image)
-              newimage=$path/''${file:1}
-              echo "optimizing $image"
-              ${pkgs.pngquant}/bin/pngquant --quality 80-90 -f -o $newimage $image
-              oldsize=$(stat --format=%s $image)
-              newsize=$(stat --format=%s $newimage)
-              pct=$(${pkgs.bc}/bin/bc <<< "scale=1; $newsize * 100 / $oldsize")
-              echo "size went from "$(($oldsize / 1024))"KB to "$(($newsize / 1024))"KB ("$pct"% as large as original)"
-            done
-          '';
-          inherit (pkgs.callPackage ./fonts.nix { }) copyFonts linkFonts;
+          inherit (pkgs) callPackage;
+          optimize-images = callPackage ./nix/optimize-images.nix { };
+          inherit (callPackage ./nix/fonts.nix { }) copyFonts linkFonts;
         in
         {
           packages.default = with pkgs; stdenv.mkDerivation {
@@ -52,7 +39,10 @@
               optimize-images
               zola build
             '';
-            installPhase = "cp -r public $out";
+            installPhase = ''
+              cp -r public $out
+              cp Caddyfile $out
+            '';
           };
           devShells.default = with pkgs; mkShell {
             packages = [ flyctl optimize-images zola ];
@@ -61,19 +51,10 @@
               ln -snf "${theme}" "themes/${themeName}"
             '' + linkFonts;
           };
-          packages.docker =
-            let
-              site = self'.packages.default;
-            in
-            pkgs.dockerTools.buildLayeredImage {
-              name = site.pname;
-              tag = site.version;
-              contents = [ site pkgs.caddy ];
-
-              config = {
-                Cmd = [ "caddy" ];
-              };
-            };
+          packages.docker = callPackage ./nix/docker.nix { site = self'.packages.default; };
+          apps.deploy.program =
+            let deploy = callPackage ./nix/deploy.nix { dockerImg = self'.packages.docker; };
+            in "${deploy}/bin/deploy";
         };
     };
 }

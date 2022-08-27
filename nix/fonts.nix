@@ -61,13 +61,6 @@ rec {
     font = fontDerivation fontSrc;
   };
   fonts = map fetchFont fontSrcs;
-  copyFont = { font, name, ... }: ''
-    mkdir -p static/font/${name}
-    cp -r ${font}/* static/font/${pathName name}
-  '';
-  linkFont = { font, name, ... }: ''
-    ln -snf "${font}" static/font/${pathName name}
-  '';
   mkFontCss = { font, name, fileName, cssVar }:
     let path = pathName name; in ''
       @font-face {
@@ -109,9 +102,17 @@ rec {
     '';
   fontCss = lib.concatMapStrings mkFontCss fonts;
   fontCssFile = writeText "fonts.css" fontCss;
+  copyFont = { font, name, ... }:
+    let path = pathName name; in ''
+      mkdir -p static/font/${path}
+      cp -r ${font}/* static/font/${path}
+    '';
   copyFonts = (lib.concatMapStrings copyFont fonts) + ''
     mkdir -p static/style
     cp ${fontCssFile} static/style/fonts.css
+  '';
+  linkFont = { font, name, ... }: ''
+    ln -snf "${font}" static/font/${pathName name}
   '';
   linkFonts = ''
     mkdir -p static/font

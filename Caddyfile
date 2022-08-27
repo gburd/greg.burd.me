@@ -1,0 +1,56 @@
+{
+	# fly.io handles HTTPS for us
+	auto_https off
+}
+
+http://static-mat-services.fly.dev {
+	redir https://mat.services/
+}
+
+:8080 {
+	root * /var/www
+	encode gzip
+	file_server
+
+	handle_errors {
+		@404 {
+			expression {http.error.status_code} == 404
+		}
+		rewrite @404 /404.html
+		file_server
+	}
+
+	header {
+		# disable FLoC tracking
+		Permissions-Policy interest-cohort=()
+		# enable HSTS
+		# currently ramping up max-age as per https://hstspreload.org/
+		Strict-Transport-Security max-age=604800; includeSubDomains
+		# disable clients from sniffing the media type
+		X-Content-Type-Options nosniff
+		# clickjacking protection
+		X-Frame-Options DENY
+		# keep referrer data off of HTTP connections
+		Referrer-Policy no-referrer
+		# content security policy
+		# style-src 'unsafe-inline': syntax highlighting in codefences
+		# sandbox allow-popups: enable target="_blank" links to open in new tabs
+		Content-Security-Policy "default-src 'none';
+      img-src 'self';
+      style-src 'self' 'unsafe-inline';
+      font-src 'self';
+      form-action 'none';
+      frame-ancestors 'none';
+      base-uri 'none';
+      upgrade-insecure-requests;
+      sandbox allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+	}
+
+	# caching
+	route {
+		header /style/* Cache-Control max-age=31536000, immutable
+		header /image/* Cache-Control max-age=31536000, immutable
+		header /font/* Cache-Control max-age=31536000, immutable
+		header Cache-Control max-age=180
+	}
+}
