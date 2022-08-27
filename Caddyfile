@@ -8,7 +8,7 @@ http://static-mat-services.fly.dev {
 }
 
 :8080 {
-	root * /var/www
+	root * {$SITE_ROOT}
 	encode gzip
 	file_server
 

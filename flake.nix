@@ -17,10 +17,9 @@
       systems = inputs.nixpkgs.lib.systems.flakeExposed;
       perSystem = { config, self', inputs', pkgs, system, ... }:
         let
-          inherit (pkgs) callPackage;
-          optimize-images = callPackage ./nix/optimize-images.nix { };
-          inherit (callPackage ./nix/fonts.nix { }) copyFonts linkFonts;
-          inherit (callPackage ./nix/theme.nix {
+          inherit (pkgs.callPackage ./nix { }) deploy docker fonts optimize-images themes;
+          inherit (fonts) copyFonts linkFonts;
+          inherit (themes {
             theme = inputs.apollo;
             themeEnabled = false;
           }) copyTheme linkTheme;
@@ -38,17 +37,19 @@
             '';
             installPhase = ''
               cp -r public $out
-              cp Caddyfile $out
             '';
           };
           devShells.default = with pkgs; mkShell {
             packages = [ flyctl optimize-images zola ];
             shellHook = linkTheme + linkFonts;
           };
-          packages.docker = callPackage ./nix/docker.nix { site = self'.packages.default; };
+          packages.docker = docker {
+            caddyfile = builtins.readFile ./Caddyfile;
+            site = self'.packages.default;
+          };
           apps.deploy.program =
-            let deploy = callPackage ./nix/deploy.nix { dockerImg = self'.packages.docker; };
-            in "${deploy}/bin/deploy";
+            let deploy' = deploy { dockerImage = self'.packages.docker; };
+            in "${deploy'}/bin/deploy";
         };
     };
 }
