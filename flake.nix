@@ -17,7 +17,7 @@
       systems = inputs.nixpkgs.lib.systems.flakeExposed;
       perSystem = { config, self', inputs', pkgs, system, ... }:
         let
-          # TODO: move these to a flake-modules
+          # TODO: move these to a flake-module
           inherit (pkgs.callPackage ./nix { }) container deploy fonts optimize-images themes;
           inherit (fonts) copyFonts linkFonts;
           inherit (themes {

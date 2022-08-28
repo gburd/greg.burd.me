@@ -415,6 +415,9 @@ Now you should be able to use a command like this on a Docker-friendly host, and
 nix run .#deploy
 ```
 
+### Future Directions
+There is just a touch of boilerplate left in `flake.nix`, required to thread the correct nixpkgs context through (`callPackage`, passing `site` and `dockerImage` explicitly). We could easily package that up in a `flake-module.nix` and add it to the `imports` argument of `flake-parts.lib.mkFlake`. I'll probably try to make another blog post out of the process of packaging up the Nix glue, so keep your eyes peeled!
+
 Thanks for reading!
 
 ## Acknowledgements
