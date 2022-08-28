@@ -416,3 +416,6 @@ nix run .#deploy
 ```
 
 Thanks for reading!
+
+## Acknowledgements
+- [Thanks to Lutris, Inc. for their `nix-fly-template`, which was very influential in the writing of this post.](https://github.com/LutrisEng/nix-fly-template)
