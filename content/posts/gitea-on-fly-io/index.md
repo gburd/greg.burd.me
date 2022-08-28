@@ -184,6 +184,6 @@ I have been running my Gitea install on a 512MB instance since the first day I s
 
 It's worth noting that scaling up to 512 MB means you will start accruing a Fly.io balance, but so far this has never been more than a $2 monthly bill for me. If that's too steep for you, consider that Fly.io doesn't (at the time of this writing) charge for monthly bills below $5, or else check out some of the competing PaaS options out there.
 
-### Acknowledgements
+## Acknowledgements
 - [Thank you to Xe Iaso for xer blog post on Fly.io that inspired me to try it in the first place!](https://xeiaso.net/blog/fly.io-heroku-replacement)
 - [Thank you to techknowlogick for their instructive post on running Gitea on Fly.io!](https://blog.gitea.io/2022/04/running-gitea-on-fly.io/)

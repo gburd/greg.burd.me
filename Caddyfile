@@ -4,7 +4,7 @@
 }
 
 http://static-mat-services.fly.dev {
-	redir https://mat.services/
+	redir https://mat.services
 }
 
 :8080 {

@@ -17,7 +17,8 @@
       systems = inputs.nixpkgs.lib.systems.flakeExposed;
       perSystem = { config, self', inputs', pkgs, system, ... }:
         let
-          inherit (pkgs.callPackage ./nix { }) deploy docker fonts optimize-images themes;
+          # TODO: move these to a flake-modules
+          inherit (pkgs.callPackage ./nix { }) container deploy fonts optimize-images themes;
           inherit (fonts) copyFonts linkFonts;
           inherit (themes {
             theme = inputs.apollo;
@@ -27,13 +28,13 @@
         {
           packages.default = with pkgs; stdenv.mkDerivation {
             pname = "personal-site";
-            version = "2022-08-21";
+            version = "2022-08-27";
             src = ./.;
             nativeBuildInputs = [ optimize-images zola ];
             configurePhase = copyTheme + copyFonts;
             buildPhase = ''
               optimize-images
-              zola build
+              zola build --drafts
             '';
             installPhase = ''
               cp -r public $out
@@ -43,12 +44,12 @@
             packages = [ flyctl optimize-images zola ];
             shellHook = linkTheme + linkFonts;
           };
-          packages.docker = docker {
+          packages.container = container {
             caddyfile = builtins.readFile ./Caddyfile;
-            site = self'.packages.default;
+            site = config.packages.default;
           };
           apps.deploy.program =
-            let deploy' = deploy { dockerImage = self'.packages.docker; };
+            let deploy' = deploy { dockerImage = config.packages.container; };
             in "${deploy'}/bin/deploy";
         };
     };
