@@ -20,12 +20,19 @@ http://static-mat-services.fly.dev {
 		file_server
 	}
 
+	log {
+		output stdout
+		output net {$LOG_OUTPUT_ADDR} {
+			dial_timeout 1m
+		}
+	}
+
 	header {
 		# disable FLoC tracking
 		Permissions-Policy interest-cohort=()
 		# enable HSTS
 		# currently ramping up max-age as per https://hstspreload.org/
-		Strict-Transport-Security max-age=604800; includeSubDomains
+		Strict-Transport-Security max-age=2592000; includeSubDomains
 		# disable clients from sniffing the media type
 		X-Content-Type-Options nosniff
 		# clickjacking protection
@@ -39,6 +46,7 @@ http://static-mat-services.fly.dev {
       img-src 'self';
       style-src 'self' 'unsafe-inline';
       font-src 'self';
+			script-src 'self';
       form-action 'none';
       frame-ancestors 'none';
       base-uri 'none';

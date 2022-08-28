@@ -47,4 +47,6 @@
   <link rel="stylesheet" href="{{ get_url(path=stylesheet, cachebust=true) }}">
   {% endfor %}
   {% endif %}
+
+  <link rel="canonical" href="{{ get_url(path=current_path) }}" />
 </head>

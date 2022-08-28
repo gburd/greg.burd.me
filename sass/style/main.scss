@@ -50,11 +50,11 @@ div.brand>* {
   padding: 0 0.25em;
 }
 
-div.brand:hover img.logo {
+div.brand:hover img#logo {
   filter: brightness(0) invert(1);
 }
 
-img.logo {
+img#logo {
   border: none;
   height: 0.75em;
   width: 0.75em;
@@ -90,104 +90,13 @@ footer {
   font-size: 0.75em;
   display: flex;
 
-  code {
-    color: var(--text-0);
-
-    &:hover {
-      background-color: var(--primary-color);
-      color: var(--hover-color);
-      border-radius: 0;
-    }
-  }
-
-  .privacy-note {
-    flex: 2 0;
-    padding-right: 1em;
-  }
-
-  .powered-by {
+  #site-info {
     flex: 1 0;
   }
-}
 
-// Different sized headers
-h1.page-header {
-  font-weight: normal;
-  max-width: 720px;
-}
-
-h2 {
-  font-size: 1.4rem;
-  margin-top: 1.4em;
-
-  &::before {
-    content: "# ";
+  #copyright {
+    align-items: flex-end;
   }
-}
-
-h3 {
-  font-size: 1.3rem;
-  margin-top: 1.3em;
-
-  &::before {
-    content: "## ";
-  }
-}
-
-h4 {
-  font-size: 1.2rem;
-  margin-top: 1.2em;
-
-  &::before {
-    content: "### ";
-  }
-}
-
-h5 {
-  font-size: 1.1rem;
-  margin-top: 1.1em;
-
-  &::before {
-    content: "#### ";
-  }
-}
-
-h6 {
-  font-size: 1rem;
-  margin-top: 1em;
-
-  &::before {
-    content: "##### ";
-  }
-}
-
-// Tags
-ul.tags {
-  margin: 0.5rem;
-
-  li {
-    margin-right: 0.6rem;
-    display: inline-block;
-
-    a {
-      margin-left: 0;
-    }
-  }
-}
-
-// // Header dot
-// .header-dot {
-//   font-size: 1.6em;
-// }
-
-// Meta
-.meta a:hover {
-  color: white;
-}
-
-// Fixup grays
-time {
-  color: var(--text-1);
 }
 
 // Post list
