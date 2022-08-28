@@ -22,9 +22,6 @@ http://static-mat-services.fly.dev {
 
 	log {
 		output stdout
-		output net {$LOG_OUTPUT_ADDR} {
-			dial_timeout 1m
-		}
 	}
 
 	header {
