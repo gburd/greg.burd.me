@@ -7,7 +7,7 @@ tags = ["static-site", "nix", "caddy", "fly.io"]
 +++
 
 ## Motivation
-So, [you've ditched Github and friends](https://sfconservancy.org/GiveUpGitHub/), [set up your own Gitea instance](.@/posts/gitea-on-fly-io), and there's just one (read: at least one) thing left for you to take care of—that snazzy static site you had up on Github Pages.
+So, [you've ditched Github and friends](https://sfconservancy.org/GiveUpGitHub/), [set up your own Gitea instance](@/posts/gitea-on-fly-io/index.md), and there's just one (read: at least one) thing left for you to take care of—that snazzy static site you had up on Github Pages.
 
 ### Pages and Static Site Hosting
 I can remember how empowering it felt when I finally realized how much utility Github had packed into the Pages product. I went through a gleeful week or more of churning out Vue.js templates and half-baked styles for several different sites, all the while starry-eyed with how easy Pages made the deployment process. Eventually I migrated some of my work, including my static sites, to Gitlab, which has a virtually identical offering. I was quietly pleased with the ease of use afforded by both options.
