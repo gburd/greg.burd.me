@@ -192,7 +192,7 @@ stdenv.mkDerivation {
     # install the Hugo output
     cp -r public $out
   '';
-)
+}
 ```
 
 If we need to build any other auxiliary outputs, like Docker images (hint!), we can add them here. For now, let's just save our progress:
