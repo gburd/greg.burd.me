@@ -1,6 +1,6 @@
 +++
 title = "hosting a static site on fly.io with nix and caddy"
-date = "2022-08-28"
+date = "2022-09-04"
 draft = true
 [taxonomies]
 tags = ["static-site", "nix", "caddy", "fly.io"]
@@ -10,18 +10,18 @@ tags = ["static-site", "nix", "caddy", "fly.io"]
 So, [you've ditched Github and friends](https://sfconservancy.org/GiveUpGitHub/), [set up your own Gitea instance](@/posts/gitea-on-fly-io/index.md), and there's just one (read: at least one) thing left for you to take care of—that snazzy static site you had up on Github Pages.
 
 ### Pages and Static Site Hosting
-I can remember how empowering it felt when I finally realized how much utility Github had packed into the Pages product. I went through a gleeful week or more of churning out Vue.js templates and half-baked styles for several different sites, all the while starry-eyed with how easy Pages made the deployment process. Eventually I migrated some of my work, including my static sites, to Gitlab, which has a virtually identical offering. I was quietly pleased with the ease of use afforded by both options.
+Github Pages, and the identically named product from Gitlab, have been a part of my personal site workflow for about as long as I have been maintaining a personal site. I can remember how empowering it felt when I finally realized how much utility Github had packed into the Pages product. I went through a gleeful week of churning out Vue.js templates, starry-eyed with how easy Pages made the deployment process.
 
-Fast forward to today, and my migration away from Github and Gitlab has me once again pondering the question of an easy-to-use static site host. The tech industry has left us spoiled for choice here. Aside from Pages products from code hosting platforms, the major cloud infrastructure providers all have their own take on static site hosting. Companies like Netlify, Vercel, and Render offer a lot to hobbyist developers in terms of static hosting resources, with some going even further to provide Serverless-style "Functions-as-a-Service" products. 
+Fast forward to today, and my migration away from Github and Gitlab has me once again pondering the question of an easy-to-use static site host. The tech industry has left me spoiled for choice here. Aside from Pages products from Github and Gitlab, the major cloud infrastructure providers all have their own take on static site hosting. More specialized companies like Netlify, Vercel, and Render offer a lot to hobbyist developers in terms of static hosting resources, with some going even further to provide Serverless-style "Functions-as-a-Service" products. 
 
-Some of these options were ruled out by requiring source code to be hosted on Github and friends, while others were much more heavyweight than what my requirements demanded. I was also motivated by an urge to consolidate: I already had projects running on Fly.io, as well as some important configuration and infrastructure on DigitalOcean, which made me hesitant to bring another third party into the mix.
+Some of these options were ruled out for me by requiring source code to be hosted on Github and friends, while others were much more heavyweight than what my requirements demanded. I was also motivated by an urge to consolidate: I already had projects running on Fly.io, as well as some important configuration and infrastructure on DigitalOcean, which made me hesitant to bring another third party into the mix.
 
 As you may have guessed from the title, my ultimate decision was to take inspiration from [a Fly.io tutorial document](https://fly.io/docs/getting-started/static/) explaining how to deploy a very simple vanilla HTML site on Fly using a Go-powered webserver. I'm going to expand on their design a bit by introducing two major components: [Nix](https://nixos.org), to give us the power to build our site with whatever static site generator (or other build process) we want to use; and [Caddy](https://caddyserver.com), to give us a more flexible and extensible platform for actually serving the content.
 
-For the purposes of this article, we'll assume you already have your static site ready to go. Whether you're writing pure HTML by hand, or using a cutting-edge Javascript framework that renders down to static resources, you'll be able to package it up with Nix and serve it with Caddy using Fly.io.
+For the purposes of this article, we'll assume you already have your static site ready to go. Whether you're writing pure HTML by hand, or using a cutting-edge Javascript framework that renders down to static resources, you'll be able to package it up with Nix and serve it with Caddy, all hosted on Fly.io.
 
 ## Before You Deploy: Nix
-Much like static site hosts, static site **generators** are everywhere, and it seems like one of those things where people have particularly strong opinions on what workflow fits them best. Some people eschew a "generator" entirely and chain more purpose-built tools together to achieve the perfect bespoke output. Whatever your personal choice on generating the content for your static site, it helps to have a sort of "universal entry point" to actually kick off the build process. Github and Gitlab have their own custom Continuous Integration/Continuous Delivery systems where the build for the site can be configured. Makefiles can declare a set of commands to run in a generic way, but they don't help us pull in dependencies from the outside. Dockerfiles are not only generic, but also provide some primitives to make it easy to fetch any buildtime dependencies we need. Nix, a declarative package manager, is another option that we can use to specify our build AND dependencies, without requiring us to actually make a container. Nix also provides stronger guarantees around reproducibility and hermeticity than Docker. I already use Nix flakes for virtually all of my personal work, so that's how we'll specify our build step.
+Much like static site hosts, static site **generators** are everywhere, and it seems like one of those things where people have particularly strong opinions on what workflow fits them best. Some people eschew a "generator" entirely and chain more purpose-built tools together to achieve the perfect bespoke website output. Whatever your personal choice on generating the content for your static site, it helps to have a sort of "universal entry point" to actually kick off the build process. Github and Gitlab have their own custom Continuous Integration/Continuous Delivery systems where the build for the site can be configured. [Makefiles](https://en.wikipedia.org/wiki/Make_(software)#Makefile) can declare a set of commands to run in a generic way, but they don't help us pull in dependencies from the outside. [Dockerfiles](https://docs.docker.com/engine/reference/builder/) are not only generic, but also provide some primitives to make it easy to fetch any buildtime dependencies we need. Nix, a declarative package manager, is another option that we can use to specify our build AND dependencies, without necessarily requiring us to actually make a container (although we can if we want!). Nix also provides stronger guarantees around reproducibility and hermeticity than Docker. I already use Nix flakes for virtually all of my personal work, so that's how we'll specify our build step today.
 
 Nix is a very powerful tool, but it can be intimidating to use, and I've encountered many people saying that the documentation is too sparse to be useful. I'll keep the Nix details minimal, and try to include enough explanation for what we're doing that even unfamiliar readers can follow along, but I would encourage anyone who wants some more background on Nix and Nix flakes to check out [these](https://xeiaso.net/blog/nix-flakes-1-2022-02-21) [posts](https://xeiaso.net/blog/nix-flakes-2-2022-02-27) from Xe Iaso's blog.
 
@@ -153,7 +153,7 @@ All we're going to need is `systems` and `perSystem`, so let's clean up the temp
 This won't build right away, first we're going to have to add the two `.nix` files we used.
 
 ### `shell.nix`: Reproducible Development Environment
-`shell.nix` is a common feature of many nix builds, and typically specifies the packages that are needed for developing and changing a project. If you haven't used Nix before, you likely have the dependencies and tools for your static site installed directly onto your system, or using a language-specific build tool. By switching to `shell.nix`, you can decouple the project development environment from your local system, similar to using a Docker container for development. If you don't want or need any special tools to build your site, you can mostly ignore this file, but here's what this might look like for a simple static site:
+`shell.nix` is a common feature of many Nix builds, and typically specifies the packages that are used for developing and iterating on a project. If you haven't used Nix before, you likely have the dependencies and tools for your static site installed using your system package manager, or using a language-specific build tool. By switching to `shell.nix`, you can decouple the project development environment from your local system, akin to using a Docker container for development. If you don't want or need any special tools to build your site, you can mostly ignore this file, but here's what this might look like for a simple static site:
 ```nix
 { pkgs ? import <nixpkgs> }:
 pkgs.mkShell {
@@ -167,8 +167,6 @@ pkgs.mkShell {
   ];
 }
 ```
-
-`shell.nix` and `mkShell` can be extended even further. 
 
 ### `site.nix`: Reproducible Site Build
 We'll write `site.nix` as a function from packages in `nixpkgs` to a derivation, which will let us call it more convneniently with `pkgs.callPackage`, as we did above in `flake.nix`. Here's an example of a site build for `hugo`:
@@ -213,7 +211,7 @@ index.html main.css ...
 ## Serving: Caddy
 We can reliably build our site, but now we need a way serve that onto the [blagoblag](https://xkcd.com/181/). Let's use Caddy! The syntax is marginally less arcane than Apache or Nginx, and it has cool features like HTTPS-by-default!
 
-Unfortunately, the first thing we're going to have to do in our `Caddyfile` is turn that off:
+Sadly, the first thing we're going to have to do in our `Caddyfile` is turn that off:
 ```Caddyfile
 # fly.io handles https for us
 {
@@ -245,7 +243,7 @@ Valid configuration
 env SITE_ROOT=result caddy run
 ```
 
-You should be able to browse to your site at `127.0.0.1:8080` and load it, although some resources may load improperly or not at all. When we deploy to Fly, however, everything should be working. Add the Caddyfile to git:
+You should be able to browse to your site at `127.0.0.1:8080` and load it, although some resources may load improperly or not at all if they expect to be accessed at a particular hostname. When we deploy to Fly, however, everything should be working. Add the Caddyfile to git:
 ```bash
 git add Caddyfile
 git commit -m "Add Caddyfile"
@@ -379,7 +377,7 @@ docker run -itp 8080:8080 static-site:2022-08-28
 curl http://[::]:8080
 ```
 
-Some people, myself included, don't enjoy the experience of running a Docker engine instance on their Macbooks, so the easiest way for us to test this would be to package up the deployment step into a script and run it on a Linux host with Docker, such as a container in a CI/CD server.
+Some people, myself included, don't care to run Docker engine on their Macbooks, so the easiest way for us to test this would be to package up the deployment step into a script and run it on a Linux host with Docker, such as a container in a CI/CD server.
 
 Let's add another `callPackage` friendly Nix file:
 ```nix
