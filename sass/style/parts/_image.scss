@@ -1,4 +1,4 @@
-img:not(#logo) {
+img:not(#logo):not(#pixel) {
   border: 3px solid #ececec;
   max-width: 100%;
   border-radius: 5px;
