@@ -211,7 +211,7 @@ index.html main.css ...
 ```
 
 ## Serving: Caddy
-We can reliably build our site, but now we need a way serve that onto the blagoblag. Let's use Caddy! The syntax is marginally less arcane than Apache or Nginx, and it has cool features like HTTPS-by-default!
+We can reliably build our site, but now we need a way serve that onto the [blagoblag](https://xkcd.com/181/). Let's use Caddy! The syntax is marginally less arcane than Apache or Nginx, and it has cool features like HTTPS-by-default!
 
 Unfortunately, the first thing we're going to have to do in our `Caddyfile` is turn that off:
 ```Caddyfile

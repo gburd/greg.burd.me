@@ -1,7 +1,7 @@
 +++
 title = "diy code hosting with gitea and fly.io"
 date = "2022-08-07"
-updated = "2022-08-21"
+updated = "2022-09-04"
 [taxonomies]
 tags = ["git", "gitea", "fly.io"]
 +++
@@ -179,6 +179,11 @@ That doesn't look so great. It seems like Gitea idles just under the amount of m
 <img alt="Fly.io VM scaling interface" src=fly-io-scale-vm.png />
 <figcaption><h4>Fly.io VM scaling interface</h4></figcaption>
 </figure>
+
+You can also use `flyctl` to scale your app!
+```bash
+flyctl scale memory 512
+```
 
 I have been running my Gitea install on a 512MB instance since the first day I started using it, which seems to be plenty of headroom for personal use. If you open up your Gitea installation to the public and it starts to get popular, you might end up needing to scale up further.
 

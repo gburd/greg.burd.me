@@ -26,11 +26,10 @@ favicon = "/image/favicon.svg"
 stylesheets = []
 
 use_cdn = false
-# include hashes for SRI
 cdns = [
-    { url = "https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.min.css", hash = "sWIpcFPnJFfPqQU7FWn8H9+Xax/h5ihI8hVjQTBa5WmUde6CZZLw9DUAaIyA6j5u" },
-    { url = "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.5/dist/web/static/pretendard-std-dynamic-subset.min.css", hash = "UzN3sOqBetZN9G2CDFfxg1PNJ+Qrv8/HZIoBp6XsCD+2DOehpvXGqkj2WFCNge5Q" },
-    { url = "https://cdn.jsdelivr.net/gh/codex-src/iA-Fonts@master/iA%20Writer%20Quattro/Webfonts/index.min.css", hash = "Vx6OU3QBwm96rTUebUtdfD/AW3d3uzT896pixaUYg9Nb87zqHuXmjmv9aGwBmFjP" },
+    # { url = "https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.min.css", hash = "sWIpcFPnJFfPqQU7FWn8H9+Xax/h5ihI8hVjQTBa5WmUde6CZZLw9DUAaIyA6j5u" },
+    # { url = "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.5/dist/web/static/pretendard-std-dynamic-subset.min.css", hash = "UzN3sOqBetZN9G2CDFfxg1PNJ+Qrv8/HZIoBp6XsCD+2DOehpvXGqkj2WFCNge5Q" },
+    # { url = "https://cdn.jsdelivr.net/gh/codex-src/iA-Fonts@master/iA%20Writer%20Quattro/Webfonts/index.min.css", hash = "Vx6OU3QBwm96rTUebUtdfD/AW3d3uzT896pixaUYg9Nb87zqHuXmjmv9aGwBmFjP" },
     # Disabling variable fonts to bring site weight down
     # { url = "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.5/dist/web/variable/pretendardvariable-std.min.css", hash = "3OYJp8uUv2MJWyKGgrZOrSjf+WP+nD7ifpJ04kAsI02PYi+nghC4TF37YkN/2Qxt" },
     # { url = "https://cdn.jsdelivr.net/gh/codex-src/iA-Fonts@master/iA%20Writer%20Quattro/Variable/index.min.css", hash = "sFJyxW2UhZcJ0SAweDcoU6dBgqox5PbLK5nZStQSQitBeRHigPu7OPWDvoIHEXeo" },
