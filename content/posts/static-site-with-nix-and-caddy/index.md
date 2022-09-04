@@ -1,7 +1,6 @@
 +++
 title = "hosting a static site on fly.io with nix and caddy"
 date = "2022-09-04"
-draft = true
 [taxonomies]
 tags = ["static-site", "nix", "caddy", "fly.io"]
 +++
