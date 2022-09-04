@@ -18,10 +18,10 @@ Some of these options were ruled out for me by requiring source code to be hoste
 
 As you may have guessed from the title, my ultimate decision was to take inspiration from [a Fly.io tutorial document](https://fly.io/docs/getting-started/static/) explaining how to deploy a very simple vanilla HTML site on Fly using a Go-powered webserver. I'm going to expand on their design a bit by introducing two major components: [Nix](https://nixos.org), to give us the power to build our site with whatever static site generator (or other build process) we want to use; and [Caddy](https://caddyserver.com), to give us a more flexible and extensible platform for actually serving the content.
 
-For the purposes of this article, we'll assume you already have your static site ready to go. Whether you're writing pure HTML by hand, or using a cutting-edge Javascript framework that renders down to static resources, you'll be able to package it up with Nix and serve it with Caddy, all hosted on Fly.io.
+For the purposes of this article, I'll assume you already have your static site ready to go. Whether you're writing pure HTML by hand, or using a cutting-edge Javascript framework that renders down to static resources, you'll be able to package it up with Nix and serve it with Caddy, all hosted on Fly.io.
 
 ## Before You Deploy: Nix
-Much like static site hosts, static site **generators** are everywhere, and it seems like one of those things where people have particularly strong opinions on what workflow fits them best. Some people eschew a "generator" entirely and chain more purpose-built tools together to achieve the perfect bespoke website output. Whatever your personal choice on generating the content for your static site, it helps to have a sort of "universal entry point" to actually kick off the build process. Github and Gitlab have their own custom Continuous Integration/Continuous Delivery systems where the build for the site can be configured. [Makefiles](https://en.wikipedia.org/wiki/Make_(software)#Makefile) can declare a set of commands to run in a generic way, but they don't help us pull in dependencies from the outside. [Dockerfiles](https://docs.docker.com/engine/reference/builder/) are not only generic, but also provide some primitives to make it easy to fetch any buildtime dependencies we need. Nix, a declarative package manager, is another option that we can use to specify our build AND dependencies, without necessarily requiring us to actually make a container (although we can if we want!). Nix also provides stronger guarantees around reproducibility and hermeticity than Docker. I already use Nix flakes for virtually all of my personal work, so that's how we'll specify our build step today.
+Much like static site hosts, static site **generators** are everywhere, and it seems like one of those things where people have particularly strong opinions on what workflow fits them best. Some people eschew a "generator" entirely and chain more purpose-built tools together to achieve the perfect bespoke website output. Whatever your personal choice is for generating the content for your static site, it helps to have a sort of "universal entry point" to actually kick off the build process. Github and Gitlab each have their own custom Continuous Integration/Continuous Delivery systems where the build for the site can be configured. [Makefiles](https://en.wikipedia.org/wiki/Make_(software)#Makefile) can declare a set of commands to run in a generic way, but they don't help us pull in dependencies from the outside. [Dockerfiles](https://docs.docker.com/engine/reference/builder/) are another generic build specification that also make it easy to fetch any buildtime dependencies we need. Nix, a declarative package manager, is another option that we can use to specify our build and dependencies, without necessarily requiring us to actually make a container (although we can if we want!). Nix also offers more guarantees in terms of reproducibility and hermeticity than Docker. I already use Nix flakes for virtually all of my personal work, so that's how we'll specify our build step today.
 
 Nix is a very powerful tool, but it can be intimidating to use, and I've encountered many people saying that the documentation is too sparse to be useful. I'll keep the Nix details minimal, and try to include enough explanation for what we're doing that even unfamiliar readers can follow along, but I would encourage anyone who wants some more background on Nix and Nix flakes to check out [these](https://xeiaso.net/blog/nix-flakes-1-2022-02-21) [posts](https://xeiaso.net/blog/nix-flakes-2-2022-02-27) from Xe Iaso's blog.
 
@@ -82,13 +82,13 @@ This will leave us with the following:
 }
 ```
 
-Hmm. Well that's a VERY basic flake. It's also seemingly out of date, as the latest advice I've seen recommends `packages.${system}.default` over `defaultPackage.${system}`. Let's scrap that and pull in a template from the [`flake-parts`](https://flake.parts) ([Github](https://github.com/hercules-ci/flake-parts)), a flake that bills itself as the _"Core of a distributed framework for writing Nix Flakes"_. 
+Hmm. Well, that's a VERY basic flake. It's also seemingly out of date, as the latest advice I've seen recommends `packages.${system}.default` over `defaultPackage.${system}`. Let's scrap that and pull in a template from the [`flake-parts`](https://flake.parts) ([Github](https://github.com/hercules-ci/flake-parts)), a flake that bills itself as the _"Core of a distributed framework for writing Nix flakes"_. 
 ```bash
 rm flake.nix
 nix flake init --template github:hercules-ci/flake-parts
 ```
 
-In my experience, `flake-parts` is an extremely helpful tool that provides some Nix functions which drastically reduce the amount of boilerplate you need for a working flake:
+In my experience, `flake-parts` is an extremely helpful tool that provides some Nix functions that drastically reduce the amount of boilerplate you need for a working flake:
 ```nix
 {
   description = "Description for the project";
@@ -150,7 +150,7 @@ All we're going to need is `systems` and `perSystem`, so let's clean up the temp
 }
 ```
 
-This won't build right away, first we're going to have to add the two `.nix` files we used.
+This won't build right away. First we're going to have to add the two `.nix` files we used.
 
 ### `shell.nix`: Reproducible Development Environment
 `shell.nix` is a common feature of many Nix builds, and typically specifies the packages that are used for developing and iterating on a project. If you haven't used Nix before, you likely have the dependencies and tools for your static site installed using your system package manager, or using a language-specific build tool. By switching to `shell.nix`, you can decouple the project development environment from your local system, akin to using a Docker container for development. If you don't want or need any special tools to build your site, you can mostly ignore this file, but here's what this might look like for a simple static site:
@@ -169,7 +169,7 @@ pkgs.mkShell {
 ```
 
 ### `site.nix`: Reproducible Site Build
-We'll write `site.nix` as a function from packages in `nixpkgs` to a derivation, which will let us call it more convneniently with `pkgs.callPackage`, as we did above in `flake.nix`. Here's an example of a site build for `hugo`:
+We'll write `site.nix` as a function from packages in `nixpkgs` to a derivation, which will let us call it more conveniently with `pkgs.callPackage`, as we did above in `flake.nix`. Here's an example of a site build with `hugo`:
 ```nix
 { stdenv, hugo, scour }:
 stdenv.mkDerivation {
@@ -209,7 +209,7 @@ index.html main.css ...
 ```
 
 ## Serving: Caddy
-We can reliably build our site, but now we need a way serve that onto the [blagoblag](https://xkcd.com/181/). Let's use Caddy! The syntax is marginally less arcane than Apache or Nginx, and it has cool features like HTTPS-by-default!
+We can reliably build our site, but now we need a way to serve it on the [blagoblag](https://xkcd.com/181/). Let's use Caddy! The syntax is marginally less arcane than Apache or Nginx, and it has cool features like HTTPS-by-default!
 
 Sadly, the first thing we're going to have to do in our `Caddyfile` is turn that off:
 ```Caddyfile
@@ -234,7 +234,7 @@ Sadly, the first thing we're going to have to do in our `Caddyfile` is turn that
 }
 ```
 
-You can test this out by adding `caddy` to your `shell.nix` file or else installing it locally, and running something like this:
+You can test this by adding `caddy` to your `shell.nix` file or else installing it locally, and running something like this:
 ```bash
 nix build
 env SITE_ROOT=result caddy validate
@@ -243,7 +243,7 @@ Valid configuration
 env SITE_ROOT=result caddy run
 ```
 
-You should be able to browse to your site at `127.0.0.1:8080` and load it, although some resources may load improperly or not at all if they expect to be accessed at a particular hostname. When we deploy to Fly, however, everything should be working. Add the Caddyfile to git:
+You should be able to browse to your site at `127.0.0.1:8080` and load it, although some resources may load improperly or not at all if they are expected to be accessed at a particular hostname. When we deploy to Fly, however, everything should be working. Add the Caddyfile to git:
 ```bash
 git add Caddyfile
 git commit -m "Add Caddyfile"
@@ -264,7 +264,7 @@ git add fly.toml
 git commit -m "Initialize Fly app"
 ```
 
-We need some way for Fly to build a VM from our application and Caddyfile. Fly supports Dockerfiles, so let's just go ahead and start with that:
+We need to find some way for Fly to build a VM from our application and Caddyfile. Fly supports Dockerfiles, so let's just go ahead and start with that:
 ```Dockerfile
 FROM nixos/nix:latest
 
@@ -288,7 +288,7 @@ We can use a multi-stage build to run the Nix build first, then copy that into a
 flyctl deploy
 ```
 
-Now we can set up a custom domain, if we want:
+Now we can set up a custom domain if we want:
 ```bash
 flyctl ips list
 VERSION	IP                 	TYPE  	REGION	CREATED AT           
@@ -323,7 +323,7 @@ http://seals-meander-daringly.fly.dev {
 Don't forget to `flyctl deploy` again!
 
 ## Bonus Round: Configure Everything in Nix
-"But mat!" you're shouting in anguish, "Why do we have to write a crummy Dockerfile to build our software! You said several sections ago that Nix could be the universal entry point, and that it was better than Docker for some important sounding reasons!"
+"But mat!" you're shouting in anguish, "Why do we have to write a crummy Dockerfile to build our software? You said several sections ago that Nix could be the universal entry point, and that it was better than Docker for some important sounding reasons!"
 
 I know. What's more is, you're entirely right. We DON'T have to settle for a Dockerfile! Nix has some tooling available to build our Docker images for us, and we can plug that right into our Fly.io application.
 
@@ -377,7 +377,7 @@ docker run -itp 8080:8080 static-site:2022-08-28
 curl http://[::]:8080
 ```
 
-Some people, myself included, don't care to run Docker engine on their Macbooks, so the easiest way for us to test this would be to package up the deployment step into a script and run it on a Linux host with Docker, such as a container in a CI/CD server.
+Some people, myself included, don't care to run Docker engine on their Macbooks, so the easiest way for us to test this would be to package up the deployment step into a script and run it on a Linux host with Docker, such as in a container on a CI/CD server.
 
 Let's add another `callPackage` friendly Nix file:
 ```nix
@@ -408,7 +408,7 @@ And plug it into the flake:
 }
 ```
 
-Now you should be able to use a command like this on a Docker-friendly host, and your site will be running before long:
+Now you should be able to use a command like this on a Docker-friendly host, and your site will be up and running before long:
 ```bash
 nix run .#deploy
 ```
@@ -420,3 +420,4 @@ Thanks for reading!
 
 ## Acknowledgements
 - [Thanks to Lutris, Inc. for their `nix-fly-template`, which was very influential in the writing of this post.](https://github.com/LutrisEng/nix-fly-template)
+- Thanks to Hollis Druhet for reading the draft of this post and offering feedback!
