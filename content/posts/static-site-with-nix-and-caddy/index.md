@@ -1,6 +1,7 @@
 +++
 title = "hosting a static site on fly.io with nix and caddy"
 date = "2022-09-04"
+updated = "2022-09-06"
 [taxonomies]
 tags = ["static-site", "nix", "caddy", "fly.io"]
 +++
@@ -322,6 +323,8 @@ http://seals-meander-daringly.fly.dev {
 Don't forget to `flyctl deploy` again!
 
 ## Bonus Round: Configure Everything in Nix
+**Update 2022-09-06**: [@rtpg on lobste.rs asked some questions about this section](https://lobste.rs/s/qydlal/hosting_static_site_on_fly_io_with_nix#c_hbto6t) which lead me to uncover that it is a bit buggy. I'm working on debugging the Nix expressions, but it may end up being blocked finding a CI/CD setup that makes me happy, so beware the section below until this message goes away.
+
 "But mat!" you're shouting in anguish, "Why do we have to write a crummy Dockerfile to build our software? You said several sections ago that Nix could be the universal entry point, and that it was better than Docker for some important sounding reasons!"
 
 I know. What's more is, you're entirely right. We DON'T have to settle for a Dockerfile! Nix has some tooling available to build our Docker images for us, and we can plug that right into our Fly.io application.
