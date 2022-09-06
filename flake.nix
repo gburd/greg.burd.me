@@ -5,18 +5,21 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-parts.inputs.nixpkgs.follows = "nixpkgs";
+    gitignore.url = "github:hercules-ci/gitignore.nix";
+    gitignore.inputs.nixpkgs.follows = "nixpkgs";
 
     # theme - inlined now, not used
     apollo.url = "github:not-matthias/apollo";
     apollo.flake = false;
   };
 
-  outputs = { self, flake-parts, ... }@inputs:
+  outputs = { self, flake-parts, gitignore, ... }@inputs:
     flake-parts.lib.mkFlake { inherit self; } {
       imports = [ ];
       systems = inputs.nixpkgs.lib.systems.flakeExposed;
       perSystem = { config, self', inputs', pkgs, system, ... }:
         let
+          inherit (gitignore.lib) gitignoreSource;
           # TODO: move these to a flake-module
           inherit (pkgs.callPackage ./nix { }) container deploy fonts optimize-images themes;
           inherit (fonts) copyFonts linkFonts;
@@ -28,8 +31,8 @@
         {
           packages.default = with pkgs; stdenv.mkDerivation {
             pname = "personal-site";
-            version = "2022-08-27";
-            src = ./.;
+            version = "2022-09-06";
+            src = gitignoreSource ./.;
             nativeBuildInputs = [ optimize-images zola ];
             configurePhase = copyTheme + copyFonts;
             buildPhase = ''
@@ -45,11 +48,11 @@
             shellHook = linkTheme + linkFonts;
           };
           packages.container = container {
-            caddyfile = builtins.readFile ./Caddyfile;
+            caddyfile = ./Caddyfile;
             site = config.packages.default;
           };
           apps.deploy.program =
-            let deploy' = deploy { dockerImage = config.packages.container; };
+            let deploy' = deploy { dockerImage = self.packages.x86_64-linux.container; };
             in "${deploy'}/bin/deploy";
         };
     };

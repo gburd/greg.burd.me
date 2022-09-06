@@ -20,10 +20,6 @@ http://static-mat-services.fly.dev {
 		file_server
 	}
 
-	log {
-		output stdout
-	}
-
 	header {
 		# disable FLoC tracking
 		Permissions-Policy interest-cohort=()
@@ -40,22 +36,28 @@ http://static-mat-services.fly.dev {
 		# style-src 'unsafe-inline': syntax highlighting in codefences
 		# sandbox allow-popups: enable target="_blank" links to open in new tabs
 		Content-Security-Policy "default-src 'none';
-      img-src 'self';
+      img-src 'self' https://stats.mat.services;
       style-src 'self' 'unsafe-inline';
       font-src 'self';
-			script-src 'self';
+			script-src 'self' https://stats.mat.services;
       form-action 'none';
       frame-ancestors 'none';
       base-uri 'none';
       upgrade-insecure-requests;
-      sandbox allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+      sandbox
+				allow-same-origin
+				allow-scripts
+				allow-popups 
+				allow-popups-to-escape-sandbox"
 	}
 
 	# caching
+	@static {
+		path *.bmp *.jpg *.png *.svg *.gif *.pdf *.css *.js *.woff *.woff2
+	}
 	route {
-		header /style/* Cache-Control max-age=31536000, immutable
-		header /image/* Cache-Control max-age=31536000, immutable
-		header /font/* Cache-Control max-age=31536000, immutable
 		header Cache-Control max-age=180
+		header /sitemap.xml Cache-Control max-age=0
+		header @static Cache-Control max-age=31536000, immutable
 	}
 }
