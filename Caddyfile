@@ -53,11 +53,11 @@ http://static-mat-services.fly.dev {
 
 	# caching
 	@static {
-		path *.bmp *.jpg *.png *.svg *.gif *.pdf *.css *.js *.woff *.woff2
+		path *.bmp *.jpg *.png *.svg *.gif *.pdf *.css *.js *.woff *.woff2 /style/* /font/* /image/*
 	}
 	route {
-		header Cache-Control max-age=180
-		header /sitemap.xml Cache-Control max-age=0
 		header @static Cache-Control max-age=31536000, immutable
+		header *.xml Cache-Control max-age=0
+		header ?Cache-Control max-age=360
 	}
 }

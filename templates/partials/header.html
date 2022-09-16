@@ -4,17 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  {# Site title #}
   {% set current_path = current_path | default(value="/") %}
-  {% if current_path == "/" %}
-  <title>
-    {{ config.title | default(value="Home") }}
-  </title>
-  {% else %}
-  <title>
-    {{ page.title | default(value=config.title) | default(value="Post") }}
-  </title>
-  {% endif %}
 
   {# Favicon #}
   {% if config.extra.favicon %}
@@ -48,5 +38,35 @@
   {% endfor %}
   {% endif %}
 
+  {% if current_path == "/" %}
+  {% set current_title = config.title | default(value="home") %}
+  {% set current_description = "the personal site of mat ess" %}
+  {% set hero = false %}
+  {% else %}
+  {% set current_title = page.title | default(value=config.title) | default(value="post") %}
+  {% set current_description = page.description | default(value="from the personal site of mat ess") %}
+  {% set hero = page.extra.hero | default(value=false) %}
+  {% endif %}
+
+  {# Meta links #}
+  <title>{{ current_title }}</title>
   <link rel="canonical" href="{{ get_url(path=current_path) }}" />
+  <meta name="title" content="{{ current_title }}">
+  <meta name="description" content="{{ current_description }}">
+
+  {# Open Graph / Facebook #}
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ current_title }}">
+  <meta property="og:description" content="{{ current_description }}">
+  {% if hero %}
+  <meta property="og:image" content="hero.png">
+  {% endif %}
+
+  {# Twitter #}
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="{{ current_title }}">
+  <meta property="twitter:description" content="{{ current_description }}">
+  {% if hero %}
+  <meta property="twitter:image" content="hero.png">
+  {% endif %}
 </head>

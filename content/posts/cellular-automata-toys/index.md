@@ -3,6 +3,8 @@ title = "cellular automata toys in löve2d"
 date = "2022-09-15"
 [taxonomies]
 tags = ["cellular-automata", "lua", "löve2d"]
+[extra]
+hero = true
 +++
 
 <figure>
