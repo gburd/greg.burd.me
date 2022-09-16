@@ -59,7 +59,7 @@
   <meta property="og:title" content="{{ current_title }}">
   <meta property="og:description" content="{{ current_description }}">
   {% if hero %}
-  <meta property="og:image" content="hero.png">
+  <meta property="og:image" content="{{ get_url(path=current_path) }}/hero.png">
   {% endif %}
 
   {# Twitter #}
