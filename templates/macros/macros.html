@@ -10,6 +10,16 @@
       <a href={{ page.permalink }}>{{page.title}}</a>
     </h2>
 
+    {% if page.description %}
+    <div class="description">
+      {{ page.description }}
+    </div>
+    {% elif page.summary %}
+    <div class="description">
+      {{ page.summary }}&hellip;
+    </div>
+    {% endif %}
+
     <div class="meta">
       posted on <time>{{ page.date | date(format="%Y-%m-%d") }}</time>
     </div>
@@ -17,19 +27,6 @@
     {{ post_macros::tags(page=page) }}
 
     <br />
-    <div class="description">
-      {% if page.description %}
-      {{ page.description }}
-      {% elif page.summary %}
-      {{ page.summary }}&hellip;
-      {% else %}
-      {% set hide_read_more = true %}
-      {% endif %}
-    </div>
-
-    {% if not hide_read_more %}
-    <a class="readmore" href={{ page.permalink }}>Read more ⟶</a>
-    {% endif %}
   </li>
 
   {% endfor -%}
