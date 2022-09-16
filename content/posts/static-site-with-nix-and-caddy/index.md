@@ -284,7 +284,7 @@ RUN caddy
 ```
 
 We can use a multi-stage build to run the Nix build first, then copy that into a container with the Caddyfile and run that. We're set to deploy!
-```shell
+```bash
 flyctl deploy
 ```
 

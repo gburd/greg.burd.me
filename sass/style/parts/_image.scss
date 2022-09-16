@@ -4,6 +4,11 @@ img:not(#logo):not(#pixel) {
   border-radius: 5px;
 }
 
+img.hero {
+  margin-top: 1.5rem;
+  border: none !important;
+}
+
 figure {
   box-sizing: border-box;
   display: inline-block;

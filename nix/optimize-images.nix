@@ -8,7 +8,7 @@ writeShellScriptBin "optimize-images" ''
     file=$(basename $image)
     newimage=$path/''${file:1}
     echo "optimizing $image"
-    ${pngquant}/bin/pngquant --quality 80-90 -f -o $newimage $image
+    ${pngquant}/bin/pngquant --quality 70-90 -f -o $newimage $image
     oldsize=$(stat --format=%s $image)
     newsize=$(stat --format=%s $newimage)
     pct=$(${bc}/bin/bc <<< "scale=1; $newsize * 100 / $oldsize")
