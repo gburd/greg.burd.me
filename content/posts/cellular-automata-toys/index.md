@@ -1,6 +1,7 @@
 +++
 title = "cellular automata toys in löve2d"
 date = "2022-09-15"
+description = "a short announcement post for a few interactive cellular automata toys written in lua"
 [taxonomies]
 tags = ["cellular-automata", "lua", "löve2d"]
 [extra]
