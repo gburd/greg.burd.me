@@ -6,7 +6,7 @@ description = "a tutorial on 'breaking' the hermeticity of nix flakes by adding 
 tags = ["nix"]
 [extra]
 hero = true
-heroPrompt = "A rogue program hacking through the firewall, in the style of Tron Legacy, cyberpunk vibe, digital render, 8k uhd, unreal engine</i> - generated using Stable Diffusion"
+heroPrompt = "A rogue program hacking through the firewall, in the style of Tron Legacy, cyberpunk vibe, digital render, 8k uhd, unreal engine"
 +++
 
 [Nix flakes](https://serokell.io/blog/practical-nix-flakes) are very useful, but the feature of a [fully hermetic build](https://bazel.build/basics/hermeticity) also means that they carry with them a certain degree of inflexibility. [Users have asked for a mechanism to parameterize flakes](https://github.com/NixOS/nix/issues/2861#issuecomment-891521971), but there seems to be no interest from the Nix maintainers in adding such a feature.
