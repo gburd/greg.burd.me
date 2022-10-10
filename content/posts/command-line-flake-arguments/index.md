@@ -1,18 +1,13 @@
 +++
 title = "passing command line arguments to nix flakes"
-date = "2022-10-09"
+date = "2022-10-10"
 description = "a tutorial on 'breaking' the hermeticity of nix flakes by adding convenient command line flags"
-draft = true
 [taxonomies]
 tags = ["nix"]
 [extra]
 hero = true
+heroPrompt = "A rogue program hacking through the firewall, in the style of Tron Legacy, cyberpunk vibe, digital render, 8k uhd, unreal engine</i> - generated using Stable Diffusion"
 +++
-
-<figure>
-<img class="hero" alt="A rogue program hacking through the firewall, in the style of Tron Legacy, cyberpunk vibe, digital render, 8k uhd, unreal engine - generated using Stable Diffusion" src=hero.png />
-<figcaption><h4><i>A rogue program hacking through the firewall, in the style of Tron Legacy, cyberpunk vibe, digital render, 8k uhd, unreal engine</i> - generated using Stable Diffusion</h4></figcaption>
-</figure>
 
 [Nix flakes](https://serokell.io/blog/practical-nix-flakes) are very useful, but the feature of a [fully hermetic build](https://bazel.build/basics/hermeticity) also means that they carry with them a certain degree of inflexibility. [Users have asked for a mechanism to parameterize flakes](https://github.com/NixOS/nix/issues/2861#issuecomment-891521971), but there seems to be no interest from the Nix maintainers in adding such a feature.
 
@@ -22,7 +17,7 @@ hero = true
 
 From outside of a flake's Nix expression, the flake is a black box, a mapping from its input sources to the artifacts that it outputs. There is no built-in way to pass an arbitrary value, a boolean flag or string, from the command line in order to override a deeply nested configuration embedded in your flake. In most cases, this is fine, and you can work around many apparent needs for a one off override by building separate outputs for different purposes. Your flakes will probably come out better designed if you can use them strictly as intended.
 
-A real-life use case where a command line override would come in handy comes from my own [nix-darwin](https://daiderd.com/nix-darwin/) configuration, where I have my [homebrew](https://brew.sh/) formulas and casks specified. I like to let Nix manage installing and upgrading these packages, but unfortunately the process to check for updates eats up a bit of time. When I'm testing a new change to some other part of my nix-darwin setup, I don't like to waste time repeatedly checking for homebrew updates. I could manually disable homebrew updates, but then I have to remember to flip it back on. Wouldn't it be nice to have two commands? Something like:
+A real-life use case where a command line override would come in handy comes from my own [nix-darwin](https://daiderd.com/nix-darwin/) configuration, where I have my [homebrew](https://brew.sh/) formulas and casks specified. I like to let Nix manage installing and upgrading these packages, but unfortunately the process to check for updates eats up a bit of time. When I'm testing a new change to some other part of my nix-darwin setup, I don't like to waste time repeatedly checking for homebrew updates. I could manually disable homebrew updates, but then I'd have to remember to flip it back on. Wouldn't it be nice to have two commands? Something like:
 ```bash
 # rebuild the full system flake, when we want to perform homebrew updates
 darwin-rebuild switch --flake <flake-path>
@@ -61,7 +56,7 @@ nix eval --override-input my-flag github:boolean-option/false --raw '.#message'
 
 So far, every flake-oriented Nix command I have tried supports the `override-input` flag, so this is a pretty reliable mechanism for passing in overrides where needed.
 
-[Take a look](https://git.mat.services/mat/dotfiles.nix/src/branch/main/flake.nix#L16-L17) [at how I use this](https://git.mat.services/mat/dotfiles.nix/src/branch/main/flake.nix#L16-L17) [in my own system flake](https://git.mat.services/mat/dotfiles.nix/src/branch/main/darwin/homebrew.nix#L31).
+[Take a look](https://git.mat.services/mat/dotfiles.nix/src/branch/main/flake.nix#L16-L17) [at how I use this](https://git.mat.services/mat/dotfiles.nix/src/branch/main/flake.nix#L256) [in my own system flake](https://git.mat.services/mat/dotfiles.nix/src/branch/main/darwin/homebrew.nix#L31).
 
 ## Appendix
 [Go back to the article](#jumpback)

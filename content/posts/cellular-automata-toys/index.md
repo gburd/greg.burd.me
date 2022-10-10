@@ -6,12 +6,8 @@ description = "a short announcement post for a few interactive cellular automata
 tags = ["cellular-automata", "lua", "löve2d"]
 [extra]
 hero = true
+heroPrompt = "The oracle reading the future from Conway's Game of Life, technomancer aesthetic, digital illustration, 8k uhd"
 +++
-
-<figure>
-<img class="hero" alt="The oracle reading the future from Conway's Game of Life, technomancer aesthetic, digital illustration, 8k uhd - generated using Stable Diffusion" src=hero.png />
-<figcaption><h4><i>The oracle reading the future from Conway's Game of Life, technomancer aesthetic, digital illustration, 8k uhd</i> - generated using Stable Diffusion</h4></figcaption>
-</figure>
 
 after reading [Andrew Healey's blog post about Langton's Ant](https://healeycodes.com/virtual-ants), i found myself inspired to reimplement some of his work. i've read numerous rave reviews of löve2d for writing simple toys, so i decided to give that a shot here as well. Langton's Ant went well enough that i also implemented Life and Wireworld.
 

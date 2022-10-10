@@ -75,6 +75,15 @@
     {% endif %}
   </div>
 
+  {% if page.extra.hero %}
+  <figure>
+    <img class="hero" alt="{{ page.extra.heroPrompt }} - generated using Stable Diffusion" src=hero.png />
+    <figcaption>
+      <h4><i>{{ page.extra.heroPrompt }}</i> - generated using Stable Diffusion</h4>
+    </figcaption>
+  </figure>
+  {% endif %}
+
   {% if page.extra.tldr %}
   <div class="tldr">
     <strong>tl;dr:</strong>
@@ -83,7 +92,7 @@
   {% endif %}
 
   {# Optional table of contents #}
-  {% if config.extra.toc | default(value=false) %}
+  {% if page.extra.toc | default(value=false) %}
   {% if page.toc %}
   <h2>Table of Contents</h2>
   <ul>
