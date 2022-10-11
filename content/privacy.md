@@ -8,7 +8,7 @@ i want to respect your pivacy, while still getting some insight into the readers
 
 - goatcounter stats are collected via javascript or tracking pixel.
 - no server logs are collected.
-- the site is hosted by fly.io.
+- the site is hosted by netlify.
 - no data is shared.
 
 ## data that i collect
@@ -30,7 +30,7 @@ goatcounter is intended to be privacy-friendly and respect your data. [take a lo
 no server logs are collected.
 
 ## site hosting
-this site is hosted on fly.io. [see this page for fly.io's privacy statement](https://fly.io/legal/privacy-policy/).
+this site is hosted on netlify. [see this page for netlify's privacy policy](https://www.netlify.com/privacy/).
 
 ## data that i share
 collected data is not shared with any third parties.
