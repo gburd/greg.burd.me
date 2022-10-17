@@ -25,11 +25,13 @@
     href="{{ get_url(path='atom.xml', trailing_slash=false) }}">
 
   {# Theme #}
-  <link rel="stylesheet" type="text/css" href="{{ get_url(path='style/theme/light.css', cachebust=true) }}" />
-  <link rel="stylesheet" type="text/css" href="{{ get_url(path='style/theme/dark.css', cachebust=true) }}"
-    media="(prefers-color-scheme: dark)" />
+  <link rel="stylesheet preload" as="style" type="text/css"
+    href="{{ get_url(path='style/theme/light.css', cachebust=true) }}" />
+  <link rel="stylesheet preload" as="style" type="text/css"
+    href="{{ get_url(path='style/theme/dark.css', cachebust=true) }}" media="(prefers-color-scheme: dark)" />
 
-  <link rel="stylesheet" type="text/css" media="screen" href="{{ get_url(path='style/main.css', cachebust=true) }}" />
+  <link rel="stylesheet preload" as="style" type="text/css" media="screen"
+    href="{{ get_url(path='style/main.css', cachebust=true) }}" />
 
   {% if config.extra.stylesheets %}
   {% for stylesheet in config.extra.stylesheets %}
