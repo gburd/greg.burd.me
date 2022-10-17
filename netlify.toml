@@ -1,5 +1,5 @@
 [build]
-  command = "zola build"
+  command = "zola build --drafts"
   publish = "public/"
 
 [dev]
