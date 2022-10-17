@@ -12,14 +12,13 @@
   <link rel="icon" type="image/{{ favicon_ext }}" href="{{ get_url(path=config.extra.favicon, cachebust=true) }}" />
   {% endif %}
 
-  {# Font from cdn or disk #}
-  {% if config.extra.use_cdn | default(value=false) %}
-  {% for cdn in config.extra.cdns %}
-  <link href="{{ cdn.url }}" rel="stylesheet" integrity="sha384-{{ cdn.hash }}" crossorigin="anonymous">
+  {% for font in config.extra.fonts %}
+  {% for style in ["Bold", "BoldItalic", "Italic", "Regular"] %}
+  {% set font_path = 'font/' ~ font.path ~ '/' ~ font.name ~ '-' ~ style ~ '.woff2' %}
+  <link rel="preload" href="{{ get_url(path=font_path) }}" as="font" type="font/woff2" crossorigin>
   {% endfor %}
-  {% else %}
-  <link href="{{ get_url(path='style/fonts.css', cachebust=true) }}" rel="stylesheet" />
-  {% endif %}
+  {% endfor %}
+  <link href="{{ get_url(path='style/fonts.css', cachebust=true) }}" rel="stylesheet preload" as="style" />
 
   {# RSS #}
   <link rel="alternate" type="application/atom+xml" title="{{ config.title }}"
@@ -59,7 +58,7 @@
   <meta property="og:title" content="{{ current_title }}">
   <meta property="og:description" content="{{ current_description }}">
   {% if hero %}
-  <meta property="og:image" content="{{ get_url(path=current_path) }}/hero.png">
+  <meta property="og:image" content="{{ get_url(path=current_path) }}/hero.webp">
   {% endif %}
 
   {# Twitter #}
@@ -67,6 +66,6 @@
   <meta property="twitter:title" content="{{ current_title }}">
   <meta property="twitter:description" content="{{ current_description }}">
   {% if hero %}
-  <meta property="twitter:image" content="{{ get_url(path=current_path) }}/hero.png">
+  <meta property="twitter:image" content="{{ get_url(path=current_path) }}/hero.webp">
   {% endif %}
 </head>
