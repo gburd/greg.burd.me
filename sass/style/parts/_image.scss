@@ -5,6 +5,7 @@ img:not(#logo):not(#pixel) {
 }
 
 img.hero {
+  height: auto;
   margin-top: 1.5rem;
   border: none !important;
 }
