@@ -2,7 +2,6 @@
 title = "now on netlify"
 date = "2022-10-16"
 description = "a short update regarding me packing up my static site and moving from fly.io to netlify"
-draft = true
 [taxonomies]
 tags = ["static-site", "netlify"]
 [extra]
