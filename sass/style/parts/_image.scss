@@ -27,14 +27,15 @@ figure img {
   }
 }
 
-figure h4 {
+figure p {
   font-size: 1rem;
   margin: 0;
   margin-bottom: 1em;
 }
 
-figure h4::before {
+figure p::before {
   content: "↳ ";
+  font-weight: bold;
 }
 
 svg {

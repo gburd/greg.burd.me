@@ -170,14 +170,14 @@ Uh. Hm. I just got an email saying a Fly.io instance ran out of memory and crash
 
 <figure>
 <img alt="Fly.io memory dashboard" src=fly-io-memory-dashboard.webp />
-<figcaption><h4>Fly.io memory dashboard</h4></figcaption>
+<figcaption><p>Fly.io memory dashboard</p></figcaption>
 </figure>
 
 That doesn't look so great. It seems like Gitea idles just under the amount of memory we have with a default instance size, and operations like `git push` can bump it over the threshold to an out-of-memory error. Let's check out the "Scale" section of the dashboard, and increase the memory allotment for this VM:
 
 <figure>
 <img alt="Fly.io VM scaling interface" src=fly-io-scale-vm.webp />
-<figcaption><h4>Fly.io VM scaling interface</h4></figcaption>
+<figcaption><p>Fly.io VM scaling interface</p></figcaption>
 </figure>
 
 You can also use `flyctl` to scale your app!
