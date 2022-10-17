@@ -1,10 +1,13 @@
 +++
 title = "hosting a static site on fly.io with nix and caddy"
 date = "2022-09-04"
-updated = "2022-09-06"
+updated = "2022-10-17"
 [taxonomies]
 tags = ["static-site", "nix", "caddy", "fly.io"]
 +++
+
+**UPDATE**
+most of the information on this page is no longer accurate for my blog, [which has since moved to netlify](@/posts/now-on-netlify/index.md). it should still work, or get you close, but i recommend checking out [`nix-fly-template`](https://github.com/LutrisEng/nix-fly-template).
 
 ## Motivation
 So, [you've ditched Github and friends](https://sfconservancy.org/GiveUpGitHub/), [set up your own Gitea instance](@/posts/gitea-on-fly-io/index.md), and there's just one (read: at least one) thing left for you to take care of—that snazzy static site you had up on Github Pages.
@@ -323,8 +326,6 @@ http://seals-meander-daringly.fly.dev {
 Don't forget to `flyctl deploy` again!
 
 ## Bonus Round: Configure Everything in Nix
-**Update 2022-09-06**: [@rtpg on lobste.rs asked some questions about this section](https://lobste.rs/s/qydlal/hosting_static_site_on_fly_io_with_nix#c_hbto6t) which lead me to uncover that it is a bit buggy. I'm working on debugging the Nix expressions, but it may end up being blocked finding a CI/CD setup that makes me happy, so beware the section below until this message goes away.
-
 "But mat!" you're shouting in anguish, "Why do we have to write a crummy Dockerfile to build our software? You said several sections ago that Nix could be the universal entry point, and that it was better than Docker for some important sounding reasons!"
 
 I know. What's more is, you're entirely right. We DON'T have to settle for a Dockerfile! Nix has some tooling available to build our Docker images for us, and we can plug that right into our Fly.io application.
@@ -332,14 +333,12 @@ I know. What's more is, you're entirely right. We DON'T have to settle for a Doc
 Let's add a `container.nix` file:
 ```nix
 { dockerTools, caddy, site }: 
-  let
-    caddyfile = builtins.readFile ./Caddyfile;
-  in dockerTools.buildLayeredImage {
+  dockerTools.buildLayeredImage {
     name = "static-site";
     tag = "2022-08-28";
-
+  
     config = {
-      Cmd = [ "${caddy}/bin/caddy" "run" "-config" "${caddyfile}" ];
+      Cmd = [ "${caddy}/bin/caddy" "run" "-config" "${./Caddyfile}" ];
       Env = [
         "SITE_ROOT=${site}"
       ];
