@@ -6,6 +6,9 @@ default_language = "en"
 compile_sass = true
 build_search_index = false
 generate_feed = true
+ignored_content = [
+    "**/_*.{png,svg}",  # unoptimized images
+]
 
 # theme is inlined
 # theme = "apollo"

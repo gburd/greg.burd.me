@@ -29,6 +29,8 @@
             buildPhase = ''
               optimize-images
               zola build --drafts
+              # zola's ignored_content setting doesn't work in static/
+              rm -rf public/image/_favicon.svg
             '';
             installPhase = ''
               cp -r public $out
