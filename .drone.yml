@@ -1,0 +1,24 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: nix build
+    image: nixos/nix
+    volumes:
+      - name: result
+        path: ./result/
+    commands:
+      - nix build
+
+  - name: netlify deploy
+    image: lucap/netlify
+    volumes:
+      - name: result
+        path: ./result/
+    settings:
+      token:
+        from_secret: netlify_token
+      site_id:
+        from_secret: netlify_site_id
+      path: ./result/
