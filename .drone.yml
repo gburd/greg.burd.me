@@ -7,23 +7,23 @@ steps:
     image: nixos/nix
     volumes:
       - name: site
-        path: /site_data/
+        path: /site/
     commands:
       - >
         nix \
           --extra-experimental-features nix-command \
           --extra-experimental-features flakes \
           build
-      - cp -r result /site_data/site
+      - cp -r result/* /site
 
   - name: netlify deploy
     image: lucap/drone-netlify
     volumes:
       - name: site
-        path: /site_data/
+        path: /site/
     settings:
       token:
         from_secret: netlify_token
       site_id:
         from_secret: netlify_site_id
-      path: /site_data/site
+      path: /site
