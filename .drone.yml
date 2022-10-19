@@ -16,7 +16,7 @@ steps:
           build
 
   - name: netlify deploy
-    image: lucap/netlify
+    image: lucap/drone-netlify
     volumes:
       - name: result
         path: ./result/
