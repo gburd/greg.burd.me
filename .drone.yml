@@ -9,7 +9,7 @@ steps:
       - name: result
         path: ./result/
     commands:
-      - nix build
+      - nix --experimental-features nix-command --experimental-features flakes build
 
   - name: netlify deploy
     image: lucap/netlify
