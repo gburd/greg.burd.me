@@ -16,7 +16,7 @@ steps:
       CACHIX_AUTH_TOKEN:
         from_secret: cachix_auth_token
     commands:
-      - nix-env --install --attribute nixpkgs.cachix nixpkgs.jq
+      - nix-env --install --attr nixpkgs.cachix nixpkgs.jq
       - cachix use $CACHE_NAME
       - >
         $NIX flake archive --json
