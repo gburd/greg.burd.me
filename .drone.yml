@@ -4,7 +4,6 @@ name: default
 
 environment:
   NIX: nix --extra-experimental-features nix-command --extra-experimental-features flakes
-  CACHE_NAME: mat
 
 steps:
   - name: nix build
@@ -12,20 +11,8 @@ steps:
     volumes:
       - name: site
         path: /site
-    environment:
-      CACHIX_AUTH_TOKEN:
-        from_secret: cachix_auth_token
     commands:
-      - nix-env --install --attr nixpkgs.cachix nixpkgs.jq
-      - cachix use $CACHE_NAME
-      - >
-        $NIX flake archive --json
-        | jq -r '.path,(.inputs|to_entries[].value.path)'
-        | cachix push $CACHE_NAME
-      - >
-        $NIX build
-        | jq -r '.[].outputs | to_entries[].value'
-        | cachix push $CACHE_NAME
+      - $NIX build
       - cp -r result/* /site/
 
   - name: netlify deploy
