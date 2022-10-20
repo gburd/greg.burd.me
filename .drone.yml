@@ -3,7 +3,7 @@ type: docker
 name: default
 
 environment:
-  NIX: nix --experimental-features 'nix-command flakes ca-derivations'
+  NIX: nix --experimental-features "nix-command flakes ca-derivations"
   CACHE_NAME: mat
 
 steps:
