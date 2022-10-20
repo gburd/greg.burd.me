@@ -1,21 +1,23 @@
 local Volume = { name: 'site', path: '/site' };
-local NetlifyStep(env, prod) = {
-  name: 'netlify deploy ' + env,
-  image: 'internetmat/drone-netlify',
-  volumes: [Volume],
-  settings: {
-    token: { from_secret: 'netlify_token' },
-    site: { from_secret: 'netlify_site_id' },
-    path: '/site',
-    prod: prod,
-  },
-  when: if prod then {
-    event: ['promote'],
-    target: ['prod'],
-  } else {
-    target: { exclude: ['prod'] },
-  },
-};
+local NetlifyStep(env) =
+  local prod = env == 'production';
+  {
+    name: 'netlify deploy ' + env,
+    image: 'internetmat/drone-netlify',
+    volumes: [Volume],
+    settings: {
+      token: { from_secret: 'netlify_token' },
+      site: { from_secret: 'netlify_site_id' },
+      path: '/site',
+      prod: prod,
+    },
+    when: if prod then {
+      event: ['promote'],
+      target: ['production'],
+    } else {
+      target: { exclude: ['production'] },
+    },
+  };
 {
   kind: 'pipeline',
   type: 'docker',
@@ -37,7 +39,7 @@ local NetlifyStep(env, prod) = {
         'cp -r result/* /site/',
       ],
     },
-    NetlifyStep('staging', false),
-    NetlifyStep('prod', true),
+    NetlifyStep('staging'),
+    NetlifyStep('production'),
   ],
 }

@@ -46,4 +46,15 @@
       allow-popups-to-escape-sandbox
     '''
 
+[context.deploy-preview]
+  [[headers]]
+      for = "/*"
+
+      [headers.values]
+        Permissions-Policy = "interest-cohort=()"
+        Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+        X-Content-Type-Options = "nosniff"
+        X-Frame-Options = "DENY"
+        Referrer-Policy = "no-referrer"
+        Content-Security-Policy = ""
 
