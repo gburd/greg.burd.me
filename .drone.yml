@@ -2,7 +2,18 @@ kind: pipeline
 type: docker
 name: default
 
+environment:
+  NIX: nix --extra-experimental-features 'nix-command flakes ca-derivations'
+  CACHE_NAME: mat
+  CACHIX_AUTH_TOKEN:
+    from_secret: cachix_auth_token
+
 steps:
+  - name: set up cachix
+    image: nixos/nix
+    commands:
+      - $NIX profile install nixpkgs#cachix
+      - cachix use $CACHE_NAME
   - name: nix build
     image: nixos/nix
     volumes:
@@ -10,10 +21,13 @@ steps:
         path: /site
     commands:
       - >
-        nix \
-          --extra-experimental-features nix-command \
-          --extra-experimental-features flakes \
-          build
+        $NIX flake archive --json \
+        | jq -r '.path,(.inputs|to_entries[].value.path)' \
+        | cachix push $CACHE_NAME
+      - >
+        $NIX build \
+        | jq -r '.[].outputs | to_entries[].value' \
+        | cachix push $CACHE_NAME
       - cp -r result/* /site/
 
   - name: netlify deploy
