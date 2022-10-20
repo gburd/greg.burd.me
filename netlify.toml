@@ -51,7 +51,6 @@
       for = "/*"
 
       [headers.values]
-        Foo = "Bar"
         Permissions-Policy = "interest-cohort=()"
         Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
         X-Content-Type-Options = "nosniff"
