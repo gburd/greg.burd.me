@@ -9,6 +9,10 @@ local NetlifyStep(env, prod) = {
     path: '/site',
     prod: prod,
   },
+  when: if prod then {
+    event: ['promote'],
+    target: ['prod'],
+  },
 };
 {
   kind: 'pipeline',
