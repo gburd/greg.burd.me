@@ -5,12 +5,13 @@ name: default
 environment:
   NIX: nix --extra-experimental-features 'nix-command flakes ca-derivations'
   CACHE_NAME: mat
-  CACHIX_AUTH_TOKEN:
-    from_secret: cachix_auth_token
 
 steps:
   - name: set up cachix
     image: nixos/nix
+    environment:
+      CACHIX_AUTH_TOKEN:
+        from_secret: cachix_auth_token
     commands:
       - $NIX profile install nixpkgs#cachix
       - cachix use $CACHE_NAME
