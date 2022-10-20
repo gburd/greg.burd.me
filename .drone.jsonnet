@@ -12,6 +12,8 @@ local NetlifyStep(env, prod) = {
   when: if prod then {
     event: ['promote'],
     target: ['prod'],
+  } else {
+    target: { exclude: ['prod'] },
   },
 };
 {
