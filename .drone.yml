@@ -3,7 +3,7 @@ type: docker
 name: default
 
 environment:
-  NIX: nix --extra-experimental-features nix-command --extra-experimental-features flakes --extra-experimental-features ca-derivations
+  NIX: nix --extra-experimental-features nix-command --extra-experimental-features flakes
   CACHE_NAME: mat
 
 steps:
@@ -16,15 +16,15 @@ steps:
       CACHIX_AUTH_TOKEN:
         from_secret: cachix_auth_token
     commands:
-      - $NIX profile install nixpkgs#cachix nixpkgs#jq
+      - nix-env --install --attribute nixpkgs.cachix nixpkgs.jq
       - cachix use $CACHE_NAME
       - >
-        $NIX flake archive --json \
-        | jq -r '.path,(.inputs|to_entries[].value.path)' \
+        $NIX flake archive --json
+        | jq -r '.path,(.inputs|to_entries[].value.path)'
         | cachix push $CACHE_NAME
       - >
-        $NIX build \
-        | jq -r '.[].outputs | to_entries[].value' \
+        $NIX build
+        | jq -r '.[].outputs | to_entries[].value'
         | cachix push $CACHE_NAME
       - cp -r result/* /site/
 
