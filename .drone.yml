@@ -7,21 +7,17 @@ environment:
   CACHE_NAME: mat
 
 steps:
-  - name: set up cachix
-    image: nixos/nix
-    environment:
-      CACHIX_AUTH_TOKEN:
-        from_secret: cachix_auth_token
-    commands:
-      - $NIX profile install nixpkgs#cachix
-      - cachix use $CACHE_NAME
   - name: nix build
     image: nixos/nix
     volumes:
       - name: site
         path: /site
+    environment:
+      CACHIX_AUTH_TOKEN:
+        from_secret: cachix_auth_token
     commands:
-      - $NIX profile install nixpkgs#jq
+      - $NIX profile install nixpkgs#cachix nixpkgs#jq
+      - cachix use $CACHE_NAME
       - >
         $NIX flake archive --json \
         | jq -r '.path,(.inputs|to_entries[].value.path)' \
