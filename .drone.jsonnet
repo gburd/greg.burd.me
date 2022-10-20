@@ -1,4 +1,23 @@
 local Volume = { name: 'site', path: '/site' };
+local WhenProd(prod) = if prod then {
+  event: ['promote'],
+  target: ['production'],
+} else {
+  target: { exclude: ['production'] },
+};
+local NixStep(env) =
+  local prod = env == 'production';
+  local output = if prod then '' else ' .#staging-site';
+  {
+    name: 'nix build ' + env,
+    image: 'nixos/nix',
+    volumes: [Volume],
+    commands: [
+      '$NIX build' + output,
+      'cp -r result/* /site/',
+    ],
+    when: WhenProd(prod),
+  };
 local NetlifyStep(env) =
   local prod = env == 'production';
   {
@@ -11,12 +30,7 @@ local NetlifyStep(env) =
       path: '/site',
       prod: prod,
     },
-    when: if prod then {
-      event: ['promote'],
-      target: ['production'],
-    } else {
-      target: { exclude: ['production'] },
-    },
+    when: WhenProd(prod),
   };
 {
   kind: 'pipeline',
@@ -30,15 +44,8 @@ local NetlifyStep(env) =
   volumes: [{ name: 'site', temp: {} }],
 
   steps: [
-    {
-      name: 'nix build',
-      image: 'nixos/nix',
-      volumes: [Volume],
-      commands: [
-        '$NIX build',
-        'cp -r result/* /site/',
-      ],
-    },
+    NixStep('staging'),
+    NixStep('production'),
     NetlifyStep('staging'),
     NetlifyStep('production'),
   ],

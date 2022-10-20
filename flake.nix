@@ -36,6 +36,14 @@
               cp -r public $out
             '';
           };
+          packages.staging-site = config.packages.default.overrideAttrs (_: {
+            buildPhase = ''
+              optimize-images
+              zola build --drafts --base_url $DEPLOY_PRIME_URL
+              # zola's ignored_content setting doesn't work in static/
+              rm -rf public/image/_favicon.svg
+            '';
+          });
           devShells.default = with pkgs; mkShell {
             packages = [ optimize-images zola ];
             shellHook = linkFonts;
