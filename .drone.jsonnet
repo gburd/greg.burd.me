@@ -32,6 +32,6 @@ local NetlifyStep(env, prod) = {
       ],
     },
     NetlifyStep('staging', false),
-    NetlifyStep('staging', true),
+    NetlifyStep('prod', true),
   ],
 }
