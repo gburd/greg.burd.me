@@ -13,7 +13,6 @@ steps:
       CACHIX_AUTH_TOKEN:
         from_secret: cachix_auth_token
     commands:
-      - echo $NIX
       - $NIX profile install nixpkgs#cachix
       - cachix use $CACHE_NAME
   - name: nix build
@@ -22,6 +21,7 @@ steps:
       - name: site
         path: /site
     commands:
+      - $NIX profile install nixpkgs#jq
       - >
         $NIX flake archive --json \
         | jq -r '.path,(.inputs|to_entries[].value.path)' \
