@@ -21,14 +21,15 @@
           buildSite = { prod }:
             let
               inherit (pkgs.lib) optionalString;
+              ifStaging = optionalString (!prod);
               rev = if (self ? rev) then self.rev else "dirty";
             in
             ''
               optimize-images
-              ${optionalString (!prod) "BASE_URL=https://${rev}--mat-services.netlify.app"}
-              zola build --drafts ${optionalString (!prod) "--base-url $BASE_URL"}
+              ${ifStaging "BASE_URL=https://${rev}--mat-services.netlify.app"}
+              zola build --drafts ${ifStaging "--base-url $BASE_URL"}
               # zola's ignored_content setting doesn't work in static/
-              cp headers/${if prod then "production" else "staging"} public/_headers
+              ${ifStaging "cp headers/staging public/_headers"}
               rm -rf public/image/_favicon.svg
             '';
         in

@@ -27,6 +27,7 @@ local NetlifyStep(env) =
     settings: {
       token: { from_secret: 'netlify_token' },
       site: { from_secret: 'netlify_site_id' },
+      alias: env,
       path: '/site',
       prod: prod,
     },
