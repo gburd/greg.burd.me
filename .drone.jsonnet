@@ -23,6 +23,7 @@ local NetlifyStep(env) =
   {
     name: 'netlify deploy ' + env,
     image: 'internetmat/drone-netlify:latest',
+    pull: 'always',
     volumes: [Volume],
     settings: {
       token: { from_secret: 'netlify_token' },
