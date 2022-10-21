@@ -15,14 +15,17 @@
   {% for font in config.extra.fonts %}
   {% for style in ["Bold", "BoldItalic", "Italic", "Regular"] %}
   {% set font_path = '/font/' ~ font.path ~ '/' ~ font.name ~ '-' ~ style ~ '.woff2' %}
-  <link rel="preload" href="{{ font_path }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ get_url(path=font_path, trailing_slash=false) }}" as="font" type="font/woff2"
+    crossorigin>
   {% endfor %}
   {% endfor %}
   <link href="{{ get_url(path='style/fonts.css', cachebust=true) }}" rel="stylesheet preload" as="style" />
 
   {# RSS #}
+  {% block rss %}
   <link rel="alternate" type="application/atom+xml" title="{{ config.title }}"
     href="{{ get_url(path='atom.xml', trailing_slash=false) }}">
+  {% endblock %}
 
   {# Theme #}
   <link rel="stylesheet preload" as="style" type="text/css"
