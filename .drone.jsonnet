@@ -10,7 +10,7 @@ local NixStep(env) =
   local output = if prod then '' else ' .#staging-site';
   {
     name: 'nix build ' + env,
-    image: 'nixos/nix',
+    image: 'nixos/nix:latest',
     volumes: [Volume],
     commands: [
       '$NIX build' + output,
@@ -22,7 +22,7 @@ local NetlifyStep(env) =
   local prod = env == 'production';
   {
     name: 'netlify deploy ' + env,
-    image: 'internetmat/drone-netlify',
+    image: 'internetmat/drone-netlify:latest',
     volumes: [Volume],
     settings: {
       token: { from_secret: 'netlify_token' },
