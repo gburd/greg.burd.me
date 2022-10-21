@@ -31,6 +31,7 @@ local NetlifyStep(env) =
       alias: env,
       path: '/site',
       prod: prod,
+      debug: true,
     },
     when: WhenProd(prod),
   };
