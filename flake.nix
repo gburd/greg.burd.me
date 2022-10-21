@@ -26,7 +26,7 @@
             in
             ''
               optimize-images
-              ${ifStaging "BASE_URL=https://${rev}--mat-services.netlify.app"}
+              ${ifStaging "BASE_URL=https://staging--mat-services.netlify.app"}
               zola build --drafts ${ifStaging "--base-url $BASE_URL"}
               # zola's ignored_content setting doesn't work in static/
               ${ifStaging "cp headers/staging public/_headers"}
