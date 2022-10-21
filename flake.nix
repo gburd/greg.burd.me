@@ -12,16 +12,20 @@
   outputs = { self, flake-parts, gitignore, ... }@inputs:
     flake-parts.lib.mkFlake { inherit self; } {
       imports = [ ];
-      systems = inputs.nixpkgs.lib.systems.flakeExposed;
+      systems = [ "x86_64-linux" "aarch64-darwin" ];
       perSystem = { config, self', inputs', pkgs, system, ... }:
         let
           inherit (gitignore.lib) gitignoreSource;
           inherit (pkgs.callPackage ./nix { }) fonts optimize-images;
           inherit (fonts) copyFonts linkFonts;
           buildSite = { prod }:
-            let inherit (pkgs.lib) optionalString; in ''
+            let
+              inherit (pkgs.lib) optionalString;
+              rev = if (self ? rev) then self.rev else "dirty";
+            in
+            ''
               optimize-images
-              ${optionalString (!prod) "BASE_URL=https://$DRONE_COMMIT_SHA--mat-services.netlify.app"}
+              ${optionalString (!prod) "BASE_URL=https://${rev}--mat-services.netlify.app"}
               zola build --drafts ${optionalString (!prod) "--base-url $BASE_URL"}
               # zola's ignored_content setting doesn't work in static/
               rm -rf public/image/_favicon.svg
@@ -30,9 +34,9 @@
         {
           packages.default = with pkgs; stdenv.mkDerivation {
             pname = "personal-site";
-            version = "2022-10-10";
+            version = "2022-10-20";
             src = gitignoreSource ./.;
-            nativeBuildInputs = [ git optimize-images zola ];
+            nativeBuildInputs = [ optimize-images zola ];
             configurePhase = copyFonts;
             buildPhase = buildSite { prod = true; };
             installPhase = ''
