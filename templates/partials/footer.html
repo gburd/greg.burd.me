@@ -1,8 +1,7 @@
 <footer>
   <div id="site-info">
     <p id="powered-by">
-      powered by <a href="https://getzola.org" target="_blank" rel="noopener noreferral">zola</a> + <a
-        href="https://github.com/not-matthias/apollo" target="_blank" rel="noopener noreferral">apollo</a>
+      powered by <a href="https://getzola.org" target="_blank" rel="noopener noreferral">zola</a> + <a href="https://github.com/not-matthias/apollo" target="_blank" rel="noopener noreferral">apollo</a>
       and
       <a href="https://nixos.org" target="_blank" rel="noopener noreferral">nix</a>.
     </p>
@@ -13,10 +12,9 @@
   <p id="copyright">
     &copy; 2022 mat ess.
   </p>
-  <script data-goatcounter="https://stats.mat.services/count" async src="//stats.mat.services/count.js"
-    crossorigin></script>
+  <script data-goatcounter="https://stats.mat.services/count" async src="//stats.mat.services/count.js" crossorigin></script>
   <noscript>
-    {% set current_path = current_path | default(value="/") %}
-    <img id=pixel src="https://stats.mat.services/count?p={{ current_path }}">
+    {%- set current_path = current_path | default(value="/") %}
+    <img id=pixel src="https://stats.mat.services/count?p={{ current_path | safe }}">
   </noscript>
 </footer>

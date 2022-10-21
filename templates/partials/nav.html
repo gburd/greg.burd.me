@@ -1,11 +1,12 @@
 <header>
   <div class="main brand">
-    <a href={{ config.base_url }}><img id="logo" src="{{ get_url(path=config.extra.favicon, cachebust=true) }}"
-        alt="" />{{ config.title }}</a>
+    <a href={{ config.base_url | safe }}>
+      <img id="logo" src="{{ get_url(path=config.extra.favicon, cachebust=true) }}" alt="circular logo" />
+      {{ config.title }}
+    </a>
   </div>
-
   <nav aria-label="Site navigation">
-    {% for menu in config.extra.menu %}
+    {%- for menu in config.extra.menu %}
     {%- set external = menu.external | default(value=false) -%}
     {%- if external %}
     <a href={{ menu.url }} target="_blank" rel="me noopener noreferrer">{{ menu.name }}</a>

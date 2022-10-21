@@ -6,20 +6,16 @@
 
 <body>
   <div class="content">
-    {% include "partials/nav.html" %}
-
-    {# Post page is the default #}
+    {% include "partials/nav.html" -%}
+    {#- Post page is the default #}
     <main class="inner">
-      {% block main_content %}
+      {%- block main_content -%}
       Nothing here?!
-      {% endblock main_content %}
+      {%- endblock main_content -%}
     </main>
-
-    {% block trailing_content %}
-
-    {% endblock trailing_content %}
-
-    {% include "partials/footer.html" %}
+    {% block trailing_content -%}
+    {%- endblock trailing_content %}
+    {%- include "partials/footer.html" %}
   </div>
 </body>
 

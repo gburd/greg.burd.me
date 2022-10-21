@@ -1,149 +1,129 @@
-{% macro list_posts(pages) %}
+{% macro list_posts(pages) -%}
 <ul>
   {%- for page in pages %}
   {%- if page.draft %}
-  {% continue %}
+  {%- continue -%}
   {% endif -%}
-
   <li class="post-list-item">
     <h2 class="title">
       <a href={{ page.permalink }}>{{page.title}}</a>
     </h2>
-
-    {% if page.description %}
+    {%- if page.description %}
     <div class="description">
       {{ page.description }}
     </div>
-    {% elif page.summary %}
+    {%- elif page.summary %}
     <div class="description">
       {{ page.summary }}&hellip;
     </div>
-    {% endif %}
-
+    {%- endif %}
     <div class="meta">
       posted on <time>{{ page.date | date(format="%Y-%m-%d") }}</time>
     </div>
-
-    {{ post_macros::tags(page=page) }}
-
-    <br />
+    {{- post_macros::tags(page=page) -}}
   </li>
-
   {% endfor -%}
 </ul>
-{% endmacro list_posts %}
+{% endmacro list_posts -%}
 
-{% macro tags(page) %}
+{%- macro tags(page) %}
 {%- if page.taxonomies and page.taxonomies.tags %}
 <span class="meta post-tags-inline">
   <span>tagged with </span>
   {%- for tag in page.taxonomies.tags %}
   <a class="post-tag" href="{{ get_taxonomy_url(kind='tags', name=tag) | safe }}">#{{ tag }}</a>
   {%- if not loop.last %},{% endif -%}
-  {% endfor -%}
+  {% endfor %}
 </span>
 {% endif -%}
-{% endmacro tags %}
+{% endmacro tags -%}
 
-{% macro page_header(title) %}
-<h1 class="page-header">
-  {{ title }}<span class="primary-color header-dot">.</span>
-</h1>
-{% endmacro content %}
+{%- macro page_header(title) -%}
+<h1 class="page-header">{{ title }}<span class="primary-color header-dot">.</span></h1>
+{%- endmacro content %}
 
 {% macro content(page) %}
 <article>
   <div class="title">
     {{ post_macros::page_header(title=page.title) }}
-
-    {% if page.date %}
+    {%- if page.date %}
     <div class="meta">
       Posted on <time>{{ page.date | date(format="%Y-%m-%d") }}</time>
-
-      {% if page.draft %}
+      {%- if page.draft %}
       <span class="draft-label">DRAFT</span>
-      {% endif %}
+      {% endif -%}
     </div>
     {% if page.updated %}
     <div class="meta">
       Updated on <time>{{ page.updated | date(format="%Y-%m-%d") }}</time>
     </div>
-    {% endif %}
+    {% endif -%}
     <div class="meta">
       {{ page.word_count }} words, {{ page.reading_time }} minute read
     </div>
-    {% endif %}
+    {% endif -%}
   </div>
-
-  {% if page.extra.hero %}
+  {%- if page.extra.hero %}
   <figure>
-    <img width=1024 height=512 class="hero" alt="{{ page.extra.heroPrompt }} - generated using Stable Diffusion"
-      src=hero.webp />
+    <img width=1024 height=512 class="hero" alt="{{ page.extra.heroPrompt }} - generated using Stable Diffusion" src=hero.webp />
     <figcaption>
       <p><i>{{ page.extra.heroPrompt }}</i> - generated using Stable Diffusion</p>
     </figcaption>
   </figure>
-  {% endif %}
-
-  {% if page.extra.tldr %}
+  {% endif -%}
+  {%- if page.extra.tldr %}
   <div class="tldr">
     <strong>tl;dr:</strong>
     {{ page.extra.tldr }}
   </div>
-  {% endif %}
-
+  {% endif -%}
   {# Optional table of contents #}
-  {% if page.extra.toc | default(value=false) %}
-  {% if page.toc %}
+  {%- if page.extra.toc | default(value=false) %}
+  {%- if page.toc -%}
   <h2>Table of Contents</h2>
   <ul>
-    {% for h1 in page.toc %}
+    {%- for h1 in page.toc %}
     <li>
       <a href="{{ h1.permalink | safe }}">{{ h1.title }}</a>
-      {% if h1.children %}
+      {%- if h1.children %}
       <ul>
-        {% for h2 in h1.children %}
+        {%- for h2 in h1.children %}
         <li>
           <a href="{{ h2.permalink | safe }}">{{ h2.title }}</a>
         </li>
-
-        {% if h2.children %}
+        {%- if h2.children %}
         <ul>
-          {% for h3 in h2.children %}
+          {%- for h3 in h2.children %}
           <li>
             <a href="{{ h3.permalink | safe }}">{{ h3.title }}</a>
           </li>
-          {% endfor %}
+          {% endfor -%}
         </ul>
-        {% endif %}
-        {% endfor %}
+        {% endif -%}
+        {% endfor -%}
       </ul>
-      {% endif %}
+      {% endif -%}
     </li>
-    {% endfor %}
+    {% endfor -%}
   </ul>
-  {% endif %}
-  {% endif %}
-
+  {%- endif -%}
+  {% endif -%}
   <section class="body">
-    {{ page.content | safe }}
+    {{ page.content | safe -}}
   </section>
-
-  {% if page.taxonomies and page.taxonomies.tags %}
+  {%- if page.taxonomies and page.taxonomies.tags %}
   <div class="post-tags">
     <span class="meta" id="tagged-with-label">this post is tagged with</span>
     <nav class="nav tags" aria-labelledby="tagged-with-label">
       <ul class="tags">
-        {% for tag in page.taxonomies.tags %}
+        {%- for tag in page.taxonomies.tags -%}
         <li>
-          <a href="{{ get_taxonomy_url(kind='tags', name=tag) | safe }}">
-            #{{ tag }}
-          </a>
+          <a href="{{ get_taxonomy_url(kind='tags', name=tag) | safe }}">#{{ tag }}</a>
         </li>
-        {% endfor %}
+        {% endfor -%}
       </ul>
     </nav>
   </div>
-  {% endif %}
+  {% endif -%}
 </article>
-{% endmacro content %}
+{% endmacro content -%}

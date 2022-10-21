@@ -3,74 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  {% set current_path = current_path | default(value="/") %}
-
+  {%- set current_path = current_path | default(value="/") -%}
   {# Favicon #}
-  {% if config.extra.favicon %}
-  {% set favicon_ext = config.extra.favicon | split(pat=".") | last %}
+  {%- if config.extra.favicon -%}
+  {%- set favicon_ext = config.extra.favicon | split(pat=".") | last -%}
   <link rel="icon" type="image/{{ favicon_ext }}" href="{{ get_url(path=config.extra.favicon, cachebust=true) }}" />
-  {% endif %}
-
-  {% for font in config.extra.fonts %}
-  {% for style in ["Bold", "BoldItalic", "Italic", "Regular"] %}
+  {%- endif -%}
+  {% for font in config.extra.fonts -%}
+  {% for style in ["Bold", "BoldItalic", "Italic", "Regular"] -%}
   {% set font_path = '/font/' ~ font.path ~ '/' ~ font.name ~ '-' ~ style ~ '.woff2' %}
-  <link rel="preload" href="{{ get_url(path=font_path, trailing_slash=false) }}" as="font" type="font/woff2"
-    crossorigin>
-  {% endfor %}
-  {% endfor %}
+  <link rel="preload" href="{{ get_url(path=font_path, trailing_slash=false) }}" as="font" type="font/woff2" crossorigin>
+  {%- endfor %}
+  {%- endfor %}
   <link href="{{ get_url(path='style/fonts.css', cachebust=true) }}" rel="stylesheet preload" as="style" />
-
   {# RSS #}
-  {% block rss %}
-  <link rel="alternate" type="application/atom+xml" title="{{ config.title }}"
-    href="{{ get_url(path='atom.xml', trailing_slash=false) }}">
-  {% endblock %}
-
+  {%- block rss -%}
+  <link rel="alternate" type="application/atom+xml" title="{{ config.title }}" href="{{ get_url(path='atom.xml', trailing_slash=false) }}">
+  {%- endblock -%}
   {# Theme #}
-  <link rel="stylesheet preload" as="style" type="text/css"
-    href="{{ get_url(path='style/theme/light.css', cachebust=true) }}" />
-  <link rel="stylesheet preload" as="style" type="text/css"
-    href="{{ get_url(path='style/theme/dark.css', cachebust=true) }}" media="(prefers-color-scheme: dark)" />
-
-  <link rel="stylesheet preload" as="style" type="text/css" media="screen"
-    href="{{ get_url(path='style/main.css', cachebust=true) }}" />
-
-  {% if config.extra.stylesheets %}
-  {% for stylesheet in config.extra.stylesheets %}
+  <link rel="stylesheet preload" as="style" type="text/css" href="{{ get_url(path='style/theme/light.css', cachebust=true) }}" />
+  <link rel="stylesheet preload" as="style" type="text/css" href="{{ get_url(path='style/theme/dark.css', cachebust=true) }}" media="(prefers-color-scheme: dark)" />
+  <link rel="stylesheet preload" as="style" type="text/css" media="screen" href="{{ get_url(path='style/main.css', cachebust=true) }}" />
+  {%- if config.extra.stylesheets -%}
+  {%- for stylesheet in config.extra.stylesheets -%}
   <link rel="stylesheet" href="{{ get_url(path=stylesheet, cachebust=true) }}">
-  {% endfor %}
-  {% endif %}
-
-  {% if current_path == "/" %}
-  {% set current_title = config.title | default(value="home") %}
-  {% set current_description = "the personal site of mat ess" %}
-  {% set hero = false %}
-  {% else %}
-  {% set current_title = page.title | default(value=config.title) | default(value="post") %}
-  {% set current_description = page.description | default(value="from the personal site of mat ess") %}
-  {% set hero = page.extra.hero | default(value=false) %}
-  {% endif %}
-
+  {%- endfor -%}
+  {%- endif -%}
+  {%- if current_path == "/" -%}
+  {%- set current_title = config.title | default(value="home") -%}
+  {%- set current_description = "the personal site of mat ess" -%}
+  {%- set hero = false -%}
+  {%- else -%}
+  {%- set current_title = page.title | default(value=config.title) | default(value="post") -%}
+  {%- set current_description = page.description | default(value="from the personal site of mat ess") -%}
+  {%- set hero = page.extra.hero | default(value=false) -%}
+  {%- endif -%}
   {# Meta links #}
   <title>{{ current_title }}</title>
   <link rel="canonical" href="{{ get_url(path=current_path) }}" />
   <meta name="title" content="{{ current_title }}">
   <meta name="description" content="{{ current_description }}">
-
-  {# Open Graph / Facebook #}
+  {#- Open Graph / Facebook #}
   <meta property="og:type" content="website">
   <meta property="og:title" content="{{ current_title }}">
   <meta property="og:description" content="{{ current_description }}">
-  {% if hero %}
+  {%- if hero -%}
   <meta property="og:image" content="{{ get_url(path=current_path) }}/hero.webp">
-  {% endif %}
-
-  {# Twitter #}
+  {%- endif -%}
+  {#- Twitter #}
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:title" content="{{ current_title }}">
   <meta property="twitter:description" content="{{ current_description }}">
-  {% if hero %}
+  {%- if hero -%}
   <meta property="twitter:image" content="{{ get_url(path=current_path) }}/hero.webp">
-  {% endif %}
+  {%- endif %}
 </head>
