@@ -6,7 +6,7 @@
   {% endif -%}
   <li class="post-list-item">
     <h2 class="title">
-      <a href={{ page.permalink }}>{{page.title}}</a>
+      <a href={{ page.permalink | safe }}>{{ page.title }}</a>
     </h2>
     {%- if page.description %}
     <div class="description">
