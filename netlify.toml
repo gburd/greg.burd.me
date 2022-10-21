@@ -12,32 +12,6 @@
   to = "https://mat.services/:splat"
   force = true
 
-# per asset caching
-
-[[headers]]
-  for = "/font/*"
-  [headers.values]
-    # a year
-    Cache-Control = "public, max-age=31536000"
-
-[[headers]]
-  for = "/image/*"
-  [headers.values]
-    # a month
-    Cache-Control = "public, max-age=2592000"
-
-[[headers]]
-  for = "/*.webp"
-  [headers.values]
-    # a month
-    Cache-Control = "public, max-age=2592000"
-
-[[headers]]
-  for = "/style/*"
-  [headers.values]
-    # a week
-    Cache-Control = "public, max-age=604800"
-
 [[headers]]
   for = "/*"
 
@@ -73,3 +47,29 @@
       allow-popups 
       allow-popups-to-escape-sandbox
     '''
+
+# per asset caching
+
+[[headers]]
+  for = "/font/*"
+  [headers.values]
+    # a year
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "/image/*"
+  [headers.values]
+    # a month
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "/*.webp"
+  [headers.values]
+    # a month
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "/style/*"
+  [headers.values]
+    # a week
+    Cache-Control = "public, max-age=604800"
