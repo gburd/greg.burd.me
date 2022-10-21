@@ -28,8 +28,8 @@
               optimize-images
               ${ifStaging "BASE_URL=https://staging--mat-services.netlify.app"}
               zola build --drafts ${ifStaging "--base-url $BASE_URL"}
+              # ${ifStaging "cp headers/staging public/_headers"}
               # zola's ignored_content setting doesn't work in static/
-              ${ifStaging "cp headers/staging public/_headers"}
               rm -rf public/image/_favicon.svg
             '';
         in
