@@ -28,6 +28,7 @@
               ${optionalString (!prod) "BASE_URL=https://${rev}--mat-services.netlify.app"}
               zola build --drafts ${optionalString (!prod) "--base-url $BASE_URL"}
               # zola's ignored_content setting doesn't work in static/
+              cp headers/${if prod then "production" else "staging"} public/_headers
               rm -rf public/image/_favicon.svg
             '';
         in
