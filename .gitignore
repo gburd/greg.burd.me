@@ -4,7 +4,7 @@ public/
 result
 
 # ignore folders where we link in files from the nix store
-themes/
+extra/
 static/font/
 static/style/fonts.css
 

@@ -7,6 +7,9 @@
     flake-parts.inputs.nixpkgs.follows = "nixpkgs";
     gitignore.url = "github:hercules-ci/gitignore.nix";
     gitignore.inputs.nixpkgs.follows = "nixpkgs";
+
+    caddyfile-syntax.url = "github:caddyserver/sublimetext";
+    caddyfile-syntax.flake = false;
   };
 
   outputs = { self, flake-parts, gitignore, ... }@inputs:
@@ -18,6 +21,7 @@
           inherit (gitignore.lib) gitignoreSource;
           inherit (pkgs.callPackage ./nix { }) fonts optimize-images;
           inherit (fonts) copyFonts linkFonts;
+          caddyfile-syntax = "${inputs.caddyfile-syntax}/Caddyfile.sublime-syntax";
           buildSite = { prod }:
             let
               inherit (pkgs.lib) optionalString;
@@ -26,9 +30,7 @@
             in
             ''
               optimize-images
-              ${ifStaging "BASE_URL=https://staging--mat-services.netlify.app"}
-              zola build --drafts ${ifStaging "--base-url $BASE_URL"}
-              ${ifStaging "cp headers/staging public/_headers"}
+              zola build --drafts ${ifStaging "--base-url https://staging--mat-services.netlify.app"}
               # zola's ignored_content setting doesn't work in static/
               rm -rf public/image/_favicon.svg
             '';
@@ -39,7 +41,10 @@
             version = "2022-10-20";
             src = gitignoreSource ./.;
             nativeBuildInputs = [ optimize-images zola ];
-            configurePhase = copyFonts;
+            configurePhase = copyFonts + ''
+              mkdir -p extra/syntax
+              cp ${caddyfile-syntax} extra/syntax
+            '';
             buildPhase = buildSite { prod = true; };
             installPhase = ''
               cp -r public $out
@@ -50,7 +55,10 @@
           });
           devShells.default = with pkgs; mkShell {
             packages = [ optimize-images zola ];
-            shellHook = linkFonts;
+            shellHook = linkFonts + ''
+              mkdir -p extra/syntax
+              ln -snf ${caddyfile-syntax} extra/syntax
+            '';
           };
         };
     };

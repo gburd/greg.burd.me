@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "caddyfile-syntax": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1505794400,
+        "narHash": "sha256-GFOZz2QI776q76HKcW8wBpLBoqYo5JgU8QX3f7r3viY=",
+        "owner": "caddyserver",
+        "repo": "sublimetext",
+        "rev": "893b6c71603931e79ade5a6588e9b0b5428c61f4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "caddyserver",
+        "repo": "sublimetext",
+        "type": "github"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs": [
@@ -58,6 +74,7 @@
     },
     "root": {
       "inputs": {
+        "caddyfile-syntax": "caddyfile-syntax",
         "flake-parts": "flake-parts",
         "gitignore": "gitignore",
         "nixpkgs": "nixpkgs"

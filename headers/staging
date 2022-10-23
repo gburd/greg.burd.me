@@ -1,6 +1,0 @@
-/*
-  Permissions-Policy: interest-cohort=()
-  X-Content-Type-Options: nosniff
-  X-Frame-Options: DENY
-  Referrer-Policy: no-referrer
-  Content-Security-Policy: default-src *;

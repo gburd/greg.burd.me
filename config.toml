@@ -20,6 +20,9 @@ taxonomies = [
 [markdown]
 highlight_code = true
 highlight_theme = "zenburn"
+extra_syntaxes_and_themes = [
+    "extra/syntax/"
+]
 render_emoji = false
 external_links_target_blank = true
 external_links_no_referrer = true
