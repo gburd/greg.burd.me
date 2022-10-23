@@ -19,7 +19,7 @@
       perSystem = { config, self', inputs', pkgs, system, ... }:
         let
           inherit (gitignore.lib) gitignoreSource;
-          inherit (pkgs.callPackage ./nix { }) fonts optimize-images;
+          inherit (pkgs.callPackage ./nix { }) fonts optimize-images update-date;
           inherit (fonts) copyFonts linkFonts;
           caddyfile-syntax = "${inputs.caddyfile-syntax}/Caddyfile.sublime-syntax";
           buildSite = { prod }:
@@ -40,7 +40,7 @@
             pname = "personal-site";
             version = "2022-10-23";
             src = gitignoreSource ./.;
-            nativeBuildInputs = [ optimize-images zola ];
+            nativeBuildInputs = [ optimize-images update-date zola ];
             configurePhase = copyFonts + ''
               mkdir -p extra/syntax
               cp ${caddyfile-syntax} extra/syntax
@@ -54,7 +54,7 @@
             buildPhase = buildSite { prod = false; };
           });
           devShells.default = with pkgs; mkShell {
-            packages = [ optimize-images zola ];
+            packages = [ optimize-images update-date zola ];
             shellHook = linkFonts + ''
               mkdir -p extra/syntax
               ln -snf ${caddyfile-syntax} extra/syntax
