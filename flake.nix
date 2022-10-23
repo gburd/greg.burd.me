@@ -38,7 +38,7 @@
         {
           packages.default = with pkgs; stdenv.mkDerivation {
             pname = "personal-site";
-            version = "2022-10-20";
+            version = "2022-10-23";
             src = gitignoreSource ./.;
             nativeBuildInputs = [ optimize-images zola ];
             configurePhase = copyFonts + ''

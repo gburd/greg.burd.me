@@ -22,7 +22,7 @@
     Permissions-Policy = "interest-cohort=()"
     # enable HSTS
     Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
-    # disable clients from sniffing the media type
+    # prevent clients from sniffing the media type
     X-Content-Type-Options = "nosniff"
     # clickjacking protection
     X-Frame-Options = "DENY"
@@ -30,13 +30,13 @@
     Referrer-Policy = "no-referrer"
     # content security policy
     # style-src 'unsafe-inline': syntax highlighting in codefences
-    # sandbox allow-popups: enable target="_blank" links to open in new tabs
+    # sandbox allow-popups*: enable target="_blank" links to open in new tabs
     Content-Security-Policy = '''
     default-src 'none';
-    img-src 'self' https://mat.services https://stats.mat.services;
-    style-src 'self' https://mat.services 'unsafe-inline';
-    font-src 'self' https://mat.services;
-    script-src 'self' https://mat.services https://stats.mat.services;
+    img-src 'self' https://stats.mat.services;
+    style-src 'self' 'unsafe-inline';
+    font-src 'self';
+    script-src 'sha256-a8rh6u3maZ6JiY6w6zsLlw9OUQf2tFPUX3t1/BV+RKc=' 'strict-dynamic';
     form-action 'none';
     frame-ancestors 'none';
     base-uri 'none';
