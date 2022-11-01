@@ -9,7 +9,13 @@
 
 [[redirects]]
   from = "https://mat-services.netlify.app/*"
-  to = "https://mat.services/:splat"
+  to = "https://www.mat.services/:splat"
+  force = true
+
+[[redirects]]
+  # avoid http -> https -> www double redirect
+  from = "http://mat.services"
+  to = "https://www.mat.services/:splat"
   force = true
 
 [[headers]]
