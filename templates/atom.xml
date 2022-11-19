@@ -30,13 +30,11 @@
 		<updated>{{ page.updated | default(value=page.date) | date(format="%+") }}</updated>
 		<link rel="alternate" href="{{ page.permalink | safe }}" type="text/html"/>
 		<id>{{ page.permalink | safe }}</id>
-		<summary type="html">
-			<![CDATA[
-				{{- post_macros::hero(page=page) -}}
-				{{ page.description | default(value="") -}}
-			]]>
+		<summary>
+			{{ page.description | safe | default(value="a post from mat's blog.") -}}
 		</summary>
 		<content type="html">
+			<![CDATA[{{ post_macros::hero(page=page) }}]]>
 			{{ page.content }}
 		</content>
 	</entry>
