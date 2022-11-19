@@ -33,7 +33,7 @@
               zola build --drafts ${ifStaging "--base-url https://staging--mat-services.netlify.app"}
               # zola's ignored_content setting doesn't work in static/
               rm -rf public/image/_favicon.svg
-              cp public/image/favicon.svg public/favicon.svg
+              convert public/image/favicon.svg -resize 64x64 public/favicon.ico
             '';
         in
         {
@@ -41,7 +41,7 @@
             pname = "personal-site";
             version = "2022-10-23";
             src = gitignoreSource ./.;
-            nativeBuildInputs = [ optimize-images update-date zola ];
+            nativeBuildInputs = [ imagemagick optimize-images update-date zola ];
             configurePhase = copyFonts + ''
               mkdir -p extra/syntax
               cp ${caddyfile-syntax} extra/syntax
