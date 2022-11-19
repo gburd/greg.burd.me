@@ -33,8 +33,6 @@
 		<summary>{{ page.description | default(value="a post from mat's blog.") | safe }}</summary>
 		<content type="html">
 			{%- if page.extra.hero %}
-			<![CDATA[<meta property="og:image" content="{{ get_url(path=page.path) }}/hero.webp">]]>
-			<![CDATA[<meta property="twitter:image" content="{{ get_url(path=page.path) }}/hero.webp">]]>
 			<![CDATA[{{ post_macros::hero(page=page) }}]]>
 			{% endif -%}
 			{{ page.content }}
