@@ -13,7 +13,7 @@ heroPrompt = "A rogue program hacking through the firewall, in the style of Tron
 
 > While many readers will be very familiar with the concept of a function and the idea of parameterizing some piece of code or data, others might appreciate a bit of background. [Take a look at the appendix for a tangential explainer of some fundamental ideas referenced throughout this post.](#appendix)
 
-<div id=jumpback />
+<div id=jumpback></div>
 
 From outside of a flake's Nix expression, the flake is a black box, a mapping from its input sources to the artifacts that it outputs. There is no built-in way to pass an arbitrary value, a boolean flag or string, from the command line in order to override a deeply nested configuration embedded in your flake. In most cases, this is fine, and you can work around many apparent needs for a one off override by building separate outputs for different purposes. Your flakes will probably come out better designed if you can use them strictly as intended.
 

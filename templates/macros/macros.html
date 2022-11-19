@@ -63,14 +63,7 @@
     </div>
     {% endif -%}
   </div>
-  {%- if page.extra.hero %}
-  <figure>
-    <img width=1024 height=512 class="hero" alt="{{ page.extra.heroPrompt }} - generated using Stable Diffusion" src=hero.webp />
-    <figcaption>
-      <p><i>{{ page.extra.heroPrompt }}</i> - generated using Stable Diffusion</p>
-    </figcaption>
-  </figure>
-  {% endif -%}
+  {{ post_macros::hero(page=page) }}
   {%- if page.extra.tldr %}
   <div class="tldr">
     <strong>tl;dr:</strong>
@@ -127,3 +120,14 @@
   {% endif -%}
 </article>
 {% endmacro content -%}
+
+{% macro hero(page) %}
+{%- if page.extra.hero %}
+  <figure>
+    <img width=1024 height=512 class="hero" alt="{{ page.extra.heroPrompt }} - generated using Stable Diffusion" src=hero.webp />
+    <figcaption>
+      <p><i>{{ page.extra.heroPrompt }}</i> - generated using Stable Diffusion</p>
+    </figcaption>
+  </figure>
+{% endif -%}
+{% endmacro hero -%}
