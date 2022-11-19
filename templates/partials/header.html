@@ -16,7 +16,7 @@
   {%- endfor %}
   {%- endfor %}
   <link href="{{ get_url(path='style/fonts.css', cachebust=true) }}" rel="stylesheet preload" as="style" />
-  {# RSS #}
+  {# Atom #}
   {%- block rss -%}
   <link rel="alternate" type="application/atom+xml" title="{{ config.title }}" href="{{ get_url(path='atom.xml', trailing_slash=false) }}">
   {%- endblock -%}
