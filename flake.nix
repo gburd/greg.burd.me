@@ -33,7 +33,7 @@
               zola build --drafts ${ifStaging "--base-url https://staging--mat-services.netlify.app"}
               # zola's ignored_content setting doesn't work in static/
               rm -rf public/image/_favicon.svg
-              convert public/image/favicon.svg -resize 64x64 public/favicon.ico
+              convert public/image/favicon.svg -resize 256x256 public/favicon.ico
             '';
         in
         {
