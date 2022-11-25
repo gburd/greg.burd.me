@@ -39,7 +39,7 @@
         {
           packages.default = with pkgs; stdenv.mkDerivation {
             pname = "personal-site";
-            version = "2022-10-23";
+            version = "2022-11-25";
             src = gitignoreSource ./.;
             nativeBuildInputs = [ imagemagick optimize-images update-date zola ];
             configurePhase = copyFonts + ''
