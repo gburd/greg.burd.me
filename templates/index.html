@@ -4,11 +4,11 @@
 <span>also on
   {%- for me in config.extra.me_links -%}
   {%- if loop.last -%}
-  <span> and </span>
+  &#32;and&#32;
   {%- endif %}
   <a href="{{ me.url | safe }}" target="_blank" rel="me noopener noreferrer">{{ me.name }}</a>
   {%- if not loop.last -%},{%- else %}
 </span>
 {%- endif -%}
-{% endfor -%}
+{% endfor %}
 {% endblock main_content %}
