@@ -42,7 +42,7 @@
     img-src 'self' https://stats.mat.services;
     style-src 'self' 'unsafe-inline';
     font-src 'self';
-    script-src 'sha256-a8rh6u3maZ6JiY6w6zsLlw9OUQf2tFPUX3t1/BV+RKc=' 'strict-dynamic';
+    script-src 'strict-dynamic' 'sha256-a8rh6u3maZ6JiY6w6zsLlw9OUQf2tFPUX3t1/BV+RKc=';
     form-action 'none';
     frame-ancestors 'none';
     base-uri 'none';
