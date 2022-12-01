@@ -1,7 +1,7 @@
-+++
-title = "selected projects"
-path = "projects"
-+++
+---
+title: "selected projects"
+path: "projects"
+---
 
 ## gemini for rust
 `gemini` is a rust crate providing a small set of types useful for working with the Gemini protocol

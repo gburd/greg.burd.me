@@ -1,10 +1,10 @@
-+++
-title = "diy code hosting with gitea and fly.io"
-date = "2022-08-07"
-updated = "2022-09-04"
-[taxonomies]
-tags = ["git", "gitea", "fly.io"]
-+++
+---
+title: "diy code hosting with gitea and fly.io"
+date: "2022-08-07"
+updated: "2022-09-04"
+taxonomies:
+  tags: ["git", "gitea", "fly.io"]
+---
 
 ## Setting the Scene
 Inspired by the [Give Up Github campaign](https://sfconservancy.org/GiveUpGitHub/), I recently decided I wanted to spin up my own instance of [Gitea](https://gitea.io/). There are free (as in beer), free (as in freedom), public instances of Gitea and other FOSS-leaning code forges, but self-hosted Gitea struck me as a nice way to take even a bit more ownership over my own code.
@@ -50,14 +50,14 @@ mkdir gitea; cd gitea
 Next up, we create our app configuration and register it with Fly.io. `flyctl` takes care of this for us in a single command, `flyctl launch`. The command will prompt you interactively for some input, but here we'll just pass some flags directly:
 ```bash
 flyctl launch \
-	# use the official Gitea docker image \
-	--image gitea/gitea:latest \
-	# give our instance a unique name, this will be used to generate a development hostname like gitea-mat-services.fly.dev \
-	--name gitea-mat-services \
-	# region where the app runs, don't supply this option if you want to interactively choose a region \
-	--region ewr \
-	# don't immediately deploy, we need to edit our fly.toml first \
-	--no-deploy
+  # use the official Gitea docker image \
+  --image gitea/gitea:latest \
+  # give our instance a unique name, this will be used to generate a development hostname like gitea-mat-services.fly.dev \
+  --name gitea-mat-services \
+  # region where the app runs, don't supply this option if you want to interactively choose a region \
+  --region ewr \
+  # don't immediately deploy, we need to edit our fly.toml first \
+  --no-deploy
 
 # don't forget to commit!
 git add fly.toml

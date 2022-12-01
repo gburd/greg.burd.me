@@ -1,13 +1,13 @@
-+++
-title = "now on netlify"
-date = "2022-10-16"
-description = "a short update regarding me packing up my static site and moving from fly.io to netlify"
-[taxonomies]
-tags = ["static-site", "netlify"]
-[extra]
-hero = true
-heroPrompt = "A man packing up and leaving home to move to the city, luggage and boxes outside of his house, a moving truck idling in his driveway, gorgeous illustration, high quality art, masterpiece"
-+++
+---
+title: "now on netlify"
+date: "2022-10-16"
+description: "a short update regarding me packing up my static site and moving from fly.io to netlify"
+taxonomies:
+  tags: ["static-site", "netlify"]
+extra:
+  hero: true
+  heroPrompt: "A man packing up and leaving home to move to the city, luggage and boxes outside of his house, a moving truck idling in his driveway, gorgeous illustration, high quality art, masterpiece"
+---
 
 a short update today, and one that (unfortunately) obsoletes a lot of the work I put into [my last post on static site hosting](@/posts/static-site-with-nix-and-caddy/index.md): this site is now hosted on netlify! after [my most recent article](@/posts/command-line-flake-arguments/index.md) ran into some accessibility issues for people outside of my fly.io deployment region, I decided to minimize the moving parts involved in keeping the site running. i moved my static content over to [netlify](https://www.netlify.com/), a well-liked PaaS for deploying webapps and static sites (they also offer other things I don't care about, such as "Serverless" and FaaS offerings). [netlify's configuration file](https://docs.netlify.com/configure-builds/file-based-configuration/) supports all the same headers and redirects options that I was using in caddy, so the transition was extremely smooth.
 

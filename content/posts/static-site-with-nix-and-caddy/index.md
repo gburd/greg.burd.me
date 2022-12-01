@@ -1,10 +1,10 @@
-+++
-title = "hosting a static site on fly.io with nix and caddy"
-date = "2022-09-04"
-updated = "2022-10-17"
-[taxonomies]
-tags = ["static-site", "nix", "caddy", "fly.io"]
-+++
+---
+title: "hosting a static site on fly.io with nix and caddy"
+date: "2022-09-04"
+updated: "2022-10-17"
+taxonomies:
+  tags: ["static-site", "nix", "caddy", "fly.io"]
+---
 
 **UPDATE**
 most of the information on this page is no longer accurate for my blog, [which has since moved to netlify](@/posts/now-on-netlify/index.md). it should still work, or get you close, but i recommend checking out [`nix-fly-template`](https://github.com/LutrisEng/nix-fly-template).

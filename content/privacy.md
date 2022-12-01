@@ -1,7 +1,7 @@
-+++
-title = "privacy notice"
-path = "privacy"
-+++
+---
+title: "privacy notice"
+path: "privacy"
+---
 
 ## summary
 i want to respect your pivacy, while still getting some insight into the readership of my site. no "personally identifiable information" or "sensitive information" is collected, and no data is shared with external parties.

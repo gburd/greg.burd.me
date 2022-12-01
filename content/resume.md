@@ -1,7 +1,7 @@
-+++
-title = "resume"
-path = "resume"
-+++
+---
+title: "resume"
+path: "resume"
+---
 
 ## skills
 ### professional 

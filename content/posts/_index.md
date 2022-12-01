@@ -1,5 +1,5 @@
-+++
-path = "posts"
-template = "posts.html"
-sort_by = "date"
-+++
+---
+path: "posts"
+template: "posts.html"
+sort_by: "date"
+---
