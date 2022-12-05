@@ -9,7 +9,7 @@ path: "projects"
 - [`gemini` source on the pijul nest](https://nest.pijul.com/mat/gemini-projects:main/5II6T7YETYWUI.BEAAA)
 
 ## mat.services
-the static sources for this site are publicly available. likely the most interesting files for inspection are the nix configurations.
+the static sources for this site are publicly available. perhaps the most interesting files for inspection are the nix configurations.
 - [`mat.services` on git.mat.services](https://git.mat.services/mat/mat.services)
 
 ## other projects
