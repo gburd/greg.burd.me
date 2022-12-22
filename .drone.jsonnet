@@ -35,6 +35,7 @@ local BootstrapStep =
     'for file in /nix/store/*; do',
     '    item=$(basename $file)',
     '    if [ ! -e /cache/$item ]; then',
+    '        echo "moving $file to cache"',
     '        cp -r $file /cache/$item',
     '    fi',
     'done',
