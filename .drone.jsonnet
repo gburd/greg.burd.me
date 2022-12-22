@@ -1,6 +1,6 @@
 local PROD = 'production';
 local STAGE = 'staging';
-local NIX = 'nix --store --eval-store local /tmp/cache --extra-experimental-features nix-command --extra-experimental-features flakes';
+local NIX = 'nix --extra-experimental-features nix-command --extra-experimental-features flakes --eval-store local --store /tmp/cache ';
 local VOLUMES = [
   { name: 'site', path: '/site' },
   { name: 'cache', path: '/tmp/cache' },
@@ -45,7 +45,7 @@ local NixStep(env) =
   local prod = env == PROD;
   local output = if prod then '' else ' .#staging-site';
   Step(env, 'nix build', [
-    NIX + ' build' + output,
+    NIX + 'build' + output,
     'cp -r result/* /site/',
   ]);
 
@@ -53,7 +53,7 @@ local DeployStep(env) =
   local prod = env == PROD;
   local options = if prod then '--prod' else '--alias staging';
   Step(env, 'netlify deploy', [
-    NIX + ' profile install nixpkgs#netlify-cli',
+    NIX + 'profile install nixpkgs#netlify-cli',
     'netlify deploy -d /site --auth $NETLIFY_TOKEN --site $NETLIFY_SITE_ID --message "$DRONE_COMMIT_MESSAGE" ' + options,
   ], Secrets(['NETLIFY_TOKEN', 'NETLIFY_SITE_ID']));
 
