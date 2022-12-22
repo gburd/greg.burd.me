@@ -1,6 +1,6 @@
 local PROD = 'production';
 local STAGE = 'staging';
-local NIX = 'nix --store /tmp/cache --extra-experimental-features nix-command --extra-experimental-features flakes';
+local NIX = 'nix --eval-store local --store /tmp/cache --extra-experimental-features nix-command --extra-experimental-features flakes';
 local VOLUMES = [
   { name: 'site', path: '/site' },
   { name: 'cache', path: '/tmp/cache' },
