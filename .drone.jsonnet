@@ -33,7 +33,7 @@ local NixStep(env) =
   local prod = env == PROD;
   local output = if prod then '' else ' .#staging-site';
   Step(env, 'nix build', [
-    'echo test',
+    'ls /nix/store',
     NIX + ' build' + output,
     'cp -r result/* /site/',
   ]);
