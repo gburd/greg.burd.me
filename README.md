@@ -1,6 +1,5 @@
 # mat.services
 ## my personal site
-[![Build Status](https://build.mat.services/api/badges/mat/mat.services/status.svg)](https://build.mat.services/mat/mat.services)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/3f5578c4-e3f5-4c22-abb5-29fd22f34b42/deploy-status)](https://app.netlify.com/sites/mat-services/deploys)
 
 built using zola and nix
