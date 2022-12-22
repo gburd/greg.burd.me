@@ -23,7 +23,7 @@ local Step(env, name, cmds, extras={}) =
     image: 'nixos/nix:latest',
     volumes: [
       { name: 'site', path: '/site' },
-      { name: 'cache', path: '/test' },
+      { name: 'cache', path: '/nix/store' },
     ],
     commands: cmds,
     when: WhenProd(prod),
@@ -57,12 +57,9 @@ local DeployStep(env) =
   ],
 
   steps: [
-    Step(STAGE, 'bootstrap test', [
-      'cp -r /nix/store/* /test',
-    ]),
-    // NixStep(STAGE),
-    // NixStep(PROD),
-    // DeployStep(STAGE),
-    // DeployStep(PROD),
+    NixStep(STAGE),
+    NixStep(PROD),
+    DeployStep(STAGE),
+    DeployStep(PROD),
   ],
 }
