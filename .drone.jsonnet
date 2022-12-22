@@ -1,6 +1,6 @@
 local PROD = 'production';
 local STAGE = 'staging';
-local NIX = 'nix --extra-experimental-features nix-command --extra-experimental-features flakes ';
+local NIX = 'nix --sandbox --extra-experimental-features nix-command --extra-experimental-features flakes ';
 local VOLUMES = [
   { name: 'site', path: '/site' },
   { name: 'cache', path: '/nix/store' },
@@ -28,6 +28,7 @@ local Step(env, name, cmds, extras={}, volumes=VOLUMES) =
     volumes: volumes,
     commands: cmds,
     when: WhenProd(prod),
+    privileged: true,
   } + extras;
 
 local BootstrapStep =
