@@ -1,6 +1,6 @@
 local PROD = 'production';
 local STAGE = 'staging';
-local NIX = 'nix --extra-experimental-features nix-command --extra-experimental-features flakes';
+local NIX = 'nix --store /tmp/cache --extra-experimental-features nix-command --extra-experimental-features flakes';
 
 local Secrets(secrets) = {
   environment: {
@@ -23,7 +23,7 @@ local Step(env, name, cmds, extras={}) =
     image: 'nixos/nix:latest',
     volumes: [
       { name: 'site', path: '/site' },
-      { name: 'cache', path: '/nix/store' },
+      { name: 'cache', path: '/tmp/cache' },
     ],
     commands: cmds,
     when: WhenProd(prod),
