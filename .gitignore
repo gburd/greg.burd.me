@@ -10,3 +10,6 @@ static/style/fonts.css
 
 # Local Netlify folder
 .netlify
+
+# local pre-commit config
+.pre-commit-config.yaml

@@ -1,4 +1,4 @@
-{ bc, libwebp, scour, writeShellScriptBin }:
+{ bc, imagemagick, libwebp, scour, writeShellScriptBin }:
 
 writeShellScriptBin "optimize-images" ''
   shopt -s globstar nullglob
@@ -14,4 +14,5 @@ writeShellScriptBin "optimize-images" ''
     pct=$(${bc}/bin/bc <<< "scale=1; $newsize * 100 / $oldsize")
     echo "size went from "$(($oldsize / 1024))"KB to "$(($newsize / 1024))"KB ("$pct"% as large as original)"
   done
+  ${imagemagick}/bin/convert static/image/favicon.svg -resize 256x256 static/favicon.ico
 ''

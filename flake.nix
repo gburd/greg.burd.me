@@ -4,19 +4,21 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    flake-parts.inputs.nixpkgs.follows = "nixpkgs";
     gitignore.url = "github:hercules-ci/gitignore.nix";
     gitignore.inputs.nixpkgs.follows = "nixpkgs";
+    pre-commit.url = "github:cachix/pre-commit-hooks.nix";
+    pre-commit.inputs.nixpkgs.follows = "nixpkgs";
+    pre-commit.inputs.gitignore.follows = "gitignore";
 
     caddyfile-syntax.url = "github:caddyserver/sublimetext";
     caddyfile-syntax.flake = false;
   };
 
-  outputs = { self, flake-parts, gitignore, ... }@inputs:
+  outputs = { self, flake-parts, gitignore, pre-commit, ... }@inputs:
     flake-parts.lib.mkFlake { inherit self; } {
-      imports = [ ];
+      imports = [ pre-commit.flakeModule ];
       systems = [ "x86_64-linux" "aarch64-darwin" ];
-      perSystem = { config, self', inputs', pkgs, system, ... }:
+      perSystem = { config, pkgs, ... }:
         let
           inherit (gitignore.lib) gitignoreSource;
           inherit (pkgs.callPackage ./nix { }) fonts optimize-images update-date;
@@ -24,25 +26,23 @@
           caddyfile-syntax = "${inputs.caddyfile-syntax}/Caddyfile.sublime-syntax";
           buildSite = { prod }:
             let
-              inherit (pkgs.lib) optionalString;
-              ifStaging = optionalString (!prod);
-              rev = if (self ? rev) then self.rev else "dirty";
+              ifStaging = pkgs.lib.optionalString (!prod);
             in
             ''
               optimize-images
               zola build --drafts ${ifStaging "--base-url https://staging--mat-services.netlify.app"}
               # zola's ignored_content setting doesn't work in static/
               rm -rf public/image/_favicon.svg
-              convert public/image/favicon.svg -resize 256x256 public/favicon.ico
             '';
         in
         {
           packages.default = with pkgs; stdenv.mkDerivation {
             pname = "personal-site";
-            version = "2022-11-25";
+            version = "2022-12-21";
             src = gitignoreSource ./.;
-            nativeBuildInputs = [ imagemagick optimize-images update-date zola ];
-            configurePhase = copyFonts + ''
+            nativeBuildInputs = [ optimize-images update-date zola ];
+            configurePhase = ''
+              ${copyFonts}
               mkdir -p extra/syntax
               cp ${caddyfile-syntax} extra/syntax
             '';
@@ -54,12 +54,25 @@
           packages.staging-site = config.packages.default.overrideAttrs (_: {
             buildPhase = buildSite { prod = false; };
           });
+          pre-commit.settings.hooks = {
+            # nix hooks
+            deadnix.enable = true;
+            nix-linter.enable = true;
+            nixpkgs-fmt.enable = true;
+            statix.enable = true;
+            # general hooks
+            typos.enable = true;
+            typos.excludes = [ "webp" "png" "svg" "ico" ];
+          };
           devShells.default = with pkgs; mkShell {
-            packages = [ optimize-images update-date zola ];
-            shellHook = linkFonts + ''
+            packages = [ jsonnet netlify-cli optimize-images update-date zola ];
+            shellHook = ''
+              ${config.pre-commit.installationScript}
+              ${linkFonts}
               mkdir -p extra/syntax
               ln -snf ${caddyfile-syntax} extra/syntax
             '';
+            inputsFrom = builtins.attrValues self.checks;
           };
         };
     };

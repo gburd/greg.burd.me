@@ -2,7 +2,6 @@
 , lib
 , stdenv
 , woff2
-, writeShellScriptBin
 , writeText
 }:
 let
@@ -45,7 +44,7 @@ rec {
     name = "font-${pathName name}";
     src = fetchFromGitHub {
       inherit owner repo rev sha256;
-      sparseCheckout = path;
+      sparseCheckout = [ path ];
     };
     nativeBuildInputs = [ woff2 ];
     buildPhase = ''
@@ -61,7 +60,7 @@ rec {
     font = fontDerivation fontSrc;
   };
   fonts = map fetchFont fontSrcs;
-  mkFontCss = { font, name, fileName, cssVar }:
+  mkFontCss = { name, fileName, cssVar, ... }:
     let path = pathName name; in ''
       @font-face {
         font-family: '${name}';

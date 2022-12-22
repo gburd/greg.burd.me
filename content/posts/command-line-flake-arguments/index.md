@@ -126,7 +126,7 @@ If software builds are functions, then Nix flakes are pure functions. Indeed, th
     builder.url = "...";
     source.url = "...";
   };
-  ouputs = { self, builder, source }: {
+  outputs = { self, builder, source }: {
     software = builder.build source;
   };
 }
