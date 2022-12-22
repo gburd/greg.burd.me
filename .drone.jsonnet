@@ -32,7 +32,7 @@ local DeployStep(env) =
   local prod = env == PROD;
   local options = if prod then '--prod' else '--alias staging';
   Step(env, 'netlify deploy', [
-    NIX + ' profile install netlify-cli',
+    NIX + ' profile install nixgpkgs#netlify-cli',
     'netlify deploy -d /site ' + options,
   ]);
 
