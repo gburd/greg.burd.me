@@ -23,7 +23,7 @@ local Step(env, name, cmds, extras={}) =
     image: 'nixos/nix:latest',
     volumes: [
       { name: 'site', path: '/site' },
-      // { name: 'cache', path: '/nix/store' },
+      { name: 'cache', path: '/nix/store' },
     ],
     commands: cmds,
     when: WhenProd(prod),
@@ -33,6 +33,7 @@ local NixStep(env) =
   local prod = env == PROD;
   local output = if prod then '' else ' .#staging-site';
   Step(env, 'nix build', [
+    'echo test',
     NIX + ' build' + output,
     'cp -r result/* /site/',
   ]);
