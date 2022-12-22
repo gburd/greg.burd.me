@@ -1,10 +1,6 @@
 local PROD = 'production';
 local STAGE = 'staging';
-local NIX = 'nix --sandbox --extra-experimental-features nix-command --extra-experimental-features flakes ';
-local VOLUMES = [
-  { name: 'site', path: '/site' },
-  { name: 'cache', path: '/nix/store' },
-];
+local NIX = 'nix --extra-experimental-features nix-command --extra-experimental-features flakes';
 
 local Secrets(secrets) = {
   environment: {
@@ -20,33 +16,24 @@ local WhenProd(prod) = if prod then {
   target: { exclude: [PROD] },
 };
 
-local Step(env, name, cmds, extras={}, volumes=VOLUMES) =
+local Step(env, name, cmds, extras={}) =
   local prod = env == PROD;
   {
     name: name + ' ' + env,
     image: 'nixos/nix:latest',
-    volumes: volumes,
+    volumes: [
+      { name: 'site', path: '/site' },
+      { name: 'cache', path: '/nix/store' },
+    ],
     commands: cmds,
     when: WhenProd(prod),
-    privileged: true,
   } + extras;
-
-local BootstrapStep =
-  Step(STAGE, 'bootrap nix', [
-    'for file in /nix/store/*; do',
-    '    item=$(basename $file)',
-    '    if [ ! -e /cache/$item ]; then',
-    '        echo "moving $file to cache"',
-    '        cp -r $file /cache/$item',
-    '    fi',
-    'done',
-  ], volumes=[{ name: 'cache', path: '/cache' }]);
 
 local NixStep(env) =
   local prod = env == PROD;
   local output = if prod then '' else ' .#staging-site';
   Step(env, 'nix build', [
-    NIX + 'build' + output,
+    NIX + ' build' + output,
     'cp -r result/* /site/',
   ]);
 
@@ -54,7 +41,7 @@ local DeployStep(env) =
   local prod = env == PROD;
   local options = if prod then '--prod' else '--alias staging';
   Step(env, 'netlify deploy', [
-    NIX + 'profile install nixpkgs#netlify-cli',
+    NIX + ' profile install nixpkgs#netlify-cli',
     'netlify deploy -d /site --auth $NETLIFY_TOKEN --site $NETLIFY_SITE_ID --message "$DRONE_COMMIT_MESSAGE" ' + options,
   ], Secrets(['NETLIFY_TOKEN', 'NETLIFY_SITE_ID']));
 
@@ -69,7 +56,6 @@ local DeployStep(env) =
   ],
 
   steps: [
-    BootstrapStep,
     NixStep(STAGE),
     NixStep(PROD),
     DeployStep(STAGE),
