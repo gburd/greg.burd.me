@@ -1,6 +1,10 @@
 local PROD = 'production';
 local STAGE = 'staging';
 local NIX = 'nix --store /tmp/cache --extra-experimental-features nix-command --extra-experimental-features flakes';
+local VOLUMES = [
+  { name: 'site', path: '/site' },
+  { name: 'cache', path: '/tmp/cache' },
+];
 
 local Secrets(secrets) = {
   environment: {
@@ -16,24 +20,30 @@ local WhenProd(prod) = if prod then {
   target: { exclude: [PROD] },
 };
 
-local Step(env, name, cmds, extras={}) =
+local Step(env, name, cmds, extras={}, volumes=VOLUMES) =
   local prod = env == PROD;
   {
     name: name + ' ' + env,
     image: 'nixos/nix:latest',
-    volumes: [
-      { name: 'site', path: '/site' },
-      { name: 'cache', path: '/tmp/cache' },
-    ],
+    volumes: volumes,
     commands: cmds,
     when: WhenProd(prod),
   } + extras;
+
+local BootstrapStep =
+  Step(STAGE, 'bootrap nix', [
+    'for file in /nix/store/*; do',
+    '    item=$(basename $file)',
+    '    if [ ! -e /cache/$item ]; then',
+    '        cp -r $file /cache/$item',
+    '    fi',
+    'done',
+  ], volumes=[{ name: 'cache', path: '/cache' }]);
 
 local NixStep(env) =
   local prod = env == PROD;
   local output = if prod then '' else ' .#staging-site';
   Step(env, 'nix build', [
-    'ls /nix/store',
     NIX + ' build' + output,
     'cp -r result/* /site/',
   ]);
@@ -57,6 +67,7 @@ local DeployStep(env) =
   ],
 
   steps: [
+    BootstrapStep,
     NixStep(STAGE),
     NixStep(PROD),
     DeployStep(STAGE),
