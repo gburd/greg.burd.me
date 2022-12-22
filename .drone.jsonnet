@@ -23,7 +23,7 @@ local Step(env, name, cmds, extras={}) =
     image: 'nixos/nix:latest',
     volumes: [
       { name: 'site', path: '/site' },
-      { name: 'cache', path: '/nix/store' },
+      // { name: 'cache', path: '/nix/store' },
     ],
     commands: cmds,
     when: WhenProd(prod),
