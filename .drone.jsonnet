@@ -1,54 +1,52 @@
-local Volume = { name: 'site', path: '/site' };
+local PROD = 'production';
+local STAGE = 'staging';
+local VOLUME = { name: 'site', path: '/site' };
+local NIX = 'nix --extra-experimental-features nix-command --extra-experimental-features flakes';
+
 local WhenProd(prod) = if prod then {
   event: ['promote'],
-  target: ['production'],
+  target: [PROD],
 } else {
-  target: { exclude: ['production'] },
+  target: { exclude: [PROD] },
 };
-local NixStep(env) =
-  local prod = env == 'production';
-  local output = if prod then '' else ' .#staging-site';
+
+local Step(env, name, cmds) =
+  local prod = env == PROD;
   {
-    name: 'nix build ' + env,
+    name: name + ' ' + env,
     image: 'nixos/nix:latest',
-    volumes: [Volume],
-    commands: [
-      '$NIX build' + output,
-      'cp -r result/* /site/',
-    ],
+    volumes: [VOLUME],
+    commands: cmds,
     when: WhenProd(prod),
   };
-local NetlifyStep(env) =
-  local prod = env == 'production';
-  {
-    name: 'netlify deploy ' + env,
-    image: 'internetmat/drone-netlify:latest',
-    pull: 'always',
-    volumes: [Volume],
-    settings: {
-      token: { from_secret: 'netlify_token' },
-      site: { from_secret: 'netlify_site_id' },
-      alias: env,
-      path: '/site',
-      prod: prod,
-    },
-    when: WhenProd(prod),
-  };
+
+local NixStep(env) =
+  local prod = env == PROD;
+  local output = if prod then '' else ' .#staging-site';
+  Step(env, 'nix build', [
+    NIX + ' build' + output,
+    'cp -r result/* /site/',
+  ]);
+
+local DeployStep(env) =
+  local prod = env == PROD;
+  local options = if prod then '--prod' else '--alias staging';
+  Step(env, 'netlify deploy', [
+    NIX + ' profile install netlify-cli',
+    'netlify deploy -d /site ' + options,
+  ]);
+
 {
   kind: 'pipeline',
   type: 'docker',
   name: 'default',
 
-  environment: {
-    NIX: 'nix --extra-experimental-features nix-command --extra-experimental-features flakes',
-  },
-
   volumes: [{ name: 'site', temp: {} }],
 
   steps: [
-    NixStep('staging'),
-    NixStep('production'),
-    NetlifyStep('staging'),
-    NetlifyStep('production'),
+    NixStep(STAGE),
+    NixStep(PROD),
+    DeployStep(STAGE),
+    DeployStep(PROD),
   ],
 }
