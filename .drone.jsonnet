@@ -1,6 +1,6 @@
 local PROD = 'production';
 local STAGE = 'staging';
-local NIX = 'nix --extra-experimental-features nix-command --extra-experimental-features flakes --eval-store local --store /tmp/cache ';
+local NIX = 'nix --extra-experimental-features nix-command --extra-experimental-features flakes ';
 local VOLUMES = [
   { name: 'site', path: '/site' },
   { name: 'cache', path: '/tmp/cache' },
@@ -45,7 +45,7 @@ local NixStep(env) =
   local prod = env == PROD;
   local output = if prod then '' else ' .#staging-site';
   Step(env, 'nix build', [
-    NIX + 'build' + output,
+    NIX + 'build --store /tmp/cache --eval-store local' + output,
     'cp -r result/* /site/',
   ]);
 
