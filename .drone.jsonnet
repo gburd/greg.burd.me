@@ -1,6 +1,6 @@
 local PROD = 'production';
 local STAGE = 'staging';
-local VOLUME = { name: 'site', path: '/site' };
+local VOLUMES = { name: 'site', path: '/site' };
 local NIX = 'nix --extra-experimental-features nix-command --extra-experimental-features flakes';
 
 local Secrets(secrets) = {
@@ -22,7 +22,10 @@ local Step(env, name, cmds, extras={}) =
   {
     name: name + ' ' + env,
     image: 'nixos/nix:latest',
-    volumes: [VOLUME],
+    volumes: [
+      { name: 'site', path: '/site' },
+      { name: 'cache', path: '/nix' },
+    ],
     commands: cmds,
     when: WhenProd(prod),
   } + extras;
@@ -48,7 +51,10 @@ local DeployStep(env) =
   type: 'docker',
   name: 'default',
 
-  volumes: [{ name: 'site', temp: {} }],
+  volumes: [
+    { name: 'site', temp: {} },
+    { name: 'cache', host: { path: '/data/nix' } },
+  ],
 
   steps: [
     NixStep(STAGE),
