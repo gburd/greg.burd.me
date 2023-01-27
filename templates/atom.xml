@@ -16,7 +16,7 @@
 	</author>
 	<link href="{{ feed_url | safe }}" rel="self" type="application/atom+xml"/>
 	<icon>{{ get_url(path=config.extra.favicon) }}</icon>
-	<rights>&#169; 2022 mat ess</rights>
+	<rights>&#169; 2022-2023 mat ess</rights>
 	<generator uri="https://www.getzola.org/">Zola</generator>
 	<updated>{{ last_updated | date(format="%+") }}</updated>
 	<id>{{ feed_url | safe }}</id>

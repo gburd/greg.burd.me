@@ -45,7 +45,6 @@ menu = [
 ]
 
 me_links = [
-    { name = "stereophonic.space", url = "https://stereophonic.space/mat" },
     { name = "pijul nest", url = "https://nest.pijul.com/mat" },
     { name = "lobste.rs", url = "https://lobste.rs/u/mat" },
     { name = "gitlab", url = "https://gitlab.com/matthewess" },
