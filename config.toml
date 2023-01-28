@@ -1,6 +1,6 @@
 base_url = "https://www.mat.services"
 title = "mat.services"
-description = "the personal website of matthew ess"
+description = "the personal website of mat ess"
 default_language = "en"
 
 compile_sass = true

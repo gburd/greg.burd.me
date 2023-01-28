@@ -3,7 +3,7 @@ title: "about me"
 path: "about"
 ---
 
-## matthew ess (they/them)
+## mat ess (they/them)
 i'm a 'software engineer'/'code monkey' by trade, currently employed by yelp inc in the engineering effectiveness department. my work is focused on improving the tooling used by other engineers at yelp to develop python services.
 
 [you can look at my resume here](/resume).
