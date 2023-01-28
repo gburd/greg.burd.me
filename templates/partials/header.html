@@ -22,6 +22,7 @@
   <link rel="stylesheet preload" as="style" type="text/css" href="{{ get_url(path='style/theme/light.css', cachebust=true) }}" />
   <link rel="stylesheet preload" as="style" type="text/css" href="{{ get_url(path='style/theme/dark.css', cachebust=true) }}" media="(prefers-color-scheme: dark)" />
   <link rel="stylesheet preload" as="style" type="text/css" media="screen" href="{{ get_url(path='style/main.css', cachebust=true) }}" />
+  <meta name="theme-color" content="lightcoral" />
   {%- if config.extra.stylesheets -%}
   {%- for stylesheet in config.extra.stylesheets -%}
   <link rel="stylesheet" href="{{ get_url(path=stylesheet, cachebust=true) }}">
