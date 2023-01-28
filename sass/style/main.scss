@@ -97,14 +97,19 @@ footer {
   margin: 2em;
   color: var(--text-1);
   font-size: 0.75em;
-  display: flex;
+}
 
-  #site-info {
-    flex: 1 0;
-  }
+@media (min-width: 500px) {
+  footer {
+    display: flex;
 
-  #copyright {
-    align-items: flex-end;
+    #site-info {
+      flex: 1 0;
+    }
+
+    #copyright {
+      align-items: flex-end;
+    }
   }
 }
 
