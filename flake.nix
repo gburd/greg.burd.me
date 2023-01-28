@@ -38,7 +38,7 @@
         {
           packages.default = with pkgs; stdenv.mkDerivation {
             pname = "personal-site";
-            version = "2022-12-21";
+            version = "2023-01-27";
             src = gitignoreSource ./.;
             nativeBuildInputs = [ optimize-images update-date zola ];
             configurePhase = ''

@@ -11,12 +11,6 @@
   background-color: var(--primary-color);
 }
 
-::-moz-selection {
-  background: var(--primary-color);
-  color: var(--hover-color);
-  text-shadow: none;
-}
-
 ::selection {
   background: var(--primary-color);
   color: var(--hover-color);
@@ -40,14 +34,34 @@ blockquote {
 }
 
 a {
-  border-bottom: 3px solid var(--primary-color);
   color: inherit;
   text-decoration: none;
+  position: relative;
+  transition: all .2s ease-in;
 }
 
 a:hover {
-  background-color: var(--primary-color);
   color: var(--hover-color);
+  transition: all .2s ease;
+}
+
+a::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  z-index: -1;
+  bottom: -3px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: var(--primary-color);
+  transition: all .2s ease-in;
+}
+
+a:hover::after {
+  height: 100%;
+  transform: translateY(-3px);
+  transition: all .2s ease;
 }
 
 time {
