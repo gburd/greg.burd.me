@@ -69,13 +69,21 @@ nav a {
 }
 
 // Footer
+html, body {
+  box-sizing: border-box;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
 .content {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100%;
+  box-sizing: border-box;
 }
 
-div.inner {
+main.inner {
   flex-grow: 1;
 }
 
