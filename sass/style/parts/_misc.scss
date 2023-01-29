@@ -36,14 +36,25 @@ blockquote {
 a {
   color: inherit;
   text-decoration: none;
-  box-shadow: inset 0 -.15em 0 var(--primary-color);
-  transition: all .2s ease-in;
+  box-shadow: inset 0 -3px 0 var(--primary-color);
+  padding-bottom: 3px;
+  transition: all .1s ease-in;
 }
 
 a:hover {
   color: var(--hover-color);
-  box-shadow: inset 0 -1.15em 0 var(--primary-color);
-  transition: all .2s ease;
+  box-shadow: inset 0 -1.45em 0 var(--primary-color);
+  transition: all .3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a {
+    transition: none;
+  }
+
+  a:hover {
+    transition: none;
+  }
 }
 
 time {
