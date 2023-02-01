@@ -47,7 +47,7 @@ a:hover {
   transition: all .3s ease;
 }
 
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce), (any-hover: none) {
   a {
     transition: none;
   }
