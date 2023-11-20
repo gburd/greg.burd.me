@@ -1,0 +1,187 @@
+% Latex Curriculum Vitae Template
+%
+% Copyright (C) 2004-2009 Jason Blevins <jrblevin@sdf.lonestar.org>
+% http://jblevins.org/projects/cv-template/
+%
+% You may use use this document as a template to create your own CV
+% and you may redistribute the source code freely. No attribution is
+% required in any resulting documents. I do ask that you please leave
+% this notice and the above URL in the source code if you choose to
+% redistribute this file.
+%
+% INSTRUCTIONS:
+% pdflatex cv-us.tex
+
+\documentclass[letterpaper]{article}
+
+\usepackage{hyperref}
+\usepackage{geometry}
+
+% Comment the following lines to use the default Computer Modern font
+% instead of the Palatino font provided by the mathpazo package.
+% Remove the 'osf' bit if you don't like the old style figures.
+\usepackage[T1]{fontenc}
+\usepackage[sc,osf]{mathpazo}
+
+\usepackage{siunitx}
+
+% Set your name here
+\def\name{Gregory Burd}
+
+% Replace this with a link to your CV (as in
+% \def\footerlink{http://jblevins.org/projects/cv-template/})
+% if you like, or set it empty (as in \def\footerlink{}) to remove
+% the link in the footer:
+
+% \def\footerlink{http://gregburd.com/}
+
+% The following metadata will show up in the PDF properties
+\hypersetup{
+  colorlinks = true,
+  urlcolor = black,
+  pdfauthor = {\name},
+  pdfkeywords = {software, database},
+  pdftitle = {\name: Curriculum Vitae},
+  pdfsubject = {Curriculum Vitae},
+  pdfpagemode = UseNone
+}
+
+\geometry{
+  body={6.5in, 8.5in},
+  left=1.0in,
+  top=1.25in
+}
+
+% Customize page headers
+\pagestyle{myheadings}
+\markright{\name}
+\thispagestyle{empty}
+
+% Custom section fonts
+\usepackage{sectsty}
+\sectionfont{\rmfamily\mdseries\Large}
+\subsectionfont{\rmfamily\mdseries\itshape\large}
+
+% Other possible font commands include:
+% \ttfamily for teletype,
+% \sffamily for sans serif,
+% \bfseries for bold,
+% \scshape for small caps,
+% \normalsize, \large, \Large, \LARGE sizes.
+
+% Don't indent paragraphs.
+\setlength\parindent{0em}
+
+% Make lists without bullets
+\renewenvironment{itemize}{
+  \begin{list}{}{
+    \setlength{\leftmargin}{1.5em}
+  }
+}{
+  \end{list}
+}
+
+\begin{document}
+
+% Place name at left
+{\huge \name}
+
+% Alternatively, print name centered and bold:
+%\centerline{\huge \bf \name}
+
+\vspace{0.25in}
+
+\begin{minipage}{0.45\linewidth}
+  72 Lexington Ave \\
+  Cambridge, MA 02138-3337
+\end{minipage}
+\begin{minipage}{0.45\linewidth}
+  \begin{tabular}{ll}
+    Phone: & +1 (617) 869-0997 \\
+    Email: & \href{mailto:greg@burd.me}{\tt greg@burd.me} \\
+  \end{tabular}
+\end{minipage}
+
+\vspace{0.25in}
+
+\subsection*{Overview}
+
+Senior Staff Software Engineer with 30+ years experience in production environments from
+embedded to cloud-scale at all layers of the stack with a strong focus on data storage,
+consistency, and networking.  Depth of knowledge in writing code and operating and
+administering systems in production.  Comfortable in many roles, including
+individual contributor, architecture, technical lead, and product definition/management.
+
+\section*{Professional Skills}
+
+\begin{itemize}
+\item In-depth knowledge of operating systems, networking, and data storage
+\item Practical experience with distributed systems design, deployment, and maintenance at scale
+\item Experienced programmer in C, Scala, Java, Erlang, Elixir, Python
+\item Depth of knowledge in UNIX systems including Linux, BSD, Solaris, macOS (OS/X, NeXTSTEP)
+\item Excellent problem-solving skills, innovative yet well-reasoned solutions architect
+\item Strong communication skills including the production of technical materials
+\item Extensive knowledge of software engineering principles, tools, and languages
+\item Seasoned mentor, team member, and individual contributor
+\end{itemize}
+
+
+\section*{Employment}
+
+\begin{itemize}
+
+\item {\it Klar}, Director of Engineering -- Cambridge, MA -- July 2022 - current
+
+Reduced database infrastructure costs by 60\% and aligned costs with customer demand. Reduced database incidents from weekly to infrequent through education and hands-on changes to the ~100 microservices.  Introduced a new functions-style method for delivering on data engineering tasks reducing complexity for engineers better focused on analysis.
+
+\item {\it BlockFi}, Senior Staff Software Engineer -- Cambridge, MA -- June 2020 - June 2022
+
+Designed and delivered observability stack at BlockFi (logs, metrics, tracing, alerts), grew the team to 8 then handed it off to a team member I groomed and promoted. I joined the data storage team and oversaw the health of Postgres as well as other data engineering issues.
+
+\item {\it Humio}, Principal Software Engineer -- Cambridge, MA -- September 2018 - April 2020
+
+I worked on the backend team to create an innovative index-free filter-based storage system able to find needles spread across multi-petabyte archives of log and metric data by intelligently filtering data to reduce IO to the absolute minimum and then exploit modern CPU/memory architecture despite being on the JVM (Scala).
+
+\item {\it Onshape}, Principal Software Engineer, Architect -- Cambridge, MA -- January 2017 - October 2018
+
+I worked on data storage responsible for primary, object, and long-term storage as well as caching.  I was responsible for taking Onshape from the pre-launch/1.0 data architecture based entirely on MongoDB and MemcacheD to something that will provide more consistent performance at scale.  To that end, I authored a new client layer that used Cassandra while providing causal consistency and in-application caching and nesting transactions for accessing model objects via a friendly Java-based DSL (https://github.com/gburd/helenus and https://github.com/gburd/memcached-jcache).
+
+\item {\it Akamai Technologies}, Senior Software Development Engineer -- Cambridge, MA -- July 2015 - December 2016
+
+I was a member of the Labs group at Akamai. I owned the database component (design, implementation, deployment, automation, and ongoing management) for a WebRTC-based peer and multi-party video conferencing platform. In addition, I customized a Linux distro to provide an always-on, low-maintenance kiosk-style video-wall experience combining an Intel NUC and large television and deployed this into Akamai's lobby as well as other locations within the company.
+
+\item {\it Amazon AWS}, Senior Software Development Engineer -- Cambridge, MA -- July 2014 - July 2015
+
+I wrote and deployed software for the Storage Gateway service’s data and control plane as well as for the virtualized on-premise iSCSI gateway. I orchestrated the zero-downtime upgrade of thousands of customers remotely to mitigate the Bash ShellShock bug. I investigated and produced a design to incorporate de-duplication techniques to lower the overhead of storage and speed up the time to perform backups of customer data into the service’s data plane. I represented our service in weekly operations meetings and performed root cause analysis for many system failures.
+
+\item {\it Basho Technologies}, Software Architect and Product Manager -- Cambridge, MA -- Jul 2011 - Apr 2014
+
+I authored node-level data storage and asynchronous thread queues for Riak in Erlang and C. I identified TCP node-level communication using \si{\micro}TP. I built a layer to isolate Erlang’s BEAM virtual machine from native code to avoid “scheduler collapse”. I investigated alternatives to TCP for intra-node work, specifically reviewing  \si{\micro}TP (micro transport protocol, used by BitTorrent). I built a pure-Erlang local LSM-style ordered storage layer called HanoiDB and investigated other local storage alternatives.
+
+\item {\it Oracle Corporation}, Product Manager -- Burlington, MA -- Feb 2006 - Mar 2011
+
+\item {\it Sleepycat Software}, Software Engineer/Product Manager -- Boston, MA -- Jul 2002 - Feb 2006
+
+\item {\it KnowNow}, Software Engineer/Technical Alliance Manager -- Menlo Park, CA -- Dec 2000 - Jun 2002
+
+\item {\it Primix Solutions}, Software Engineer/Managing Consultant -- Watertown, MA -- Sep 1996 - Jun 1999
+
+\item {\it Sun Microsystems}, Software Engineer Member of Technical Staff (MTS-4) -- Bay Area, CA -- Jul 1999 - Nov 2000
+
+\item {\it Marble Associates}, Software Engineer/Consultant -- San Jose, CA then later Watertown, MA -- August 1993 - August 1996
+
+\item {\it NeXT Computer}, Developer Support Team -- Redwood City, CA -- May 1992 - September 1992
+
+\end{itemize}
+
+\bigskip
+
+% Footer
+\begin{center}
+  \begin{footnotesize}
+    Last updated: \today \\
+  \end{footnotesize}
+\end{center}
+
+\end{document}
+

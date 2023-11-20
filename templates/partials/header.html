@@ -30,11 +30,11 @@
   {%- endif -%}
   {%- if current_path == "/" -%}
   {%- set current_title = config.title | default(value="home") -%}
-  {%- set current_description = "the personal site of mat ess" -%}
+  {%- set current_description = "the personal site of greg(ory) burd" -%}
   {%- set hero = false -%}
   {%- else -%}
   {%- set current_title = page.title | default(value=config.title) | default(value="post") -%}
-  {%- set current_description = page.description | default(value="from the personal site of mat ess") -%}
+  {%- set current_description = page.description | default(value="from the personal site of greg(ory) burd") -%}
   {%- set hero = page.extra.hero | default(value=false) -%}
   {%- endif -%}
   {# Meta links #}

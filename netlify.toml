@@ -8,14 +8,14 @@
   port = 1111
 
 [[redirects]]
-  from = "https://mat-services.netlify.app/*"
-  to = "https://www.mat.services/:splat"
+  from = "https://burd-me.netlify.app/*"
+  to = "https://greg.burd.me/:splat"
   force = true
 
 [[redirects]]
   # avoid http -> https -> www double redirect
-  from = "http://mat.services"
-  to = "https://www.mat.services/:splat"
+  from = "http://burd.me"
+  to = "https://greg.burd.me/:splat"
   force = true
 
 [[headers]]
@@ -39,10 +39,10 @@
     # sandbox allow-popups*: enable target="_blank" links to open in new tabs
     Content-Security-Policy = '''
     default-src 'none';
-    img-src 'self' https://stats.mat.services;
+    img-src 'self' https://stats.burd.me;
     style-src 'self' 'unsafe-inline';
     font-src 'self';
-    script-src 'self' https://stats.mat.services;
+    script-src 'self' https://stats.burd.me;
     form-action 'none';
     frame-ancestors 'none';
     base-uri 'none';
@@ -50,7 +50,7 @@
     sandbox
       allow-same-origin
       allow-scripts
-      allow-popups 
+      allow-popups
       allow-popups-to-escape-sandbox
     '''
 

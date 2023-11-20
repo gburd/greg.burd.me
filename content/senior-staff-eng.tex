@@ -1,0 +1,182 @@
+% Latex Curriculum Vitae Template
+%
+% Copyright (C) 2004-2009 Jason Blevins <jrblevin@sdf.lonestar.org>
+% http://jblevins.org/projects/cv-template/
+%
+% You may use use this document as a template to create your own CV
+% and you may redistribute the source code freely. No attribution is
+% required in any resulting documents. I do ask that you please leave
+% this notice and the above URL in the source code if you choose to
+% redistribute this file.
+%
+% INSTRUCTIONS:
+% pdflatex cv-us.tex
+
+\documentclass[letterpaper]{article}
+
+\usepackage{hyperref}
+\usepackage{geometry}
+
+% Comment the following lines to use the default Computer Modern font
+% instead of the Palatino font provided by the mathpazo package.
+% Remove the 'osf' bit if you don't like the old style figures.
+\usepackage[T1]{fontenc}
+\usepackage[sc,osf]{mathpazo}
+
+\usepackage{siunitx}
+
+% Set your name here
+\def\name{Gregory Burd}
+
+% Replace this with a link to your CV (as in
+% \def\footerlink{http://jblevins.org/projects/cv-template/})
+% if you like, or set it empty (as in \def\footerlink{}) to remove
+% the link in the footer:
+
+% \def\footerlink{http://gregburd.com/}
+
+% The following metadata will show up in the PDF properties
+\hypersetup{
+  colorlinks = true,
+  urlcolor = black,
+  pdfauthor = {\name},
+  pdfkeywords = {software, database},
+  pdftitle = {\name: Curriculum Vitae},
+  pdfsubject = {Curriculum Vitae},
+  pdfpagemode = UseNone
+}
+
+\geometry{
+  body={6.5in, 8.5in},
+  left=1.0in,
+  top=1.25in
+}
+
+% Customize page headers
+\pagestyle{myheadings}
+\markright{\name}
+\thispagestyle{empty}
+
+% Custom section fonts
+\usepackage{sectsty}
+\sectionfont{\rmfamily\mdseries\Large}
+\subsectionfont{\rmfamily\mdseries\itshape\large}
+
+% Other possible font commands include:
+% \ttfamily for teletype,
+% \sffamily for sans serif,
+% \bfseries for bold,
+% \scshape for small caps,
+% \normalsize, \large, \Large, \LARGE sizes.
+
+% Don't indent paragraphs.
+\setlength\parindent{0em}
+
+% Make lists without bullets
+\renewenvironment{itemize}{
+  \begin{list}{}{
+    \setlength{\leftmargin}{1.5em}
+  }
+}{
+  \end{list}
+}
+
+\begin{document}
+
+% Place name at left
+{\huge \name}
+
+% Alternatively, print name centered and bold:
+%\centerline{\huge \bf \name}
+
+\vspace{0.25in}
+
+\begin{minipage}{0.45\linewidth}
+  72 Lexington Ave \\
+  Cambridge, MA 02138-3337
+\end{minipage}
+\begin{minipage}{0.45\linewidth}
+  \begin{tabular}{ll}
+    Phone: & +1 (617) 869-0997 \\
+    Email: & \href{mailto:greg@burd.me}{\tt greg@burd.me} \\
+  \end{tabular}
+\end{minipage}
+
+\vspace{0.25in}
+
+\section*{Overview}
+
+I am a consummate, lead-by-example data engineer with decades of experience designing, implementing, deploying, retrofitting, fire-fighting, and fixing data-centric systems. Recently my focus has been on data storage and backend systems at scale, demystifying relational database issues in production systems, and providing sage advice for application and systems design.  I live in both DevOps and engineering worlds, contributing to infrastructure as code and software projects, existing and greenfield.
+
+\section*{Experience}
+
+\begin{itemize}
+\item Dataflow: Kafka, Dagster, OpenFaaS, lakeFS, Java, Python
+\item Data Storage: SQL, Postgres, DuckDB, ksqlDB, MaterializeDB
+\item Languages: Java, Python, Terraform, Scala, Erlang/Elixir/BEAM
+\item Infrastructure: Terraform, Helm, Containers, Ansible, Bash, etc.
+\item Platform: Kubernetes, AWS, Linux, etc.
+\item AI/ML: Generative AI, LLM, ChatGPT
+\item Leadership: Team lead, Mentor, Advisor, and Individual Contributor
+\item Awards: 2020 ACM SIGMOD Systems Award, 2015 Akamai Wizards Award
+\end{itemize}
+
+
+\section*{Employment}
+
+\begin{itemize}
+
+\item {\it Klar}, Senior Staff Software Engineer -- Cambridge, MA -- July 2022 - current
+
+I administered the 30+ Postgres databases reducing incidents from weekly to none.  I redesigned all backend systems from ad-hoc code into functional dataflows orchestrated by Dagster jobs that consume Kafka events, access relational databases, communicate with 3rd party APIs, and allow for human/spreadsheet-driven business decisions when necessary.  I migrated our data warehouse from Redshift to files stored in lakeFS (Git for S3) buckets as partitioned Parquet. These are read by our OLAP workloads (DBT as well as other in-house code) via DuckDB, while streaming analytics are via ksqlDB or MaterializeDB. I reduced database infrastructure costs by two-thirds.
+
+\item {\it BlockFi}, Senior Staff Software Engineer -- Cambridge, MA -- June 2020 - June 2022
+
+I took ownership of the nascent observability stack and delivered (selected products, negotiated with vendors, implemented Terraform, and educated the company) a complete system for logs, metrics, tracing, and alerts.  Then I hired and mentored a team of 8 junior engineers/operators to own the systems, and promoted one to lead the team. I went on to help diagnose and fix issues in our singular instance of Postgres as our company went through explosive growth (and then contraction).
+
+\item {\it Humio}, Principal Software Engineer -- Cambridge, MA -- September 2018 - April 2020
+
+Humio is a log storage system similar to Splunk.  It uses Kafka in two ways, to queue and then partition the onslaught of log messages for scale-out processing and provide a CRDT-like map for cluster shared state.  I combined bloom filters and trigrams of ingested data and query terms to reduce the volume of data analyzed to its absolute minimum eliminating 99\% of I/O during query processing. This approach led to industry-leading streaming query speeds and completely eliminated the "high-cardinality" issues common in other systems.
+
+\item {\it Onshape}, Principal Software Engineer, Architect -- Cambridge, MA -- January 2017 - October 2018
+
+Onshape's hosted CAD system uses Git-like structure for 3D models. The storage and management of these, as well as operational data (users, accounts, etc.), were my responsibility. I owned fixing MongoDB scale-out issues while at Onshape and explored options such as Cassandra, Oracle NoSQL DB, CockroachDB (Relational), etc. as well as localized and distributed caching for this data.
+
+\item {\it Akamai Technologies}, Senior Software Development Engineer -- Cambridge, MA -- July 2015 - December 2016
+
+I was a member of the Labs group at Akamai where I owned the database component (design, implementation, deployment, automation, and ongoing management) for a WebRTC-based peer and multi-party video conferencing platform designed to scale out across Akamai's global network as a white-label video streaming service.  I earned the Akamai Wizards award in 2015 for designing methods to integrate DNSSEC and DANE into existing DNS systems at scale.
+
+\item {\it Amazon AWS}, Senior Software Development Engineer -- Cambridge, MA -- July 2014 - July 2015
+
+I wrote and deployed software for the Storage Gateway service's data and control plane as well as for the virtualized on-premise iSCSI gateway. I orchestrated the global upgrade of thousands of on-premise customer virtual machine instances.
+
+\item {\it Basho Technologies}, Senior Software Architect -- Cambridge, MA -- Jul 2011 - Apr 2014
+
+Basho's Riak is a distributed key/value system based on Amazon AWS Dynamo paper that formed the core concepts of S3.  At Basho, I owned the node-level data storage code which was based on early log-storage management code from Google called LevelDB.
+
+\item {\it Oracle Corporation}, Software Engineer, Berkeley DB -- Burlington, MA -- Feb 2006 - Mar 2011
+
+\item {\it Sleepycat Software}, Software Engineer, Berkeley DB -- Boston, MA -- Jul 2002 - Feb 2006
+
+\item {\it KnowNow}, Software Engineer -- Menlo Park, CA -- Dec 2000 - Jun 2002
+
+\item {\it Primix Solutions}, Software Engineer -- Watertown, MA -- Sep 1996 - Jun 1999
+
+\item {\it Sun Microsystems}, Software Engineer (MTS-4) -- Bay Area, CA -- Jul 1999 - Nov 2000
+
+\item {\it Marble Associates}, Software Engineer -- San Jose, CA then later Watertown, MA -- August 1993 - August 1996
+
+\item {\it NeXT Computer}, Developer Support Team -- Redwood City, CA -- May 1992 - September 1992
+
+\end{itemize}
+
+\bigskip
+
+% Footer
+\begin{center}
+  \begin{footnotesize}
+    Last updated: \today \\
+  \end{footnotesize}
+\end{center}
+
+\end{document}

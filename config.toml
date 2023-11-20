@@ -1,6 +1,6 @@
-base_url = "https://www.mat.services"
-title = "mat.services"
-description = "the personal website of mat ess"
+base_url = "https://greg.burd.me"
+title = "greg@burd.me"
+description = "Greg Burd's words, please ignore."
 default_language = "en"
 
 compile_sass = true
@@ -41,13 +41,15 @@ menu = [
     { name = "/posts", url = "@/posts/_index.md" },
     { name = "/projects", url = "@/projects.md" },
     { name = "/about", url = "@/about.md" },
-    { name = "git", url = "https://git.mat.services/mat", external = true },
+    { name = "git", url = "https://git.burd.me/greg", external = true },
 ]
 
 me_links = [
-    { name = "pijul nest", url = "https://nest.pijul.com/mat" },
-    { name = "lobste.rs", url = "https://lobste.rs/u/mat" },
-    { name = "gitlab", url = "https://gitlab.com/matthewess" },
-    { name = "github", url = "https://github.com/matthewess" },
+    { name = "keybase.io", url = "https://keybase.io/gregburd" },
+    { name = "lobste.rs", url = "https://lobste.rs/u/gregburd" },
+    { name = "news.ycombinator.com", url = "https://news.ycombinator.com/user?id=gregburd" },
+    { name = "github", url = "https://github.com/gburd" },
+    { name = "twitter", url = "https://twitter.com/gregburd" },
+    { name = "linkedin", url = "https://linkedin.com/in/gregburd" },
 ]
 

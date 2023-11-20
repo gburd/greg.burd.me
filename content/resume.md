@@ -4,7 +4,7 @@ path: "resume"
 ---
 
 ## skills
-### professional 
+### professional
 * python
 * relational databases
   * redshift

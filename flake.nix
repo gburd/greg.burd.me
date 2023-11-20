@@ -62,7 +62,7 @@
             statix.enable = true;
             # general hooks
             typos.enable = true;
-            typos.excludes = [ "webp" "png" "svg" "ico" ];
+            typos.excludes = [ "webp" "png" "svg" "ico" "pdf" ];
           };
           devShells.default = with pkgs; mkShell {
             packages = [ jsonnet netlify-cli optimize-images update-date zola ];

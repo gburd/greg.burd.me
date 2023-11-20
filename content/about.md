@@ -3,13 +3,16 @@ title: "about me"
 path: "about"
 ---
 
-## mat ess (they/them)
-i'm a 'software engineer'/'code monkey' by trade, currently employed by yelp inc in the engineering effectiveness department. my work is focused on improving the tooling used by other engineers at yelp to develop python services.
+## greg(ory) burd
+I'm a software engineer, have been for 30+ years.  Presently, I'm at Symas
+working on OpenLDAP and other related things.
 
-[you can look at my resume here](/resume).
+[you can look at my resume(cv) here](/resume).
 
-in my spare time, i try to research programming language theory and practice, hack on useful tools, and change the world. in reality, i spend a considerable amount of time consuming movies and television, but i'm always looking for inspiration and opportunities to pursue my passions.
+I don't have "spare time" (despite having a list of fun things I'd like to do
+when relaxing) because I have four children who are amazing, demanding, and way
+too much fun to ignore. :)
 
 ## contact
 
-email: mat@mat.services
+email: greg@burd.me
