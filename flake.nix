@@ -30,7 +30,7 @@
             in
             ''
               optimize-images
-              zola build --drafts ${ifStaging "--base-url https://staging--mat-services.netlify.app"}
+              zola build --drafts ${ifStaging "--base-url https://staging--burd-me.netlify.app"}
               # zola's ignored_content setting doesn't work in static/
               rm -rf public/image/_favicon.svg
             '';
