@@ -23,7 +23,7 @@ highlight_theme = "zenburn"
 extra_syntaxes_and_themes = [
     "extra/syntax/"
 ]
-render_emoji = false
+render_emoji = true
 external_links_target_blank = true
 external_links_no_referrer = true
 
@@ -46,10 +46,12 @@ menu = [
 
 me_links = [
     { name = "keybase.io", url = "https://keybase.io/gregburd" },
-    { name = "lobste.rs", url = "https://lobste.rs/u/gregburd" },
-    { name = "news.ycombinator.com", url = "https://news.ycombinator.com/user?id=gregburd" },
     { name = "github", url = "https://github.com/gburd" },
+    { name = "fediverse", url = "https://mastodon.social/@gregburd" },
+    { name = "fediverse", url = "https://hachyderm.io/@gregburd" },
     { name = "twitter", url = "https://twitter.com/gregburd" },
     { name = "linkedin", url = "https://linkedin.com/in/gregburd" },
+    { name = "lobste.rs", url = "https://lobste.rs/u/gregburd" },
+    { name = "news.ycombinator.com", url = "https://news.ycombinator.com/user?id=gregburd" },
 ]
 
