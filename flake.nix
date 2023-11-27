@@ -65,7 +65,7 @@
             typos.excludes = [ "webp" "png" "svg" "ico" "pdf" ];
           };
           devShells.default = with pkgs; mkShell {
-            packages = [ jsonnet netlify-cli optimize-images update-date zola ];
+            packages = [ jsonnet netlify-cli optimize-images update-date zola drone-cli imagemagick ];
             shellHook = ''
               ${config.pre-commit.installationScript}
               ${linkFonts}
