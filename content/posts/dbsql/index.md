@@ -32,8 +32,8 @@ consistency. Code that I admired and learned a great deal from over the years.
 Dr Richard Hipp has a different style for C programming, one that is just as
 good as anyone else's.  One that fits him, but is entirely different from what
 I'd seen in Berkeley DB, *BSD, or even GNU projects like GCC.  That's something
-interesting about C progrmming -- style is up to the programmer, the compiler is
-ambiguous to human differences of opinion related to style.
+interesting about C programming -- style is up to the programmer, the compiler is
+ambiguous to human differences of opinion.
 
 I wanted Sleepycat to have a SQL layer on top of Berkeley DB, but I wanted to do
 it in a way that Keith and Margo and the rest of the team would admire and be
@@ -42,11 +42,11 @@ answer to everyone asking, "where's your SQL API"?
 
 So, I translated/rewrote(?) all the code line by line from one style to another.
 I changed naming conventions.  I added supporting scripts.  I changed the build
-system to Autoconf.  Day and night, weekends, whenever I toiled away in the boat
-pushing myself to remold something into something else but operationally the
-same.  And I did it.  I created [dbsql](https://git.burd.me/greg/dbsql), a
-complete re-write of SQLite on top of Berkeley DB but and in the style more akin
-to Berkeley DB programmers yet entirely the same functionality as SQLite.
+system to Autoconf.  Day and night, weekends, I toiled away in the boat pushing
+myself to remold something into something else but operationally the same.  _And
+I did it_.  I created [dbsql](https://git.burd.me/greg/dbsql), a complete
+re-write of SQLite on top of Berkeley DB but and in the style more akin to
+Berkeley DB programmers yet entirely the same functionality as SQLite.
 
 "What makes it better, certainly you didn't just do this because you liked the
 coding style of Sleepycat more than SQLite, tell me there's more to this
@@ -54,52 +54,73 @@ insanity!?" -- said everyone at this point.
 
 Yes, yes there is.  Back then SQLite's storage layer was... well, it was early
 days.  These days it's great, for purpose, but still lacks a lot of the features
-of Berkeley DB and transactions were early days for SQLite.  With Berkeley DB
-it's easy to BEGIN TXN, do lots of work over, COMMIT TXN or ABORT TXN and have
-it work.  Which is a tricky thing to get right.  Also, Berkeley DB isn't just a
+of Berkeley DB.  With Berkeley DB it's easy to `BEGIN TXN`, do work over key/value
+pairs even in different databases, different access methods and more, then invoke
+`COMMIT TXN` or `ABORT TXN` and have it work.  Which is a tricky thing to get
+right.  We'd spent years digging into the guts of filesystems, disk controller
+hardware, different physical storage media, cache controllers, operating systems
+nuances, and much more finding corner cases and carefully writing code to
+protect data from unrecoverable corruption regardless of the situation.  We
+built a system that had a [proper write-ahead log (WAL) with ARES
+recovery](https://sookocheff.com/post/databases/write-ahead-logging/) for
+transaction processing.  No other open source product has that level of
+sophistication, even today.  More than that, Berkeley DB isn't just a
 [BTREE](https://carlosproal.com/ir/papers/p121-comer.pdf) it is also a hash
-table (HASH), a record set (RECNO), and a queue (QUEUE).  So I had plans to use
-those where it made sense.  So, there's a lot of tools in the tool box, mature
-tools, tested tools, and things I'd like to show off under the covers of
-something complex like a RDBMS.  Sure, it's true that MySQL had (has?) a
-Berkeley DB storage engine mapping, but with INNODB it was hardly used.  But
-there was at least one existence proof showing that BDB+SQL worked.
+table (HASH), a record set (RECNO), and a queue (QUEUE).  There were other
+features too like secondary indexes and sequence generation that were obviously
+useful for relational databases.  I had plans to use these features where it
+made sense.  So, there's a lot of tools in the tool box, mature tools, tested
+tools proven in the field by demanding customers. It's true that MySQL had for
+a long time a Berkeley DB storage engine mapping when MyISAM was the only other
+choice, but later with INNODB it was hardly used.  But there was at least one
+existence proof showing that BDB as a storage engine for an RDBMS works.
 
-On top of that, there is the "High Availability", or replication feature of
-Berkeley DB, the major feature of 4.x.  3.x was transactions, 4.x was
-single-master, multi-replica replication of log records between nodes.  Real
-PAXOS leader election and all sorts of other goodness.  At that time in
-Sleepycat's history we had a number of real customers (Google, Steam, etc.)
-using our HA feature making it bullet proof.  So, in my mind not only was the
-BTREE better and I'd have fun using features of BDB but there was a way forward
-for a distributed SQL server -- a rare item at that time.  Exciting, to say the
-least.  Was it perfect?  No.  But, it had legs and so I committed myself to
-making it something we could consider selling.
+Berkeley DB had just released a major new feature, "High Availability" (HA), or
+replication.  BDB/HA was the major feature of 4.x (3.x was transactions) and at
+that time the only game in town for replicated RDBMS/SQL databases was Oracle's
+RAC, an expensive and difficult solution.  If Sleepycat had a product with a SQL
+API and some form of replication, that should sell.  BDB/HA provides a strongly
+consistent set of replicas for read-only access with a single-master for
+writes.  Replicas apply log records to their local databases using standard ARES
+recovery code, replicas could share these logs between peers taking pressure off
+the master.  BDB/HA is a [CP](https://en.wikipedia.org/wiki/CAP_theorem) or
+[PC/EC](https://en.wikipedia.org/wiki/PACELC_theorem) distributed system with
+PAXOS leader election.  At that time in Sleepycat's history we had a number of
+real customers (Google, Steam, etc.) using our HA feature forcing us to ensure
+that it was bullet proof under extreme conditions.  BDB's BTREE was better than
+SQLite's but also I wanted to showcase other features and have fun along the
+way.  Exciting, to say the least, and possibly a way to extend our market reach.
+Was it perfect?  No.  But, it had legs and so I committed myself to making it
+something we could consider selling.
 
 Long story short, while Margo and Keith fully appreciated my work and the idea
 they found fault in my approach.  They doubted the idea.  It wilted, and died
-"on the vine" and such is history.  We, Sleepycat, acquired by Oracle had new
+on the vine and such is history.  We, Sleepycat, acquired by Oracle had new
 priorties.  Eventually at Oracle I connected with the Oracle Lite team and
 learned about their obligations to companies and governments and their distain
 for their own codebase.  I offered up a new idea, well really an old idea
-remade.  I brokered a deal with SQLite via Dr. Hipp to build way that Berkeley
-DB could be a storage engine for it much like MySQL.  SQLite wouldn't change
-much, it would have an abstract storage layer and Berkely DB would be an engine
-for SQLite.  And that looked good, but had no market appeal from within Oracle.
-So that died as well.
+remade.  I brokered a deal with SQLite via Dr. Hipp to build a way that Berkeley
+DB could be a storage engine for it much like
+[MySQL](http://dev.cs.ovgu.de/db/mysql/BDB.html).  SQLite wouldn't change much,
+it would have an abstract storage layer and Berkely DB would be an engine for
+SQLite.  This happened, it's called [Berkeley DB
+SQL](https://www.oracle.com/technical-resources/articles/database/oracle-berkeley-db-sql-api.html),
+but it had limited appeal within Oracle and almost no market adoption because of
+it's limited scope.
 
 Now, nearly 20 years later, SQLite is insanely popular and has been actively
 developed and updated.  What I say about SQLite in this article has to do with
 the version of that code back in 2009, not today.  [A lot has happened within
 the SQLite
-codebase](https://github.com/sqlite/sqlite/compare/master@%7B9/3/2009%7D...master)
-- over 5,000 commits - since that crazy Winter on my Hans Christian 42.  What's
+codebase](https://github.com/sqlite/sqlite/compare/master@%7B9/3/2009%7D...master),
+over 5,000 commits since that crazy Winter on my Hans Christian 42.  What's
 clear is that we, Sleepycat, made a mistake.  We should have gone all in on a
 "SQL API" years ago.  I'm not sure we'd have won out against SQLite had we
 done that, our corporate personality was different than their's and maybe that
 was their greatest strength.  They adapted, they focused on customer needs and
 kept it simple.  And they won.
 
-But this post is about my win.  My work that Winter was awesome.  I am proud of
-it.  I hope someone else spots it and learns something, or finds it useful, or
-just reaches out to say hi.
+But this post is about my win.  [My work that Winter was
+awesome](https://git.burd.me/greg/dbsql), and I am proud of it.  I hope someone
+else spots it and learns something, or finds it useful, or just reaches out to
+say hi.

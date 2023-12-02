@@ -1,0 +1,86 @@
+Consistent hashing Fritchie article
+Machi and Humming Consensus in rust; a dive into the depths of chain based replication
+A new riak/dynomite, a series where we look at the algorithms I'd combine to
+build a new dynamo clone
+
+
+
+Docker buildx silliness
+
+```
+--output type=docker
+vs
+--push --output=type=registry,ref=localhost:5000
+```
+
+
+Bash-isms
+```shell
+set -euo pipefail
+#set -x
+trap "trap - SIGTERM && kill -- -$$ || true" SIGHUP SIGINT SIGQUIT SIGPIPE SIGTERM EXIT
+```
+
+
+Security is a (fun) nightmare.
+* Aurae
+* NixOS/Ops
+* OSv'ed containers on KVM/Firecracker
+* Tailscale
+
+
+DNS: it's always 127.0.0.1
+* https://nip.io/
+* https://github.com/Corollarium/localtls
+* https://sslip.io/
+
+
+sun, wind, water
+sure, solar panels and batteries make perfect sense but what about wind and water for power generation in your average home?
+you'll need a three wire alternator some gearing, and a something that catches the wind this approach uses a motorcycle alternator and a bike hub, cool.
+
+https://www.amazon.com/dp/B013U2L120
+https://www.youtube.com/watch?v=vidcGvbfbig
+https://www.youtube.com/watch?v=jLVcbd0C9Ns
+https://www.amazon.com/dp/B013U2L120
+https://a.co/d/axiP4sp
+
+
+
+50 billion miles and counting
+I turned 52 recently, on October 27, 2023.  That makes me old and well-traveled, too, as I just did the math, and it seems that I've traveled over 50 billion miles around the sun so far.  That's a fair distance, and I'm feeling each mile a bit more than I used to.  I'm the father of four exceptional children, but I'm not nearly an "empty nester" like many of my friends.  Mine are 10, 7, 6, and 4, and they all need me to hang around for about another 11.7 billion miles, give or take.
+So, what am I doing to ensure that I'm around to make sure they have what they need to thrive in their lives?  What am I doing to ensure that my 30-year career thus far in the world of computer science has 20 more years of legs under it?  What am I doing to ensure that my wife and I don't fall into the typical patterns of not divorcing during the most challenging years of our children's lives? What am I doing to remain sane?
+Yeah, that's a great question. I'm a constant learner; I like to dig into the things that impact my life and master them.  So, for my career that will have to span another 20 years before I'm done, I need to get with today's skills, some of which I have in spades and some I'm a noob.  Good news is the things I should learn are highly correlated with those I want to learn, so motivation is good.
+To start with, I'm moving myself to NixOS for my "daily driver" operating system.  I have my Mac laptop for that comfy, always-mostly-works feeling as a backup, and I've been in the Debian/Ubuntu world for years, so this won't be too hard.  The hard part will be describing my preferred setup functionally within the Nix language and sticking to it despite years of hacking things to work when and how I needed them to be hacked.  Nix frowns on this, and I have to accept new patterns for my daily work to gain the benefits of Nix and still be as effective as I've been.  I look forward to not having to rebuild my laptop over and over as cruft builds up; that's something Nix is very good at.
+I love programming, I fell in love with ANSI C and these days I want to fall in love with Rust.  I find it frustrating as I learn in similar ways to Nix.  Both are opinionated in ways that haven't been impediments to me in the past, but both are good for me.  The Rust borrowing system 
+I'm adding a lot of new skills just because I've put that off for too long.
+Nix
+Kubernetes, Helm, Go
+Rust
+etc.
+
+new infra
+burd.me
+ghost
+Forgejo
+Drone
+GoatCounter
+
+new projects
+mentat
+
+
+
+dbsql: Berkeley DB + SQLite
+About 14 years ago, I worked for Sleepycat Software.  I was an engineer, but also tasked with "product management," which could mean any number of things but for me at that time, it was about attempting to match a software product with market demands.  It was clear that SQLite would eat our lunch in the market of an "embeddable database engine", but that's a story for a different post.  This article is about how I set about to fix this myself single-handedly while living aboard a sailboat in Boston Harbor, Commercial Wharf, during the Winter.
+SQLite is a very active project, not to mention insanely popular.  Since that
+cold Winter 14 years ago, a lot has happened within the SQLite codebase.  I'll
+never have time to catch up, nor is there any reason to do so, but that's not
+the point.
+
+
+
+TODO
+Things to look into:
+* https://docs.rs/blip/latest/blip/ https://github.com/vlcn-io/cr-sqlite
+https://vlcn.io/ https://github.com/lalithsuresh/rapid
