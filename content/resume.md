@@ -28,8 +28,12 @@ path: "resume"
 * AWS
 
 ## experience
-### symas corp, 2023-present
-#### 2023-present
+### amazon/aws
+#### 2024-present
+_senior software engineer (L7), documentdb: query planner, data storage_
+
+### symas corp
+#### 2023-2024
 _software engineer, openldap_
 
 ### klar
