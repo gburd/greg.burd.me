@@ -29,3 +29,7 @@ PostgreSQL = "PostgreSQL"
 EDN = "EDN"
 edn = "edn"
 GitGitGadget = "GitGitGadget"
+
+# Allow common false-positive substrings inside git commit hashes.
+[default.extend-identifiers]
+"9daa983d" = "9daa983d"

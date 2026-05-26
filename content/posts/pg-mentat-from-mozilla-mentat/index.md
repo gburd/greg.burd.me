@@ -1,7 +1,7 @@
 +++
 title = "pg_mentat: bringing Mozilla's Mentat back inside PostgreSQL"
-date = "2026-08-10"
-draft = true
+date = "2026-05-26"
+draft = false
 description = "Datomic's data model is too good to leave in a deprecated repo. The pgrx port lives in the database that already has the rest of your data."
 [taxonomies]
 tags = ["postgres","pg_mentat","datalog","datomic","extensions"]

@@ -1,7 +1,7 @@
 +++
 title = "pg_tre: approximate regex as a real Postgres index AM"
-date = "2026-08-24"
-draft = true
+date = "2026-05-26"
+draft = false
 description = "A native USING tre index access method with three-tier filtering, WAL coverage, and Levenshtein-distance recheck. Sub-millisecond on tens of thousands of rows."
 [taxonomies]
 tags = ["postgres","pg_tre","indexing","regex","extensions"]

@@ -1,7 +1,7 @@
 +++
 title = "pg_turbovec: 4-bit vector search that beats pgvector on storage and latency"
 date = "2026-05-26"
-draft = true
+draft = false
 description = "Open-source vector similarity for Postgres backed by Google Research's TurboQuant, with measured numbers against pgvector HNSW."
 [taxonomies]
 tags = ["postgres","pg_turbovec","vector-search","quantization","extensions"]

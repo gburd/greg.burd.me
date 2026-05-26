@@ -1,7 +1,7 @@
 +++
 title = "Lime: an LALR(1) parser generator with runtime grammar extensions"
-date = "2026-09-21"
-draft = true
+date = "2026-05-26"
+draft = false
 description = "Yacc and Bison generate parsers at compile time. Database engines, language servers, and extensible query processors need parsers that can evolve at runtime. Lime fills that gap."
 [taxonomies]
 tags = ["lime","parsers","compilers","postgres"]
