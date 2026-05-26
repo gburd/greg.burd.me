@@ -1,79 +1,65 @@
 {
-  description = "personal site";
+  description = "personal site (greg.burd.me)";
+
+  # Nix is optional. The site builds with just `zola build` on any machine
+  # (including Netlify's build image, which ships Zola). The flake exists for
+  # local convenience: a dev shell with the right Zola version, image-
+  # optimization helpers, and pre-commit hooks.
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     flake-parts.url = "github:hercules-ci/flake-parts";
     gitignore.url = "github:hercules-ci/gitignore.nix";
     gitignore.inputs.nixpkgs.follows = "nixpkgs";
     pre-commit.url = "github:cachix/pre-commit-hooks.nix";
     pre-commit.inputs.nixpkgs.follows = "nixpkgs";
-    pre-commit.inputs.gitignore.follows = "gitignore";
-
-    caddyfile-syntax.url = "github:caddyserver/sublimetext";
-    caddyfile-syntax.flake = false;
   };
 
-  outputs = { self, flake-parts, gitignore, pre-commit, ... }@inputs:
-    flake-parts.lib.mkFlake { inherit self; } {
+  outputs =
+    { flake-parts
+    , pre-commit
+    , ...
+    }@inputs:
+    flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [ pre-commit.flakeModule ];
-      systems = [ "x86_64-linux" "aarch64-darwin" ];
-      perSystem = { config, pkgs, ... }:
+      systems = [
+        "x86_64-linux"
+        "aarch64-darwin"
+      ];
+      perSystem =
+        { config, pkgs, ... }:
         let
-          inherit (gitignore.lib) gitignoreSource;
-          inherit (pkgs.callPackage ./nix { }) fonts optimize-images update-date;
-          inherit (fonts) copyFonts linkFonts;
-          caddyfile-syntax = "${inputs.caddyfile-syntax}/Caddyfile.sublime-syntax";
-          buildSite = { prod }:
-            let
-              ifStaging = pkgs.lib.optionalString (!prod);
-            in
-            ''
-              optimize-images
-              zola build --drafts ${ifStaging "--base-url https://staging--burd-me.netlify.app"}
-              # zola's ignored_content setting doesn't work in static/
-              rm -rf public/image/_favicon.svg
-            '';
+          inherit (pkgs.callPackage ./nix { }) optimize-images update-date;
         in
         {
-          packages.default = with pkgs; stdenv.mkDerivation {
-            pname = "personal-site";
-            version = "2023-02-01";
-            src = gitignoreSource ./.;
-            nativeBuildInputs = [ optimize-images update-date zola ];
-            configurePhase = ''
-              ${copyFonts}
-              mkdir -p extra/syntax
-              cp ${caddyfile-syntax} extra/syntax
-            '';
-            buildPhase = buildSite { prod = true; };
-            installPhase = ''
-              cp -r public $out
-            '';
-          };
-          packages.staging-site = config.packages.default.overrideAttrs (_: {
-            buildPhase = buildSite { prod = false; };
-          });
           pre-commit.settings.hooks = {
-            # nix hooks
             deadnix.enable = true;
-            nix-linter.enable = true;
             nixpkgs-fmt.enable = true;
             statix.enable = true;
-            # general hooks
             typos.enable = true;
-            typos.excludes = [ "webp" "png" "svg" "ico" "pdf" ];
+            typos.excludes = [
+              "webp"
+              "png"
+              "svg"
+              "ico"
+              "pdf"
+              "woff2"
+            ];
           };
-          devShells.default = with pkgs; mkShell {
-            packages = [ jsonnet netlify-cli optimize-images update-date zola drone-cli imagemagick ];
-            shellHook = ''
-              ${config.pre-commit.installationScript}
-              ${linkFonts}
-              mkdir -p extra/syntax
-              ln -snf ${caddyfile-syntax} extra/syntax
-            '';
-            inputsFrom = builtins.attrValues self.checks;
-          };
+          devShells.default =
+            with pkgs;
+            mkShell {
+              packages = [
+                netlify-cli
+                optimize-images
+                update-date
+                zola
+                imagemagick
+              ];
+              shellHook = ''
+                ${config.pre-commit.installationScript}
+              '';
+            };
         };
     };
 }

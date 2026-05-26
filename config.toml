@@ -5,7 +5,7 @@ default_language = "en"
 
 compile_sass = true
 build_search_index = false
-generate_feed = true
+generate_feeds = true
 ignored_content = [
     "**/_*.{png,svg}",  # unoptimized images
 ]

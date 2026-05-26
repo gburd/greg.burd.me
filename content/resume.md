@@ -1,13 +1,12 @@
 ---
 title: "resume"
-path: "resume"
 ---
 
 ## skills
 ### professional
 * programming: ansi c, python, bash, sql
 * platforms: linux, LXR (containers/Docker), virtualization
-* databases: postgresql, sqlite, dbsql
+* databases: postgresql, sqlite, etc.
 * kubernetes, helm, operators, etc.
 * distributed systems: paxos, dynamo, dataflow
 

@@ -1,6 +1,5 @@
 ---
 title: "privacy notice"
-path: "privacy"
 ---
 
 ## summary

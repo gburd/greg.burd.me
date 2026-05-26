@@ -1,10 +1,9 @@
 ---
 title: "about me"
-path: "about"
 ---
 
 ## greg(ory) burd
-I'm a software engineer, have been for 30+ years.  Presently, I'm at Amazon/AWS
+I'm a software engineer, have been for 35+ years.  Presently, I'm at Amazon/AWS
 working on the DocumentDB team.
 
 [you can look at my resume(cv) here](/resume).

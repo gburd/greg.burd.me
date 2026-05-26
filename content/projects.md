@@ -1,6 +1,5 @@
 ---
 title: "selected projects"
-path: "projects"
 ---
 
 ## mentat

@@ -1,42 +1,66 @@
+# Netlify build configuration.
+#
+# Workflow:
+#   - Push to `main`           -> production deploy at https://greg.burd.me
+#   - Push to any other branch -> branch deploy at https://<branch>--burd-me.netlify.app
+#   - Open a PR                -> deploy preview at https://deploy-preview-<n>--burd-me.netlify.app
+#
+# Drafts (`+++ draft = true`) are included in branch deploys and previews,
+# excluded from production.
+
 [build]
-  command = "zola build --drafts"
   publish = "public/"
+  # `zola build` honors $BASE_URL when set; we pass --base-url explicitly per
+  # context below so production gets the canonical URL and previews get their
+  # own deploy URL.
+  command = "zola build --base-url $URL"
+
+[build.environment]
+  # Pin the Zola toolchain so deploys are reproducible. Bump deliberately.
+  ZOLA_VERSION = "0.20.0"
+
+# Production: only `main`, no drafts, canonical URL.
+[context.production]
+  command = "zola build --base-url $URL"
+
+[context.production.environment]
+  URL = "https://greg.burd.me"
+
+# Deploy previews (PRs against `main`): include drafts, use the preview URL.
+[context.deploy-preview]
+  command = "zola build --drafts --base-url $DEPLOY_PRIME_URL"
+
+# Branch deploys (any non-`main` branch, e.g. `staging`): include drafts.
+[context.branch-deploy]
+  command = "zola build --drafts --base-url $DEPLOY_PRIME_URL"
 
 [dev]
   command = "zola serve --drafts"
   publish = "public/"
   port = 1111
 
+# Redirect the bare Netlify URL to the canonical domain.
 [[redirects]]
   from = "https://burd-me.netlify.app/*"
   to = "https://greg.burd.me/:splat"
   force = true
 
+# Avoid http -> https -> www double redirect on the apex.
 [[redirects]]
-  # avoid http -> https -> www double redirect
   from = "http://burd.me"
   to = "https://greg.burd.me/:splat"
   force = true
 
+# Default headers applied to every response.
 [[headers]]
   for = "/*"
-
   [headers.values]
-    # baseline cache, one hour
     Cache-Control = "public, max-age=3600"
-    # disable FLoC tracking
     Permissions-Policy = "interest-cohort=()"
-    # enable HSTS
     Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
-    # prevent clients from sniffing the media type
     X-Content-Type-Options = "nosniff"
-    # clickjacking protection
     X-Frame-Options = "DENY"
-    # keep referrer data off of HTTP connections
     Referrer-Policy = "no-referrer"
-    # content security policy
-    # style-src 'unsafe-inline': syntax highlighting in codefences
-    # sandbox allow-popups*: enable target="_blank" links to open in new tabs
     Content-Security-Policy = '''
     default-src 'none';
     img-src 'self' https://stats.burd.me;
@@ -54,28 +78,23 @@
       allow-popups-to-escape-sandbox
     '''
 
-# per asset caching
-
+# Per-asset caching.
 [[headers]]
   for = "/font/*"
   [headers.values]
-    # a year
     Cache-Control = "public, max-age=31536000"
 
 [[headers]]
   for = "/image/*"
   [headers.values]
-    # a month
     Cache-Control = "public, max-age=2592000"
 
 [[headers]]
   for = "/*.webp"
   [headers.values]
-    # a month
     Cache-Control = "public, max-age=2592000"
 
 [[headers]]
   for = "/style/*"
   [headers.values]
-    # a week
     Cache-Control = "public, max-age=604800"
