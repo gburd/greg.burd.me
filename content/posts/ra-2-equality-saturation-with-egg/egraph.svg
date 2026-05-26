@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" font-family="IBM Plex Mono, monospace" font-size="11">
+  <style>
+    .lbl { fill: #444; font-size: 12px; font-weight: bold; }
+    .sub { fill: #777; font-size: 10px; }
+    .eclass { fill: #eaf3fb; stroke: #2c80c4; stroke-width: 1.2; }
+    .enode { fill: #fff; stroke: #333; stroke-width: 1; }
+    .literal { fill: #fdebd0; stroke: #c9881c; }
+    .new { fill: #d5f5e3; stroke: #1a7f37; }
+    .edge { stroke: #555; stroke-width: 1; fill: none; marker-end: url(#a); }
+    .ruleline { stroke: #c9881c; stroke-width: 1; stroke-dasharray: 3 2; fill: none; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <text x="360" y="20" text-anchor="middle" class="lbl" font-size="14">e-graph: same expression, two equivalent plans</text>
+  <text x="360" y="36" text-anchor="middle" class="sub">σ(R ⋈ S, p_R) — predicate touches only R, so push it down</text>
+
+  <!-- BEFORE -->
+  <text x="170" y="68" text-anchor="middle" class="lbl">before rule fires</text>
+
+  <!-- e-class for σ -->
+  <rect class="eclass" x="100" y="80" width="140" height="50" rx="6"/>
+  <rect class="enode" x="120" y="92" width="100" height="26" rx="3"/>
+  <text x="170" y="109" text-anchor="middle">σ_p</text>
+
+  <path class="edge" d="M 170 130 L 170 150"/>
+
+  <!-- e-class for ⋈ -->
+  <rect class="eclass" x="100" y="150" width="140" height="50" rx="6"/>
+  <rect class="enode" x="120" y="162" width="100" height="26" rx="3"/>
+  <text x="170" y="179" text-anchor="middle">R ⋈ S</text>
+
+  <path class="edge" d="M 140 200 L 130 220"/>
+  <path class="edge" d="M 200 200 L 210 220"/>
+
+  <rect class="literal" x="105" y="220" width="50" height="26" rx="3"/>
+  <text x="130" y="237" text-anchor="middle">R</text>
+  <rect class="literal" x="185" y="220" width="50" height="26" rx="3"/>
+  <text x="210" y="237" text-anchor="middle">S</text>
+
+  <!-- AFTER -->
+  <text x="540" y="68" text-anchor="middle" class="lbl">after rule fires (added in green)</text>
+
+  <!-- top σ unchanged -->
+  <rect class="eclass" x="470" y="80" width="140" height="50" rx="6"/>
+  <rect class="enode" x="490" y="92" width="100" height="26" rx="3"/>
+  <text x="540" y="109" text-anchor="middle">σ_p</text>
+
+  <path class="edge" d="M 540 130 L 540 150"/>
+
+  <!-- ⋈ e-class now contains TWO equivalent enodes -->
+  <rect class="eclass" x="430" y="150" width="220" height="50" rx="6"/>
+  <rect class="enode" x="446" y="162" width="92" height="26" rx="3"/>
+  <text x="492" y="179" text-anchor="middle">R ⋈ S</text>
+  <rect class="new" x="546" y="162" width="98" height="26" rx="3"/>
+  <text x="595" y="179" text-anchor="middle">σ(R) ⋈ S</text>
+
+  <path class="edge" d="M 470 200 L 460 220"/>
+  <path class="edge" d="M 540 200 L 540 220"/>
+  <path class="edge" d="M 600 200 L 610 220"/>
+
+  <rect class="literal" x="430" y="220" width="50" height="26" rx="3"/>
+  <text x="455" y="237" text-anchor="middle">R</text>
+  <rect class="new" x="515" y="220" width="50" height="26" rx="3"/>
+  <text x="540" y="237" text-anchor="middle">σ(R)</text>
+  <rect class="literal" x="585" y="220" width="50" height="26" rx="3"/>
+  <text x="610" y="237" text-anchor="middle">S</text>
+
+  <!-- legend -->
+  <g transform="translate(60,275)">
+    <rect class="eclass" x="0" y="0" width="20" height="14"/>
+    <text x="26" y="11" class="sub">e-class (set of equivalent expressions)</text>
+
+    <rect class="enode" x="220" y="0" width="20" height="14"/>
+    <text x="246" y="11" class="sub">e-node</text>
+
+    <rect class="new" x="320" y="0" width="20" height="14"/>
+    <text x="346" y="11" class="sub">added by saturation step</text>
+  </g>
+
+  <text x="360" y="305" text-anchor="middle" class="sub">extraction picks the cheapest member of the root e-class after saturation converges</text>
+</svg>

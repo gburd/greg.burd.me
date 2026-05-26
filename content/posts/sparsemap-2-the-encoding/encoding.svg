@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" font-family="IBM Plex Mono, monospace" font-size="11">
+  <style>
+    .lbl { fill: #444; font-size: 12px; font-weight: bold; }
+    .sub { fill: #777; font-size: 10px; }
+    .byte { stroke: #888; stroke-width: 0.5; fill: #fff; }
+    .desc { fill: #d4e6f1; }
+    .vec { fill: #fdebd0; }
+    .rle { fill: #d5f5e3; }
+    .empty { fill: #f4f4f4; }
+    .arrow { stroke: #555; stroke-width: 1; fill: none; marker-end: url(#a); }
+    .axis { stroke: #ccc; stroke-width: 0.5; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- title -->
+  <text x="360" y="20" text-anchor="middle" class="lbl" font-size="14">sparsemap chunk encoding</text>
+
+  <!-- SPARSE example -->
+  <text x="20" y="60" class="lbl">sparse encoding</text>
+  <text x="20" y="76" class="sub">64-bit descriptor + only the non-uniform vectors</text>
+
+  <text x="20" y="105" class="sub">descriptor (64 bits): 2-bit code per vector</text>
+  <g transform="translate(20,110)">
+    <rect class="desc byte" x="0"   y="0" width="22" height="22"/>
+    <rect class="desc byte" x="22"  y="0" width="22" height="22"/>
+    <rect class="desc byte" x="44"  y="0" width="22" height="22"/>
+    <rect class="desc byte" x="66"  y="0" width="22" height="22"/>
+    <rect class="desc byte" x="88"  y="0" width="22" height="22"/>
+    <rect class="desc byte" x="110" y="0" width="22" height="22"/>
+    <rect class="desc byte" x="132" y="0" width="22" height="22"/>
+    <rect class="desc byte" x="154" y="0" width="22" height="22"/>
+    <text x="11"  y="15" text-anchor="middle">11</text>
+    <text x="33"  y="15" text-anchor="middle">00</text>
+    <text x="55"  y="15" text-anchor="middle">10</text>
+    <text x="77"  y="15" text-anchor="middle">00</text>
+    <text x="99"  y="15" text-anchor="middle">11</text>
+    <text x="121" y="15" text-anchor="middle">01</text>
+    <text x="143" y="15" text-anchor="middle">00</text>
+    <text x="165" y="15" text-anchor="middle">11</text>
+  </g>
+
+  <text x="20" y="155" class="sub">payload: only mixed-pattern vectors stored</text>
+  <g transform="translate(20,162)">
+    <rect class="vec byte" x="0"   y="0" width="44" height="22"/>
+    <rect class="vec byte" x="44"  y="0" width="44" height="22"/>
+    <text x="22" y="15" text-anchor="middle">vec₂ mix</text>
+    <text x="66" y="15" text-anchor="middle">vec₅ mix</text>
+  </g>
+
+  <text x="20" y="210" class="sub">codes: 00=all-0, 01=all-1, 10=mixed (stored), 11=skip</text>
+
+  <!-- arrow connecting descriptor to payload (one example) -->
+  <path class="arrow" d="M 55 132 Q 55 152, 22 161"/>
+  <path class="arrow" d="M 99 132 Q 99 152, 66 161"/>
+
+  <!-- RLE example -->
+  <text x="380" y="60" class="lbl">RLE encoding</text>
+  <text x="380" y="76" class="sub">1 descriptor word represents up to 2³¹ contiguous set bits</text>
+
+  <g transform="translate(380, 110)">
+    <rect class="rle byte" x="0" y="0" width="240" height="22"/>
+    <text x="120" y="15" text-anchor="middle">RLE descriptor: kind=run, length=2,147,483,648</text>
+  </g>
+
+  <text x="380" y="155" class="sub">payload size: 0 bytes</text>
+
+  <text x="380" y="195" class="lbl" font-size="12" fill="#1a7f37">8 bytes total → 2 Gbit run</text>
+
+  <!-- comparison strip -->
+  <text x="20" y="265" class="lbl">comparison: 16 KB of consecutive set bits</text>
+  <g transform="translate(20,275)">
+    <rect class="empty byte" x="0" y="0" width="200" height="20"/>
+    <text x="100" y="14" text-anchor="middle">raw bitmap: 16,384 bytes</text>
+
+    <rect class="empty byte" x="0" y="30" width="60" height="20"/>
+    <text x="30" y="44" text-anchor="middle">Roaring: ~64 B</text>
+
+    <rect class="rle byte" x="0" y="60" width="20" height="20"/>
+    <text x="10" y="74" text-anchor="middle" font-size="10">8</text>
+    <text x="30" y="74">sparsemap: 8 bytes  ← best case</text>
+  </g>
+</svg>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 280" font-family="IBM Plex Mono, monospace" font-size="11">
+  <style>
+    .lbl { fill: #444; font-size: 12px; font-weight: bold; }
+    .sub { fill: #777; font-size: 10px; }
+    .node { fill: #fff; stroke: #555; stroke-width: 1; }
+    .marked { fill: #fdebd0; stroke: #c9881c; stroke-width: 1.2; stroke-dasharray: 3 2; }
+    .new { fill: #d5f5e3; stroke: #1a7f37; }
+    .ptr { stroke: #555; stroke-width: 1.2; fill: none; marker-end: url(#a); }
+    .markptr { stroke: #c9881c; stroke-width: 1.2; fill: none; marker-end: url(#b); stroke-dasharray: 3 2; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+    <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c9881c"/>
+    </marker>
+  </defs>
+
+  <text x="360" y="20" text-anchor="middle" class="lbl" font-size="14">Fraser/Harris marked-pointer delete</text>
+
+  <!-- step 1 -->
+  <text x="120" y="55" text-anchor="middle" class="lbl">1. logical delete: mark next-pointer</text>
+  <g transform="translate(20,75)">
+    <rect class="node" x="0"   y="0" width="50" height="36" rx="4"/>
+    <text x="25" y="22" text-anchor="middle">A</text>
+    <rect class="marked" x="80"  y="0" width="50" height="36" rx="4"/>
+    <text x="105" y="22" text-anchor="middle">B</text>
+    <rect class="node" x="160" y="0" width="50" height="36" rx="4"/>
+    <text x="185" y="22" text-anchor="middle">C</text>
+
+    <path class="ptr"      d="M 50 18 L 80 18"/>
+    <path class="markptr"  d="M 130 18 L 160 18"/>
+
+    <text x="105" y="58" class="sub" text-anchor="middle">B's outgoing pointer is now marked (CAS)</text>
+    <text x="105" y="71" class="sub" text-anchor="middle">B is logically deleted but still reachable</text>
+  </g>
+
+  <!-- step 2 -->
+  <text x="600" y="55" text-anchor="middle" class="lbl">2. physical unlink: redirect predecessor (CAS)</text>
+  <g transform="translate(490,75)">
+    <rect class="node" x="0"   y="0" width="50" height="36" rx="4"/>
+    <text x="25" y="22" text-anchor="middle">A</text>
+    <rect class="marked" x="80"  y="0" width="50" height="36" rx="4" opacity="0.4"/>
+    <text x="105" y="22" text-anchor="middle" opacity="0.4">B</text>
+    <rect class="node" x="160" y="0" width="50" height="36" rx="4"/>
+    <text x="185" y="22" text-anchor="middle">C</text>
+
+    <path class="ptr" d="M 50 14 Q 105 -8, 160 14"/>
+
+    <text x="105" y="58" class="sub" text-anchor="middle">A→B unlinked; A→C installed atomically</text>
+    <text x="105" y="71" class="sub" text-anchor="middle">B awaits epoch retire (EBR)</text>
+  </g>
+
+  <!-- the invariant -->
+  <text x="360" y="180" class="lbl" text-anchor="middle">invariant</text>
+  <text x="360" y="200" class="sub" text-anchor="middle">readers traversing through B see the mark and can either:</text>
+  <text x="360" y="215" class="sub" text-anchor="middle">(a) help finish the unlink, or (b) retry from a known-good predecessor</text>
+  <text x="360" y="230" class="sub" text-anchor="middle">— never observe a torn structure, never block, never lock</text>
+
+  <text x="360" y="260" class="sub" text-anchor="middle">memory reclamation: epoch-based; B freed only after all pre-mark readers exit</text>
+</svg>

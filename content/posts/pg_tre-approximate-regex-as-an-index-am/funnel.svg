@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" font-family="IBM Plex Mono, monospace" font-size="11">
+  <style>
+    .lbl { fill: #444; font-size: 12px; font-weight: bold; }
+    .sub { fill: #777; font-size: 10px; }
+    .funnel { fill: #eaf3fb; stroke: #2c80c4; stroke-width: 1; }
+    .funnel2 { fill: #fdebd0; stroke: #c9881c; stroke-width: 1; }
+    .funnel3 { fill: #d5f5e3; stroke: #1a7f37; stroke-width: 1; }
+    .heap { fill: #f5f5f5; stroke: #888; stroke-width: 1; }
+    .arrow { stroke: #555; stroke-width: 1.4; fill: none; marker-end: url(#a); }
+    .annotate { fill: #555; font-size: 10px; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <text x="360" y="20" text-anchor="middle" class="lbl" font-size="14">pg_tre: three-tier filter funnel</text>
+
+  <!-- query input -->
+  <rect x="280" y="40" width="160" height="40" rx="4" fill="#fff" stroke="#444"/>
+  <text x="360" y="58" text-anchor="middle" font-size="11">SQL query</text>
+  <text x="360" y="74" text-anchor="middle" font-size="9.5" fill="#666">body %~~ tre_pattern(p, k)</text>
+
+  <path class="arrow" d="M 360 80 L 360 100"/>
+
+  <!-- tier 1 -->
+  <rect class="funnel" x="80" y="100" width="560" height="40" rx="4"/>
+  <text x="360" y="118" text-anchor="middle">tier 1 — range bloom (BRIN-style)</text>
+  <text x="360" y="132" text-anchor="middle" class="annotate">eliminates page ranges with no possible match</text>
+
+  <path class="arrow" d="M 360 140 L 360 160"/>
+
+  <!-- tier 2 -->
+  <rect class="funnel2" x="160" y="160" width="400" height="40" rx="4"/>
+  <text x="360" y="178" text-anchor="middle">tier 2 — trigram postings (sparsemap-backed)</text>
+  <text x="360" y="192" text-anchor="middle" class="annotate">candidate TIDs from intersected n-gram lists</text>
+
+  <path class="arrow" d="M 360 200 L 360 220"/>
+
+  <!-- tier 3 -->
+  <rect class="funnel3" x="240" y="220" width="240" height="40" rx="4"/>
+  <text x="360" y="238" text-anchor="middle">tier 3 — per-tuple bloom + TRE recheck</text>
+  <text x="360" y="252" text-anchor="middle" class="annotate">approximate-regex match within k edits</text>
+
+  <path class="arrow" d="M 360 260 L 360 280"/>
+
+  <!-- heap -->
+  <rect class="heap" x="280" y="280" width="160" height="32" rx="4"/>
+  <text x="360" y="300" text-anchor="middle">heap fetch</text>
+
+  <!-- side annotations -->
+  <text x="660" y="125" class="annotate">cheapest</text>
+  <text x="660" y="245" class="annotate">most precise</text>
+  <text x="60"  y="125" class="annotate" text-anchor="end">→ wide</text>
+  <text x="60"  y="245" class="annotate" text-anchor="end">→ narrow</text>
+</svg>

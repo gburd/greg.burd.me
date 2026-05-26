@@ -2,81 +2,98 @@
 title: "resume"
 ---
 
+I'm a software engineer focused on database internals, storage,
+and query processing. Day job: AWS, on Amazon DocumentDB. Open-source
+day job: PostgreSQL contributions and a growing collection of
+PostgreSQL extensions.
+
+The version below is the public-site short form. A longer narrative
+version lives on [LinkedIn](https://www.linkedin.com/in/gregburd).
+
+## what I do now
+
+C and Rust, mostly. Database engines, query optimization, storage
+formats, indexing access methods, concurrency primitives. Increasing
+amounts of LLM tooling for static analysis, mailing-list archaeology,
+and query cost modeling.
+
 ## skills
-### professional
-* programming: ansi c, python, bash, sql
-* platforms: linux, LXR (containers/Docker), virtualization
-* databases: postgresql, sqlite, etc.
-* kubernetes, helm, operators, etc.
-* distributed systems: paxos, dynamo, dataflow
 
-### acquiring
-* rust
-* nix
-* llm/ai/ml
-* aurae (so, typescript)
+### primary
+- **Languages:** C (35+ years), Rust (modern systems work),
+  Python, SQL, Bash.
+- **PostgreSQL internals:** access methods, buffer manager,
+  WAL / rmgr, query planner, pgrx-based extensions.
+- **Storage / indexing:** btree and hash variants, skip-lists,
+  sparse bitmaps, regex / approximate matching, columnar.
+- **Concurrency:** lock-free data structures, epoch-based
+  reclamation, NUMA-aware algorithms.
+- **Performance:** perf, flamegraphs, pgbench / HammerDB
+  benchmarking on bare-metal NUMA.
 
-### skilled, less commonly used
-* java
-* scala
-* erlang
-* elixir
-* DuckDB, ksqlDB, MaterializeDB
-* Kafka, Dagster, OpenFaaS, lakeFS
-* Terraform, Ansible, etc.
-* AWS
+### working knowledge
+- Nix / NixOS (build, flakes, dev shells)
+- LLVM (Orc / JIT, used in Pure language work)
+- LLM internals (transformer activations as data, BitNet
+  quantization for cost models)
+- Kubernetes / Helm / operators (from prior roles, kept
+  current-ish)
+
+### prior depth, less commonly used today
+- Java, Scala, Erlang, Elixir
+- DuckDB, ksqlDB, MaterializeDB, Cassandra, MongoDB
+- Kafka, Dagster, OpenFaaS, lakeFS
+- Terraform, Ansible
 
 ## experience
-### amazon/aws
-#### 2024-present
-_senior software engineer (L7), documentdb: query planner, data storage_
 
-### symas corp
-#### 2023-2024
-_software engineer, openldap_
+### Amazon Web Services
+**2024 – present.** Senior software engineer (L7), Amazon DocumentDB.
 
-### klar
-#### 2022-2023
-_senior software engineer/devops, database, kafka, redshift, kafka, dagster, lakefs_
+### Symas Corp
+**2023 – 2024.** Software engineer, OpenLDAP.
 
-### blockfi
-#### 2020-2022
-_senior software engineer/devops, observability_
+### Klar
+**2022 – 2023.** Senior software engineer / devops. Database, Kafka,
+Redshift, Dagster, lakeFS.
 
-### humio (now Falcon LogScale, CrowdStrike)
-#### 2018-2022
-_senior software engineering, data storage engine, query optimization_
+### BlockFi
+**2020 – 2022.** Senior software engineer / devops. Observability.
 
-### onshape
-#### 2017-2018
-_senior software engineer_, data storage, mongodb, cassandra, sql
+### Humio (now Falcon LogScale, CrowdStrike)
+**2018 – 2020.** Senior software engineer. Data storage engine,
+query optimization on log analytics workloads.
 
-### akamai (labs)
-#### 2015-2016
-_senior software engineer_, non-relational database storage at scale, webrtc
-infrastructure, dane/dnssec award
+### Onshape
+**2017 – 2018.** Senior software engineer. Storage layer (MongoDB,
+Cassandra, SQL).
 
-### aws
-#### 2014-2015
-_senior software engineer_, storage gateway team, iscisi gateway to S3
+### Akamai (Labs)
+**2015 – 2016.** Senior software engineer. Non-relational database
+storage at scale, WebRTC infrastructure, DANE/DNSSEC award.
 
-### basho technologies
-#### 2011-2014
-_senior software engineer_, storage and distributed systems for riak, a dynamo
-clone in erlang
+### AWS
+**2014 – 2015.** Senior software engineer. Storage Gateway team,
+iSCSI gateway to S3.
 
-### oracle
-#### 2006-2011
-_senior software engineer_, oracle berkeley db (c, java, xml/xquery, and sql)
+### Basho Technologies
+**2011 – 2014.** Senior software engineer. Storage and distributed
+systems for Riak (Dynamo-style key-value store, Erlang).
 
-### sleepycat software
-#### 2002-2006
-_software engineer_, berkeley db data storage library /usr/lib/db
+### Oracle
+**2006 – 2011.** Senior software engineer. Berkeley DB (C, Java,
+XML/XQuery, and SQL).
 
-### sun microsystems
+### Sleepycat Software
+**2002 – 2006.** Software engineer. Berkeley DB — the database
+library at `/usr/lib/db.a` on most UNIXes for two decades.
+
+### Sun Microsystems
+
 ### NeXT Computer
 
 ## education
-### new mexico state university
-_bachelor of science, computer science_ not completed, no degree, hired away to
-work at NeXT Computer
+
+### New Mexico State University
+Bachelor of Science, Computer Science — not completed; hired away
+to NeXT Computer.
