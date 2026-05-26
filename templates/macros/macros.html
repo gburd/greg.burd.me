@@ -1,12 +1,12 @@
 {% macro list_posts(pages) -%}
 <ul>
   {%- for page in pages %}
-  {%- if page.draft %}
-  {%- continue -%}
-  {% endif -%}
   <li class="post-list-item">
     <h2 class="title">
       <a href={{ page.permalink | safe }}>{{ page.title }}</a>
+      {%- if page.draft %}
+      <span class="draft-label">DRAFT</span>
+      {%- endif %}
     </h2>
     {%- if page.description %}
     <div class="description">
