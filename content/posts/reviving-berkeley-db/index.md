@@ -1,7 +1,7 @@
 +++
 title = "reviving Berkeley DB"
 date = "2026-07-31"
-draft = false
+draft = true
 description = "Oracle stopped shipping Berkeley DB and the AGPL relicense scattered everyone who depended on it. I forked 5.3, put it back on a permissive license, and gave it a build system from this decade."
 [taxonomies]
 tags = ["berkeley-db","storage","databases","history"]

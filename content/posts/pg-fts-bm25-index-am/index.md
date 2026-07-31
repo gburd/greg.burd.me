@@ -1,7 +1,7 @@
 +++
 title = "pg_fts: BM25 full-text search as a real Postgres index AM"
 date = "2026-08-21"
-draft = false
+draft = true
 description = "A native fts index access method that keeps the corpus statistics BM25 needs inside the index, so ranking, phrase, boolean, and count all come from one operator with no heap recheck."
 [taxonomies]
 tags = ["postgres","indexing","extensions","storage"]

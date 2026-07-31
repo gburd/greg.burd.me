@@ -1,7 +1,7 @@
 +++
 title = "Nix on illumos: what solnix is and why"
 date = "2026-08-28"
-draft = false
+draft = true
 description = "illumos already has ZFS boot environments and SMF. Nix's generation model maps onto them almost exactly. solnix is the illumos analog of NixOS — early, but the risky parts already work."
 [taxonomies]
 tags = ["nix","illumos","storage","databases"]

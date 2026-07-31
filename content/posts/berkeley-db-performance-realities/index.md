@@ -1,7 +1,7 @@
 +++
 title = "Berkeley DB performance realities"
 date = "2026-08-14"
-draft = false
+draft = true
 description = "The revived engine is 16x slower than WiredTiger on in-cache reads at high thread counts, and it regresses across NUMA sockets. Here is why, what is already fixed, and the plan for the rest."
 [taxonomies]
 tags = ["berkeley-db","performance","storage","concurrency","benchmarking"]

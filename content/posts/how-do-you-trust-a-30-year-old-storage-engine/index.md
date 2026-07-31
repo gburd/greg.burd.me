@@ -1,7 +1,7 @@
 +++
 title = "how do you trust a 30-year-old storage engine?"
 date = "2026-08-07"
-draft = false
+draft = true
 description = "Reviving Berkeley DB meant deciding what quality bar to hold it to. Deterministic simulation, malloc-failure injection, fuzzing, and property-based tests — and the bugs they found."
 [taxonomies]
 tags = ["berkeley-db","storage","testing","databases"]

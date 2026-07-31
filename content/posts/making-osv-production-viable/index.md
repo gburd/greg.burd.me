@@ -1,7 +1,7 @@
 +++
 title = "making OSv production-viable: the changes and the trade-offs"
 date = "2026-09-04"
-draft = false
+draft = true
 description = "A rundown of the work bringing the OSv unikernel toward production — OpenZFS, io_uring, multiqueue block I/O, aarch64 — why each mattered, what it cost, and how OSv sits next to the other live unikernels."
 [taxonomies]
 tags = ["osv","unikernel","storage","performance"]
