@@ -11,4 +11,12 @@
 </span>
 {%- endif -%}
 {% endfor %}
+
+{%- set section = get_section(path="posts/_index.md") -%}
+{%- set recent = section.pages | filter(attribute="draft", value=false) | slice(end=3) -%}
+<div class="list recent-posts">
+  <h2>recent posts</h2>
+  {{ post_macros::list_posts(pages=recent) }}
+  <p><a href="/posts/">all posts</a> &middot; <a href="/atom.xml">atom feed</a></p>
+</div>
 {% endblock main_content %}
