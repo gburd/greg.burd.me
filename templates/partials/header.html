@@ -9,10 +9,8 @@
   {%- set favicon_ext = config.extra.favicon | split(pat=".") | last -%}
   <link rel="icon" type="image/{{ favicon_ext }}" href="{{ get_url(path=config.extra.favicon, cachebust=true) }}" />
   {%- endif -%}
-  {% for font in config.extra.fonts -%}
-  {% set font_path = '/font/' ~ font.path ~ '/' ~ font.name ~ '-Regular.woff2' %}
-  <link rel="preload" href="{{ get_url(path=font_path, trailing_slash=false) }}" as="font" type="font/woff2" crossorigin>
-  {%- endfor %}
+  <link rel="preload" href="{{ get_url(path='/font/computer-modern/CMUSerif-Roman.woff2', trailing_slash=false) }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ get_url(path='/font/computer-modern/CMUTypewriter-Regular.woff2', trailing_slash=false) }}" as="font" type="font/woff2" crossorigin>
   <link href="{{ get_url(path='style/fonts.css', cachebust=true) }}" rel="stylesheet preload" as="style" />
   {# Atom #}
   {%- block rss -%}
@@ -22,7 +20,7 @@
   <link rel="stylesheet preload" as="style" type="text/css" href="{{ get_url(path='style/theme/light.css', cachebust=true) }}" />
   <link rel="stylesheet preload" as="style" type="text/css" href="{{ get_url(path='style/theme/dark.css', cachebust=true) }}" media="(prefers-color-scheme: dark)" />
   <link rel="stylesheet preload" as="style" type="text/css" media="screen" href="{{ get_url(path='style/main.css', cachebust=true) }}" />
-  <meta name="theme-color" content="lightcoral" />
+  <meta name="theme-color" content="#fbf6e9" />
   {%- if config.extra.stylesheets -%}
   {%- for stylesheet in config.extra.stylesheets -%}
   <link rel="stylesheet" href="{{ get_url(path=stylesheet, cachebust=true) }}">
