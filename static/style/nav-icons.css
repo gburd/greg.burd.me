@@ -8,18 +8,3 @@
 nav a {
   white-space: nowrap;
 }
-
-/* Use the full browser width instead of latex.css's 80ch measure,
-   with comfortable side padding so text doesn't hug the edges. */
-body {
-  max-width: none;
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
-}
-
-@media print {
-  body {
-    max-width: none;
-    padding: 0;
-  }
-}
