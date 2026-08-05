@@ -17,12 +17,25 @@ html {
   background-color: var(--bg-0);
   color: var(--text-0);
   font-family: var(--text-font);
-  line-height: 1.6em;
+  line-height: 1.5;
   scrollbar-color: var(--primary-color) var(--bg-0);
 }
 
+// Knuth's text block: a single justified column with hyphenation.
+// Computer Modern renders small, so the body is set a touch larger.
+main.inner {
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+section.body,
+.post-list-item .description {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
 .content {
-  max-width: 944px;
+  max-width: 40em;
   margin: 0 auto;
   padding: 0 24px;
   word-wrap: break-word;
@@ -30,19 +43,19 @@ html {
 
 @media all and (min-width:640px) {
   html {
-    font-size: 16.5px;
+    font-size: 18px;
   }
 }
 
 @media all and (min-width:720px) {
   html {
-    font-size: 17px;
+    font-size: 19px;
   }
 }
 
 @media all and (min-width:960px) {
   html {
-    font-size: 18px;
+    font-size: 20px;
   }
 }
 

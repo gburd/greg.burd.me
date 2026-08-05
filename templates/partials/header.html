@@ -9,14 +9,18 @@
   {%- set favicon_ext = config.extra.favicon | split(pat=".") | last -%}
   <link rel="icon" type="image/{{ favicon_ext }}" href="{{ get_url(path=config.extra.favicon, cachebust=true) }}" />
   {%- endif -%}
-  <link rel="preload" href="{{ get_url(path='/font/latin-modern/LM-regular.woff2', trailing_slash=false) }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ get_url(path='/font/computer-modern/CMUSerif-Roman.woff2', trailing_slash=false) }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ get_url(path='/font/computer-modern/CMUTypewriter-Regular.woff2', trailing_slash=false) }}" as="font" type="font/woff2" crossorigin>
+  <link href="{{ get_url(path='style/fonts.css', cachebust=true) }}" rel="stylesheet preload" as="style" />
   {# Atom #}
   {%- block rss -%}
   <link rel="alternate" type="application/atom+xml" title="{{ config.title }}" href="{{ get_url(path='atom.xml', trailing_slash=false) }}">
   {%- endblock -%}
-  {# LaTeX.css — the only stylesheet #}
-  <link rel="stylesheet" type="text/css" href="{{ get_url(path='style/latex.css', cachebust=true) }}" />
-  <meta name="theme-color" content="#fafbfc" />
+  {# Theme #}
+  <link rel="stylesheet preload" as="style" type="text/css" href="{{ get_url(path='style/theme/light.css', cachebust=true) }}" />
+  <link rel="stylesheet preload" as="style" type="text/css" href="{{ get_url(path='style/theme/dark.css', cachebust=true) }}" media="(prefers-color-scheme: dark)" />
+  <link rel="stylesheet preload" as="style" type="text/css" media="screen" href="{{ get_url(path='style/main.css', cachebust=true) }}" />
+  <meta name="theme-color" content="#fbf6e9" />
   {%- if config.extra.stylesheets -%}
   {%- for stylesheet in config.extra.stylesheets -%}
   <link rel="stylesheet" href="{{ get_url(path=stylesheet, cachebust=true) }}">

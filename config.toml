@@ -32,9 +32,8 @@ favicon = "/image/favicon.svg"
 stylesheets = []
 
 fonts = [
-    { path = "ia-writer-quattro", name = "iAWriterQuattroS" },
-    { path = "ibm-plex-mono", name = "IBMPlexMono" },
-    { path = "inria-sans", name = "InriaSans" }
+    { path = "computer-modern", name = "CMUSerif" },
+    { path = "computer-modern", name = "CMUTypewriter" }
 ]
 
 menu = [

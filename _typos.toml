@@ -1,6 +1,3 @@
-[files]
-extend-exclude = ["static/style/latex.css"]
-
 [default.extend-words]
 referer = "referer"
 # project / extension names
